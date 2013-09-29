@@ -1,0 +1,6 @@
+
+[defaults]
+encoding=Cp1252
+
+[repositories]
+remote=aether:C:\\development\\apache-maven-3.0.5\\conf\\settings.xml
