@@ -1,5 +1,3 @@
-import ceylon.ant.internal { AntHelper }
-
 "Basically it's a mapping from Ant's XML description language to Ceylon.
  Elements and attributes are `String`s as Ant itself has a dynamic nature.
 
@@ -32,31 +30,32 @@ shared class Ant(
         [<Ant>*]? elements = null,
         String? text = null) {
 
-    void build(AntHelper antHelper) {
+    void build(AntSupport antSupport) {
         if(exists attributes) {
             for (attributeName -> attributeValue in attributes) {
-                antHelper.attribute(attributeName, attributeValue);
+                antSupport.attribute(attributeName, attributeValue);
             }
         }
         if(exists elements) {
             for (element in elements) {
-                value elementAntHelper = antHelper.createNestedElement(element.antName);
+                value elementAntHelper = antSupport.createNestedElement(element.antName);
                 element.build(elementAntHelper);
-                antHelper.element(elementAntHelper);
+                antSupport.element(elementAntHelper);
             }
         }
         if(exists text) {
-            antHelper.setText(text);
+            antSupport.setText(text);
         }
     }
 
     "Executes the built up Ant directives."
     shared void execute() {
-        value antHelper = AntHelper(antName);
-        build(antHelper);
-        print(" Directory: ``antHelper.baseDirectory``");
-        print(" Ant's XML: ``antHelper.string``");
-        antHelper.execute();
+        AntProject antProject = provideAntProject();
+        AntSupport antSupport = AntSupport(antName, antProject.projectSupport);
+        build(antSupport);
+        print(" Directory: ``antProject.effectiveBaseDirectory``");
+        print(" Ant's XML: ``antSupport.string``");
+        antSupport.execute();
     }
 
 }

@@ -1,4 +1,4 @@
-package ceylon.ant.internal;
+package ceylon.ant;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -14,71 +14,52 @@ import org.apache.tools.ant.Project;
 import org.apache.tools.ant.Task;
 import org.apache.tools.ant.types.DataType;
 
-public class AntHelper {
+public class AntSupport {
 
-    private static final ThreadLocal<Project> threadLocalProject;
-        
-    protected String antName;
-    private Project project;
+	protected String antName;
+    private ProjectSupport projectSupport;
     private Object instantiatedType;
     private IntrospectionHelper introspectionHelper;
-    private List<AntHelper> appliedElements = new ArrayList<AntHelper>();
+    private List<AntSupport> appliedElements = new ArrayList<AntSupport>();
     private Map<String, Object> appliedAttributeMap = new HashMap<String, Object>();
     private String appliedText;
     
-    static {
-    	threadLocalProject = new ThreadLocal<Project>() {
-            @Override
-            protected Project initialValue() {
-                return createProject();
-            }
-        };
+    public AntSupport() {
     }
     
-    public static Project createProject() {
-        return ProjectCreator.createProject();
-    }
-
-    public static Project provideProject() {
-        return threadLocalProject.get();
-    }
-    
-    public static Project purgeProject() {
-        threadLocalProject.set(createProject());
-        return threadLocalProject.get();
-    }
-    
-    public AntHelper() {
-    }
-    
-    public AntHelper(String antName) {
+    public AntSupport(String antName, ProjectSupport projectSupport) {
         this.antName= antName;
-        project = provideProject();
+        this.projectSupport = projectSupport;
+        Project project = getProject();
         ComponentHelper componentHelper = ComponentHelper.getComponentHelper(project);
         AntTypeDefinition antTypeDefinition = componentHelper.getDefinition(antName);
         instantiatedType = antTypeDefinition.create(project);
         introspectionHelper = IntrospectionHelper.getHelper(project, instantiatedType.getClass());
     }
     
-    private AntHelper(String nestedElementName, Project project, Object instantiatedType) {
+    private Project getProject() {
+		return projectSupport.getProject();
+	}
+
+	private AntSupport(String nestedElementName, ProjectSupport projectSupport, Object instantiatedType) {
         this.antName= nestedElementName;
-        this.project = project;
+        this.projectSupport = projectSupport;
         this.instantiatedType = instantiatedType;
-        introspectionHelper = IntrospectionHelper.getHelper(project, instantiatedType.getClass());
+        introspectionHelper = IntrospectionHelper.getHelper(getProject(), instantiatedType.getClass());
     }
     
     public void attribute(String name, Object value) {
-        introspectionHelper.setAttribute(project, instantiatedType, name, value);
+        introspectionHelper.setAttribute(getProject(), instantiatedType, name, value);
         appliedAttributeMap.put(name, value);
     }
     
-    public void element(AntHelper element) {
-        introspectionHelper.storeElement(project, instantiatedType, element.instantiatedType, element.antName);
+    public void element(AntSupport element) {
+        introspectionHelper.storeElement(getProject(), instantiatedType, element.instantiatedType, element.antName);
         appliedElements.add(element);
     }
     
     public void setText(String text) {
-        introspectionHelper.addText(project, instantiatedType, text);
+        introspectionHelper.addText(getProject(), instantiatedType, text);
         appliedText = text;
     }
     
@@ -92,11 +73,11 @@ public class AntHelper {
         return nestedElementMap;
     }
     
-    public AntHelper createNestedElement(String nestedElementName) {
-        Creator creator = introspectionHelper.getElementCreator(project, "", instantiatedType, nestedElementName, null);
+    public AntSupport createNestedElement(String nestedElementName) {
+        Creator creator = introspectionHelper.getElementCreator(getProject(), "", instantiatedType, nestedElementName, null);
         Object object = creator.create();
-        AntHelper antHelper = new AntHelper(nestedElementName, project, object);
-        return antHelper;
+        AntSupport antSupport = new AntSupport(nestedElementName, projectSupport, object);
+        return antSupport;
     }
     
     public String getAntName() {
@@ -123,11 +104,6 @@ public class AntHelper {
         return instantiatedType;
     }
     
-    public String getBaseDirectory() {
-    	Project project = provideProject();
-    	return project.getBaseDir().getAbsolutePath();
-    }
-    
     public void execute() {
         if(isTask()) {
             Task task = (Task) instantiatedType;
@@ -148,7 +124,7 @@ public class AntHelper {
         if(appliedText != null || appliedElements.size() > 0) {
             result += ">";
         }
-        for(AntHelper subElement : appliedElements) {
+        for(AntSupport subElement : appliedElements) {
             result += subElement.toString();
         }
         if(appliedText != null) {

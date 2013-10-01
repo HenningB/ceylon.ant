@@ -1,4 +1,4 @@
-package ceylon.ant.internal;
+package ceylon.ant;
 
 import java.net.MalformedURLException;
 import java.net.URL;
