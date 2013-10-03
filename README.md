@@ -47,7 +47,7 @@ Take care to include the last `.execute()` directive, otherwise the operation wi
 
 ## Building
 
-Use the Ceylon Eclipse plug-in for building this project.
+Use Eclipse with Ceylon M6 (1.0beta) plug-in for building this project.
 Modify the Maven Aether setting: right-click on project, select `Properties` -> `Ceylon Compiler` -> `Module Repositories` -> `Add Maven Repository...` and add your Maven's `settings.xml` (... and remove the old one).
 
 
@@ -57,11 +57,6 @@ Modify the Maven Aether setting: right-click on project, select `Properties` -> 
 Initially I considered to automatically generate Ceylon definitions from Ant tasks.
 But it's not possible to map Ant tasks and types to Ceylon classes or functions, as the same named element could be mapped differently in different locations.
 At least this is not possible without overlapping meanings, or unpractically long names.
-
-*I'm not quite sure about the following:*
-*Ceylon's module system doesn't (yet) allow the injection of modules.*
-*At least as long as I know Java class loaders.*
-*So it's maybe not possible that you use `ceylon.ant` within your own module with tasks not defined in the basic Ant distribution, without modifying `ceylon.ant`'s `module.ceylon` file.*
 
 
 

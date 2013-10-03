@@ -26,10 +26,10 @@ shared class AntProject(String? baseDirectory) {
         return projectSupport.baseDirectory;
     }
     
-    shared AntDefinition? antDefinition(String antTaskName) {
-        IntrospectionHelper? introspectionHelper = projectSupport.introspectionHelper(antTaskName);
+    shared AntDefinition? antDefinition(String antName) {
+        IntrospectionHelper? introspectionHelper = projectSupport.introspectionHelper(antName);
         if(exists introspectionHelper) {
-            return AntDefinitionImplementation(introspectionHelper);
+            return AntDefinitionImplementation(antName, projectSupport.project, introspectionHelper);
         } else {
             return null;
         }
@@ -43,7 +43,7 @@ shared class AntProject(String? baseDirectory) {
         for(antName in antNames) {
             IntrospectionHelper? introspectionHelper = introspectionHelperMap.get(antName);
             if(exists introspectionHelper) {
-                AntDefinition antDefinition = AntDefinitionImplementation(introspectionHelper);
+                AntDefinition antDefinition = AntDefinitionImplementation(antName, projectSupport.project, introspectionHelper);
                 result.put(antName, antDefinition);
             }
         }
