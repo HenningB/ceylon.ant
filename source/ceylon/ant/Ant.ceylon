@@ -1,3 +1,4 @@
+import ceylon.ant.internal { AntSupport, provideAntProject }
 "Basically it's a mapping from Ant's XML description language to Ceylon.
  Elements and attributes are `String`s as Ant itself has a dynamic nature.
 
@@ -38,7 +39,7 @@ shared class Ant(
         }
         if(exists elements) {
             for (element in elements) {
-                value elementAntHelper = antSupport.createNestedElement(element.antName);
+                AntSupport elementAntHelper = antSupport.createNestedElement(element.antName);
                 element.build(elementAntHelper);
                 antSupport.element(elementAntHelper);
             }

@@ -10,6 +10,5 @@ license ("http://www.apache.org/licenses/LICENSE-2.0.html")
 module ceylon.ant '0.0.6' {
     shared import ceylon.collection "0.6.1";
     import java.base '7';
-    shared import 'org.apache.ant.ant' '1.9.2';
-    // import 'org.apache.ant.ant-apache-regexp' '1.9.2'; 
+    import 'org.apache.ant.ant' '1.9.2';
 }

@@ -1,12 +1,10 @@
 import java.lang { ThreadLocal }
-
-
 import ceylon.ant { AntProject }
 
 ThreadLocal<AntProject> threadLocalAntProject = ThreadLocal<AntProject>();
 
 AntProject createAntProject(String? baseDirectory) {
-  return AntProject(baseDirectory);
+    return AntProject(baseDirectory);
 }
 
 shared AntProject provideAntProject() {
@@ -25,7 +23,7 @@ shared void setAntProject(AntProject antProject) {
 }
 
 shared AntProject purgeAntProject(String? baseDirectory) {
-    value newAntProject = createAntProject(baseDirectory);
+    AntProject newAntProject = createAntProject(baseDirectory);
     threadLocalAntProject.set(newAntProject);
     return threadLocalAntProject.get();
 }

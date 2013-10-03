@@ -1,4 +1,4 @@
-package ceylon.ant;
+package ceylon.ant.internal;
 
 public class AntHelperException extends RuntimeException {
 	

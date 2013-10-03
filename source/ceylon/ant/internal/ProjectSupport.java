@@ -1,4 +1,4 @@
-package ceylon.ant;
+package ceylon.ant.internal;
 
 import java.io.File;
 import java.util.Hashtable;
@@ -72,11 +72,15 @@ public class ProjectSupport {
     
     public IntrospectionHelper introspectionHelper(String antName) {
         Project project = getProject();
-        ComponentHelper componentHelper = ComponentHelper.getComponentHelper(project);
-        AntTypeDefinition antTypeDefinition = componentHelper.getDefinition(antName);
-        Object instantiatedType = antTypeDefinition.create(project);
-        IntrospectionHelper introspectionHelper = IntrospectionHelper.getHelper(project, instantiatedType.getClass());
-        return introspectionHelper;
+        try {
+            ComponentHelper componentHelper = ComponentHelper.getComponentHelper(project);
+            AntTypeDefinition antTypeDefinition = componentHelper.getDefinition(antName);
+            Object instantiatedType = antTypeDefinition.create(project);
+            IntrospectionHelper introspectionHelper = IntrospectionHelper.getHelper(project, instantiatedType.getClass());
+            return introspectionHelper;
+        } catch (Throwable throwable) {
+            return null;
+        }
     }
 
 }

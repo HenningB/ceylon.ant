@@ -1,4 +1,4 @@
-package ceylon.ant;
+package ceylon.ant.internal;
 
 import java.util.ArrayList;
 import java.util.Collections;

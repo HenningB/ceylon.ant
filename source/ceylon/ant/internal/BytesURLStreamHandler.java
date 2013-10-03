@@ -1,4 +1,4 @@
-package ceylon.ant;
+package ceylon.ant.internal;
 
 import java.net.URL;
 import java.net.URLConnection;

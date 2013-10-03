@@ -1,12 +1,13 @@
 import ceylon.collection { HashMap }
 import org.apache.tools.ant { IntrospectionHelper }
+import ceylon.ant.internal { ProjectSupport, setAntProject, provideAntProject, AntDefinitionImplementation }
 
 shared class AntProject(String? baseDirectory) {
 
     shared ProjectSupport projectSupport = ProjectSupport(baseDirectory);
     
-    shared Map<String, String> allProperties() {
-        value result = HashMap<String, String>();
+    shared Map<String,String> allProperties() {
+        HashMap<String,String> result = HashMap<String,String>();
         projectSupport.fillAllPropertiesMap(result);
         return result;
     }
@@ -25,20 +26,24 @@ shared class AntProject(String? baseDirectory) {
         return projectSupport.baseDirectory;
     }
     
-    shared AntDefinition antDefinition(String antTaskName) {
-        value introspectionHelper = projectSupport.introspectionHelper(antTaskName);
-        return AntDefinition(introspectionHelper);
+    shared AntDefinition? antDefinition(String antTaskName) {
+        IntrospectionHelper? introspectionHelper = projectSupport.introspectionHelper(antTaskName);
+        if(exists introspectionHelper) {
+            return AntDefinitionImplementation(introspectionHelper);
+        } else {
+            return null;
+        }
     }
      
-    shared Map<String, AntDefinition> allTopLevelAntDefinitions() {
-        value introspectionHelperMap = HashMap<String, IntrospectionHelper>();
+    shared Map<String,AntDefinition> allTopLevelAntDefinitions() {
+        HashMap<String,IntrospectionHelper> introspectionHelperMap = HashMap<String,IntrospectionHelper>();
         projectSupport.fillIntrospectionHelperMap(introspectionHelperMap);
-        value antNames = introspectionHelperMap.keys;
-        value result = HashMap<String, AntDefinition>();
+        Set<String> antNames = introspectionHelperMap.keys;
+        HashMap<String,AntDefinition> result = HashMap<String,AntDefinition>();
         for(antName in antNames) {
             IntrospectionHelper? introspectionHelper = introspectionHelperMap.get(antName);
             if(exists introspectionHelper) {
-                AntDefinition antDefinition = AntDefinition(introspectionHelper);
+                AntDefinition antDefinition = AntDefinitionImplementation(introspectionHelper);
                 result.put(antName, antDefinition);
             }
         }
