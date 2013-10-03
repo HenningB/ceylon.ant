@@ -1,4 +1,5 @@
 import ceylon.ant.internal { AntSupport, provideAntProject }
+
 "Basically it's a mapping from Ant's XML description language to Ceylon.
  Elements and attributes are `String`s as Ant itself has a dynamic nature.
 
@@ -54,7 +55,7 @@ shared class Ant(
         AntProject antProject = provideAntProject();
         AntSupport antSupport = AntSupport(antName, antProject.projectSupport);
         build(antSupport);
-        print(" Directory: ``antProject.effectiveBaseDirectory``");
+        print(" Directory: ``antProject.effectiveBaseDirectory()``");
         print(" Ant's XML: ``antSupport.string``");
         antSupport.execute();
     }

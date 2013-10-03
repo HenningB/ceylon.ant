@@ -17,9 +17,10 @@ shared class AntProject(String? baseDirectory) {
     }
     
     shared void setProperty(String propertyName, String? propertyValue) {
+        projectSupport.setProperty(propertyName, propertyValue);
     }
     
-    shared String effectiveBaseDirectory(String? newBaseDirectory) {
+    shared String effectiveBaseDirectory(String? newBaseDirectory = null) {
         if(exists newBaseDirectory) {
             projectSupport.baseDirectory = newBaseDirectory;
         }
