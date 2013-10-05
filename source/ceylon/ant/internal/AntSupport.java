@@ -92,7 +92,12 @@ public class AntSupport {
         return instantiatedType instanceof DataType;
     }
     
-    public boolean isDynamic() {
+    public boolean isTextSupported() {
+    	return introspectionHelper.supportsCharacters();
+    }
+    
+    // needs to be implemented explicitly, because "dynamic" is a Ceylon keyword
+    public boolean isDynamicType() {
         return introspectionHelper.isDynamic();
     }
     
@@ -109,7 +114,7 @@ public class AntSupport {
             Task task = (Task) instantiatedType;
             task.execute();
         } else {
-            throw new AntHelperException("Ant type " + antName + " is not an executable task.");
+            throw new AntSupportException("Ant type " + antName + " is not an executable task.");
         }
     }
     

@@ -8,12 +8,14 @@ import org.apache.tools.ant.Project;
 import ceylon.collection.HashSet;
 
 public class AntDefinitionSupport {
-	Project project;
-	IntrospectionHelper introspectionHelper;
+	private Project project;
+	private IntrospectionHelper introspectionHelper;
+	private Class<Object> elementType;
 	
-	public AntDefinitionSupport(Project project, IntrospectionHelper introspectionHelper) {
+	public AntDefinitionSupport(Project project, IntrospectionHelper introspectionHelper, Class<Object> elementType) {
 		this.project = project;
 		this.introspectionHelper = introspectionHelper;
+		this.elementType = elementType;
 	}
 	
     public void fillAttributeSet(HashSet<ceylon.language.String> result) {
@@ -32,10 +34,29 @@ public class AntDefinitionSupport {
         }
     }
     
-    public IntrospectionHelper nestedElementIntrospectionHelper(String nestedElementName) {
+    public Class<Object> nestedElementType(String nestedElementName) {
     	Class<?> elementType = introspectionHelper.getElementType(nestedElementName);
-    	IntrospectionHelper result = IntrospectionHelper.getHelper(project, elementType);
+    	@SuppressWarnings("unchecked")
+		Class<Object> result = (Class<Object>) elementType;
     	return result;
     }
 
+    public IntrospectionHelper nestedElementIntrospectionHelper(String nestedElementName, Class<Object> nestedElementType) {
+    	IntrospectionHelper result = IntrospectionHelper.getHelper(project, elementType);
+    	return result;
+    }
+    
+    public boolean isTextSupported() {
+    	return introspectionHelper.supportsCharacters();
+    }
+    
+    // needs to be implemented explicitly, because "dynamic" is a Ceylon keyword
+    public boolean isDynamicType() {
+        return introspectionHelper.isDynamic();
+    }
+    
+    public boolean isContainer() {
+        return introspectionHelper.isContainer();
+    }
+    
 }

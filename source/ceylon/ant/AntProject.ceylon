@@ -1,6 +1,7 @@
 import ceylon.collection { HashMap }
 import org.apache.tools.ant { IntrospectionHelper }
 import ceylon.ant.internal { ProjectSupport, setAntProject, provideAntProject, AntDefinitionImplementation }
+import java.lang { Class }
 
 shared class AntProject(String? baseDirectory) {
 
@@ -27,13 +28,15 @@ shared class AntProject(String? baseDirectory) {
         return projectSupport.baseDirectory;
     }
     
-    shared AntDefinition? antDefinition(String antName) {
-        IntrospectionHelper? introspectionHelper = projectSupport.introspectionHelper(antName);
-        if(exists introspectionHelper) {
-            return AntDefinitionImplementation(antName, projectSupport.project, introspectionHelper);
-        } else {
-            return null;
+    shared AntDefinition? topLevelAntDefinition(String antName) {
+        Class<Object>? instantiatedClass = projectSupport.instantiatedClass(antName);
+        if(exists instantiatedClass) {
+            IntrospectionHelper? introspectionHelper = projectSupport.introspectionHelper(antName, instantiatedClass);
+            if(exists introspectionHelper) {
+                return AntDefinitionImplementation(antName, this, introspectionHelper, instantiatedClass);
+            }
         }
+        return null;
     }
      
     shared Map<String,AntDefinition> allTopLevelAntDefinitions() {
@@ -42,9 +45,8 @@ shared class AntProject(String? baseDirectory) {
         Set<String> antNames = introspectionHelperMap.keys;
         HashMap<String,AntDefinition> result = HashMap<String,AntDefinition>();
         for(antName in antNames) {
-            IntrospectionHelper? introspectionHelper = introspectionHelperMap.get(antName);
-            if(exists introspectionHelper) {
-                AntDefinition antDefinition = AntDefinitionImplementation(antName, projectSupport.project, introspectionHelper);
+            AntDefinition? antDefinition = topLevelAntDefinition(antName);
+            if(exists antDefinition) {
                 result.put(antName, antDefinition);
             }
         }

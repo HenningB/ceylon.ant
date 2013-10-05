@@ -70,13 +70,24 @@ public class ProjectSupport {
         }
     }
     
-    public IntrospectionHelper introspectionHelper(String antName) {
-        Project project = getProject();
+	public Class<Object> instantiatedClass(String antName) {
         try {
+            Project project = getProject();
             ComponentHelper componentHelper = ComponentHelper.getComponentHelper(project);
             AntTypeDefinition antTypeDefinition = componentHelper.getDefinition(antName);
             Object instantiatedType = antTypeDefinition.create(project);
-            IntrospectionHelper introspectionHelper = IntrospectionHelper.getHelper(project, instantiatedType.getClass());
+            @SuppressWarnings("unchecked")
+            Class<Object> result = (Class<Object>) instantiatedType.getClass();
+            return result;
+        } catch (Throwable throwable) {
+            return null;
+        }
+    }
+
+    public IntrospectionHelper introspectionHelper(String antName, Class<Object> instantiatedClass) {
+        try {
+            Project project = getProject();
+            IntrospectionHelper introspectionHelper = IntrospectionHelper.getHelper(project, instantiatedClass);
             return introspectionHelper;
         } catch (Throwable throwable) {
             return null;

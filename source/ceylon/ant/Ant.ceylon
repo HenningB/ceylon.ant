@@ -60,13 +60,4 @@ shared class Ant(
         antSupport.execute();
     }
     
-    "Returns true if this element is executable as a top element.
-     Be careful though, Ant elements could change their meaning depending on location.
-     For example, an `<include>` element within a `<fileset>` becomes an `<import>` which is executable itself."
-    shared Boolean executableAsTopElement() {
-        AntProject antProject = provideAntProject();
-        AntSupport antSupport = AntSupport(antName, antProject.projectSupport);
-        return antSupport.task;
-    }
-
 }
