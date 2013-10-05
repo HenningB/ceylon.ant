@@ -1,5 +1,5 @@
 import ceylon.ant { Ant, AntProject, currentAntProject, AntDefinition }
-import ceylon.test { AssertException }
+import ceylon.test { AssertException, assertEquals, assertTrue }
 import ceylon.file { parsePath, Path, File, Directory, Nil }
 import ceylon.language.meta.model { Interface }
 
@@ -45,7 +45,7 @@ void testFileTasks() {
 void testAntDefinitions() {
     AntProject antProject = currentAntProject();
     Map<String,AntDefinition> allTopLevelAntDefinitions = antProject.allTopLevelAntDefinitions();
-    assert(allTopLevelAntDefinitions.size > 0);
+    assertTrue(allTopLevelAntDefinitions.size > 0);
     // now print out ant definitions
     Set<String> antNames = allTopLevelAntDefinitions.keys;
     String[] antNamesSorted = antNames.sort(byIncreasing((String s) => s));
@@ -54,10 +54,22 @@ void testAntDefinitions() {
     }
 }
 
-void testPropeties() {
+void testAntDefinition() {
+    AntProject antProject = currentAntProject();
+    AntDefinition? copyAntDefinition = antProject.topLevelAntDefinition("copy");
+    assert(exists copyAntDefinition);
+    Set<String> attributeNames = copyAntDefinition.attributeNames();
+    assertTrue(attributeNames.contains("todir"));
+    Set<String> nestedElementNames = copyAntDefinition.nestedElementNames();
+    assertTrue(nestedElementNames.contains("fileset"));
+    AntDefinition? filesetAntDefinition = copyAntDefinition.nestedElementDefinition("fileset");
+    assert(exists filesetAntDefinition);
+}
+
+void testProperties() {
     AntProject antProject = currentAntProject();
     Map<String,String> allProperties = antProject.allProperties();
-    assert(allProperties.size > 0);
+    assertTrue(allProperties.size > 0);
     // now print out all properties
     Set<String> propertyNames = allProperties.keys;
     String[] propertyNamesSorted = propertyNames.sort(byIncreasing((String s) => s));
@@ -69,13 +81,25 @@ void testPropeties() {
     }
 }
 
+void testProperty() {
+    String propertyName = "ceylon.ant.test.test-property";
+    String propertyConstant = "test-property-set";
+    AntProject antProject = currentAntProject();
+    antProject.setProperty(propertyName, null);
+    String? propertyValue1 = antProject.getProperty(propertyName);
+    assertEquals(propertyValue1, null);
+    antProject.setProperty(propertyName, propertyConstant);
+    String? propertyValue2 = antProject.getProperty(propertyName);
+    assertEquals(propertyValue2, propertyConstant);
+}
+
 "Test whether the `<ftp>` tasks exists, which is part of modul `org.apache.ant.ant-commons-net`.
  Depending of Ceylon's module implementation, this might not be available to the module `ceylon.ant`.
  It might be required to test this outside the `ceylon.ant` project."
 void testExternalDependency() {
     AntProject antProject = currentAntProject();
-    AntDefinition? ftpAntDefinition = antProject.antDefinition("ftp");
-    AntDefinition? undefinedAntDefinition = antProject.antDefinition("--undefined--");
+    AntDefinition? ftpAntDefinition = antProject.topLevelAntDefinition("ftp");
+    AntDefinition? undefinedAntDefinition = antProject.topLevelAntDefinition("--undefined--");
     if(exists ftpAntDefinition) {
         // ok
     } else {
