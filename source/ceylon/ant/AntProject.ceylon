@@ -3,6 +3,7 @@ import org.apache.tools.ant { IntrospectionHelper }
 import ceylon.ant.internal { ProjectSupport, setAntProject, provideAntProject, AntDefinitionImplementation }
 import java.lang { Class }
 
+"Represents an Ant's project class, with the ability to access proeprties and Ant type definitions."
 shared class AntProject(String? baseDirectory) {
 
     shared ProjectSupport projectSupport = ProjectSupport(baseDirectory);
@@ -55,6 +56,7 @@ shared class AntProject(String? baseDirectory) {
  
 }
 
+"Allows access to the current (ThreadLocal) Ant project."
 shared AntProject currentAntProject(AntProject? newAntProject = null) {
     if(exists newAntProject) {
         setAntProject(newAntProject);

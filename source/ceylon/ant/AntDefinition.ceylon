@@ -1,3 +1,4 @@
+"Ant type definition."
 shared interface AntDefinition {
     shared formal String name;
     shared formal Set<String> attributeNames();
