@@ -3,7 +3,7 @@ import org.apache.tools.ant { IntrospectionHelper }
 import ceylon.ant.internal { ProjectSupport, setAntProject, provideAntProject, AntDefinitionImplementation }
 import java.lang { Class }
 
-"Represents an Ant's project class, with the ability to access proeprties and Ant type definitions."
+"Represents Ant's Project class, with the ability to access properties and Ant type definitions."
 shared class AntProject(String? baseDirectory) {
 
     shared ProjectSupport projectSupport = ProjectSupport(baseDirectory);
