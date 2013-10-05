@@ -5,7 +5,7 @@ import java.lang { Class }
 import org.apache.tools.ant.types { DataType }
 
 shared class AntDefinitionImplementation(String antName, AntProject antProject, IntrospectionHelper introspectionHelper, Class<Object> elementType) satisfies AntDefinition {
-    value antDefinitionSupport = AntDefinitionSupport(antProject.projectSupport.project, introspectionHelper, elementType);
+    value antDefinitionSupport = AntDefinitionSupport(antProject.projectSupport.project, introspectionHelper);
     
     shared actual String name = antName;
     
@@ -35,9 +35,7 @@ shared class AntDefinitionImplementation(String antName, AntProject antProject, 
         }
     }
     
-    "Returns true if this element is executable as a top element.
-     Be careful though, Ant elements could change their meaning depending on location.
-     For example, an `<include>` element within a `<fileset>` becomes an `<import>` which is executable itself."
+    "Returns true if this element is executable as a top element."
     shared actual Boolean isTask() {
         return `Task`.isTypeOf(elementType);
     }

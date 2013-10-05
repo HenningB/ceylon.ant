@@ -10,12 +10,11 @@ import ceylon.collection.HashSet;
 public class AntDefinitionSupport {
 	private Project project;
 	private IntrospectionHelper introspectionHelper;
-	private Class<Object> elementType;
+
 	
-	public AntDefinitionSupport(Project project, IntrospectionHelper introspectionHelper, Class<Object> elementType) {
+	public AntDefinitionSupport(Project project, IntrospectionHelper introspectionHelper) {
 		this.project = project;
 		this.introspectionHelper = introspectionHelper;
-		this.elementType = elementType;
 	}
 	
     public void fillAttributeSet(HashSet<ceylon.language.String> result) {
@@ -42,7 +41,7 @@ public class AntDefinitionSupport {
     }
 
     public IntrospectionHelper nestedElementIntrospectionHelper(String nestedElementName, Class<Object> nestedElementType) {
-    	IntrospectionHelper result = IntrospectionHelper.getHelper(project, elementType);
+    	IntrospectionHelper result = IntrospectionHelper.getHelper(project, nestedElementType);
     	return result;
     }
     

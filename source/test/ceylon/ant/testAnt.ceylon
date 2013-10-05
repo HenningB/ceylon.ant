@@ -58,12 +58,20 @@ void testAntDefinition() {
     AntProject antProject = currentAntProject();
     AntDefinition? copyAntDefinition = antProject.topLevelAntDefinition("copy");
     assert(exists copyAntDefinition);
-    Set<String> attributeNames = copyAntDefinition.attributeNames();
-    assertTrue(attributeNames.contains("todir"));
-    Set<String> nestedElementNames = copyAntDefinition.nestedElementNames();
-    assertTrue(nestedElementNames.contains("fileset"));
+    Set<String> copyAttributeNames = copyAntDefinition.attributeNames();
+    assertTrue(copyAttributeNames.contains("todir"));
+    Set<String> copyNestedElementNames = copyAntDefinition.nestedElementNames();
+    assertTrue(copyNestedElementNames.contains("fileset"));
     AntDefinition? filesetAntDefinition = copyAntDefinition.nestedElementDefinition("fileset");
     assert(exists filesetAntDefinition);
+    Set<String> filesetAttributeNames = filesetAntDefinition.attributeNames();
+    assertTrue(filesetAttributeNames.contains("dir"));
+    Set<String> filesetNestedElementNames = filesetAntDefinition.nestedElementNames();
+    assertTrue(filesetNestedElementNames.contains("include"));
+    AntDefinition? includeAntDefinition = filesetAntDefinition.nestedElementDefinition("include");
+    assert(exists includeAntDefinition);
+    Set<String> includeAttributeNames = includeAntDefinition.attributeNames();
+    assertTrue(includeAttributeNames.contains("name"));
 }
 
 void testProperties() {
