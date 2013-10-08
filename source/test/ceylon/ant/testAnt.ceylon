@@ -126,7 +126,7 @@ void testExternalDependency() {
 }
 
 "Checks the difference between top level <include> task and <include> datatype within <fileset>"
-void testIncludeAsTaskAndTask() {
+void testIncludeAsTaskAndType() {
     AntProject antProject = currentAntProject();
     AntDefinition? includeAntDefinition = antProject.topLevelAntDefinition("include");
     assert(exists includeAntDefinition);
