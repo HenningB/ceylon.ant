@@ -1,24 +1,25 @@
-import org.apache.tools.ant { IntrospectionHelper, Task }
+import org.apache.tools.ant { IntrospectionHelper }
 import ceylon.ant { AntDefinition, AntProject }
-import ceylon.collection { HashSet }
+import ceylon.collection { LinkedList }
 import java.lang { Class }
-import org.apache.tools.ant.types { DataType }
 
 shared class AntDefinitionImplementation(String antName, AntProject antProject, IntrospectionHelper introspectionHelper, Class<Object> elementType) satisfies AntDefinition {
     value antDefinitionSupport = AntDefinitionSupport(antProject.projectSupport.project, introspectionHelper);
     
     shared actual String name = antName;
     
-    shared actual Set<String> attributeNames() {
-        HashSet<String> attributeSet = HashSet<String>();
-        antDefinitionSupport.fillAttributeSet(attributeSet);
-        return attributeSet;
+    shared actual List<String> attributeNames() {
+        LinkedList<String> attributeList = LinkedList<String>();
+        antDefinitionSupport.fillAttributeList(attributeList);
+        attributeList.sort(byIncreasing((String s) => s));
+        return attributeList;
     }
     
-    shared actual Set<String> nestedElementNames() {
-        HashSet<String> nestedElementeSet = HashSet<String>();
-        antDefinitionSupport.fillNestedElementSet(nestedElementeSet);
-        return nestedElementeSet;
+    shared actual List<String> nestedElementNames() {
+        LinkedList<String> nestedElementeList = LinkedList<String>();
+        antDefinitionSupport.fillNestedElementList(nestedElementeList);
+        nestedElementeList.sort(byIncreasing((String s) => s));
+        return nestedElementeList;
     }
     
     shared actual AntDefinition nestedElementDefinition(String nestedElementName) {
@@ -37,11 +38,11 @@ shared class AntDefinitionImplementation(String antName, AntProject antProject, 
     
     "Returns true if this element is executable as a top element."
     shared actual Boolean isTask() {
-        return `Task`.isTypeOf(elementType);
+        return antDefinitionSupport.isTask(elementType);
     }
     
     shared actual Boolean isDataType() {
-        return `DataType`.isTypeOf(elementType);
+        return antDefinitionSupport.isDataType(elementType);
     }
     
     shared actual Boolean isTextSupported() {
