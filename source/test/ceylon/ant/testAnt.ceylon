@@ -1,5 +1,5 @@
 import ceylon.ant { Ant, AntProject, currentAntProject, AntDefinition }
-import ceylon.test { AssertException, assertEquals, assertTrue }
+import ceylon.test { AssertException, assertEquals, assertTrue, assertFalse }
 import ceylon.file { parsePath, Path, File, Directory, Nil }
 import ceylon.language.meta.model { Interface }
 
@@ -26,6 +26,9 @@ void testEcho() {
 
 void testFileTasks() {
     String buildDirectory = "target/build-test-file-tasks-directory";
+    Ant fileset = Ant("fileset", { "dir" -> "``buildDirectory``" }, [
+        Ant("include", { "name" -> "example.txt" } )
+    ] );
     Ant("mkdir", { "dir" -> "``buildDirectory``" } ).execute();
     verifyResource("``buildDirectory``", `Directory`, "Cannot create directory");
     Ant("echo", { "message" -> "File created.", "file" -> "``buildDirectory``/example.txt" } ).execute();
@@ -33,11 +36,13 @@ void testFileTasks() {
     Ant("mkdir", { "dir" -> "``buildDirectory``/sub-directory" } ).execute();
     verifyResource("``buildDirectory``/sub-directory", `Directory`, "Cannot create directory");
     Ant("copy", { "todir" -> "``buildDirectory``/sub-directory" }, [
-        Ant("fileset", { "dir" -> "``buildDirectory``" }, [
-            Ant("include", { "name" -> "example.txt" } )
-        ] )
+        fileset
     ] ).execute();
-    verifyResource("``buildDirectory``/sub-directory/example.txt", `File`, "Cannot copy to  file");
+    verifyResource("``buildDirectory``/sub-directory/example.txt", `File`, "Cannot copy to file");
+    Ant("delete", { }, [
+        fileset
+    ] ).execute();
+    verifyResource("``buildDirectory``/example.txt", `Nil`, "Cannot delete file");
     Ant("delete", { "dir" -> "``buildDirectory``", "verbose" -> "true" } ).execute();
     verifyResource("``buildDirectory``", `Nil`, "Cannot delete directory");
 }
@@ -58,19 +63,19 @@ void testAntDefinition() {
     AntProject antProject = currentAntProject();
     AntDefinition? copyAntDefinition = antProject.topLevelAntDefinition("copy");
     assert(exists copyAntDefinition);
-    Set<String> copyAttributeNames = copyAntDefinition.attributeNames();
+    List<String> copyAttributeNames = copyAntDefinition.attributeNames();
     assertTrue(copyAttributeNames.contains("todir"));
-    Set<String> copyNestedElementNames = copyAntDefinition.nestedElementNames();
+    List<String> copyNestedElementNames = copyAntDefinition.nestedElementNames();
     assertTrue(copyNestedElementNames.contains("fileset"));
     AntDefinition? filesetAntDefinition = copyAntDefinition.nestedElementDefinition("fileset");
     assert(exists filesetAntDefinition);
-    Set<String> filesetAttributeNames = filesetAntDefinition.attributeNames();
+    List<String> filesetAttributeNames = filesetAntDefinition.attributeNames();
     assertTrue(filesetAttributeNames.contains("dir"));
-    Set<String> filesetNestedElementNames = filesetAntDefinition.nestedElementNames();
+    List<String> filesetNestedElementNames = filesetAntDefinition.nestedElementNames();
     assertTrue(filesetNestedElementNames.contains("include"));
     AntDefinition? includeAntDefinition = filesetAntDefinition.nestedElementDefinition("include");
     assert(exists includeAntDefinition);
-    Set<String> includeAttributeNames = includeAntDefinition.attributeNames();
+    List<String> includeAttributeNames = includeAntDefinition.attributeNames();
     assertTrue(includeAttributeNames.contains("name"));
 }
 
@@ -118,4 +123,27 @@ void testExternalDependency() {
     } else {
         // ok
     }
+}
+
+"Checks the difference between top level <include> task and <include> datatype within <fileset>"
+void testIncludeAsTaskAndTask() {
+    AntProject antProject = currentAntProject();
+    AntDefinition? includeAntDefinition = antProject.topLevelAntDefinition("include");
+    assert(exists includeAntDefinition);
+    print("<include: ``includeAntDefinition.attributeNames()``>");
+    AntDefinition? copyAntDefinition = antProject.topLevelAntDefinition("copy");
+    assert(exists copyAntDefinition);
+    print("<copy: ``copyAntDefinition.attributeNames()``>");
+    AntDefinition? copyFilesetAntDefinition = copyAntDefinition.nestedElementDefinition("fileset");
+    assert(exists copyFilesetAntDefinition);
+    print("<copy-fileset: ``copyFilesetAntDefinition.attributeNames()``>");
+    AntDefinition? copyFilesetIncludeAntDefinition = copyFilesetAntDefinition.nestedElementDefinition("include");
+    assert(exists copyFilesetIncludeAntDefinition);
+    print("<copy-fileset-include: ``copyFilesetIncludeAntDefinition.attributeNames()``>");
+    assertTrue(includeAntDefinition.isTask());
+    assertTrue(includeAntDefinition.attributeNames().contains("taskname"));
+    assertFalse(includeAntDefinition.attributeNames().contains("name"));
+    assertFalse(copyFilesetIncludeAntDefinition.isTask());
+    assertTrue(copyFilesetIncludeAntDefinition.attributeNames().contains("name"));
+    assertFalse(copyFilesetIncludeAntDefinition.attributeNames().contains("taskname"));
 }

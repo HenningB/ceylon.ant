@@ -11,5 +11,6 @@ void run() {
     testRunner.addTest("test.ceylon.ant::testPropeties", testProperties);
     testRunner.addTest("test.ceylon.ant::testProperty", testProperty);
     testRunner.addTest("test.ceylon.ant::testExternalDependency", testExternalDependency);
+    testRunner.addTest("test.ceylon.ant::testIncludeAsTaskAndTask", testIncludeAsTaskAndTask);
     testRunner.run();
 }
