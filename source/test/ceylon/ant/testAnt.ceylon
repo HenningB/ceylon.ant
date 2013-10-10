@@ -147,3 +147,31 @@ void testIncludeAsTaskAndType() {
     assertTrue(copyFilesetIncludeAntDefinition.attributeNames().contains("name"));
     assertFalse(copyFilesetIncludeAntDefinition.attributeNames().contains("taskname"));
 }
+
+"Test a typesave by hand generated Ceylon interface"
+void testPseudoGenerated() {
+    String buildDirectory = "target/build-test-file-tasks-directory";
+    Ant fileset = Ant("fileset", { "dir" -> "``buildDirectory``" }, [
+        Ant("include", { "name" -> "example.txt" } )
+    ] );
+    Ant("mkdir", { "dir" -> "``buildDirectory``" } ).execute();
+    verifyResource("``buildDirectory``", `Directory`, "Cannot create directory");
+    Ant("echo", { "message" -> "File created.", "file" -> "``buildDirectory``/example.txt" } ).execute();
+    verifyResource("``buildDirectory``/example.txt", `File`, "Cannot create file");
+    Ant("mkdir", { "dir" -> "``buildDirectory``/sub-directory" } ).execute();
+    verifyResource("``buildDirectory``/sub-directory", `Directory`, "Cannot create directory");
+    // invocation of pseudo generated typesave Ant interface (need to get rid of _containingElements someday)
+    copy { todir="``buildDirectory``/sub-directory"; _containingElements = [
+        FileSet{ dir="``buildDirectory``"; _containingElements = [
+            Include { name = "example.txt"; }
+        ]; }
+    ]; };
+    // end typesave invocation
+    verifyResource("``buildDirectory``/sub-directory/example.txt", `File`, "Cannot copy to file");
+    Ant("delete", { }, [
+        fileset
+    ] ).execute();
+    verifyResource("``buildDirectory``/example.txt", `Nil`, "Cannot delete file");
+    Ant("delete", { "dir" -> "``buildDirectory``", "verbose" -> "true" } ).execute();
+    verifyResource("``buildDirectory``", `Nil`, "Cannot delete directory");
+}

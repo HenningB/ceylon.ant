@@ -12,5 +12,6 @@ void run() {
     testRunner.addTest("test.ceylon.ant::testProperty", testProperty);
     testRunner.addTest("test.ceylon.ant::testExternalDependency", testExternalDependency);
     testRunner.addTest("test.ceylon.ant::testIncludeAsTaskAndType", testIncludeAsTaskAndType);
+    testRunner.addTest("test.ceylon.ant::testPseudoGenerated", testPseudoGenerated);
     testRunner.run();
 }
