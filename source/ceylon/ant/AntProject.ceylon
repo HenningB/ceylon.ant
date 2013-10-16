@@ -27,7 +27,7 @@ shared class AntProject(String? baseDirectory) {
         return projectSupport.baseDirectory;
     }
     
-    shared LinkedList<AntDefinition> allTopLevelAntDefinitions() {
+    shared List<AntDefinition> allTopLevelAntDefinitions() {
         LinkedList<AntDefinitionSupport> topLevelAntDefinitionSupportList = LinkedList<AntDefinitionSupport>();
         projectSupport.fillTopLevelAntDefinitionSupportList(topLevelAntDefinitionSupportList);
         LinkedList<AntDefinition> allTopLevelAntDefinitions = LinkedList<AntDefinition>();
@@ -35,8 +35,8 @@ shared class AntProject(String? baseDirectory) {
             AntDefinition topLevelAntDefinition = AntDefinitionImplementation(topLevelAntDefinitionSupport);
             allTopLevelAntDefinitions.add(topLevelAntDefinition);
         }
-        allTopLevelAntDefinitions.sort(byIncreasing((AntDefinition a) => a));
-        return allTopLevelAntDefinitions;
+        AntDefinition[] sortedTopLevelAntDefinitions = allTopLevelAntDefinitions.sort(byIncreasing((AntDefinition a) => a));
+        return sortedTopLevelAntDefinitions;
     }
  
 }
