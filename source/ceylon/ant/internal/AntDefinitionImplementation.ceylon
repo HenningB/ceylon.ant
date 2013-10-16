@@ -1,12 +1,10 @@
-import org.apache.tools.ant { IntrospectionHelper }
-import ceylon.ant { AntDefinition, AntProject }
+import ceylon.ant { AntDefinition }
 import ceylon.collection { LinkedList }
-import java.lang { Class }
 
-shared class AntDefinitionImplementation(String antName, AntProject antProject, IntrospectionHelper introspectionHelper, Class<Object> elementType) satisfies AntDefinition {
-    value antDefinitionSupport = AntDefinitionSupport(antProject.projectSupport.project, introspectionHelper);
-    
-    shared actual String name = antName;
+shared class AntDefinitionImplementation(AntDefinitionSupport antDefinitionSupport) satisfies AntDefinition {
+
+	shared actual String antName = antDefinitionSupport.antName;
+	shared actual String elementTypeClassName = antDefinitionSupport.elementType.name;
     
     shared actual List<String> attributeNames() {
         LinkedList<String> attributeList = LinkedList<String>();
@@ -15,34 +13,25 @@ shared class AntDefinitionImplementation(String antName, AntProject antProject, 
         return attributeList;
     }
     
-    shared actual List<String> nestedElementNames() {
-        LinkedList<String> nestedElementeList = LinkedList<String>();
-        antDefinitionSupport.fillNestedElementList(nestedElementeList);
-        nestedElementeList.sort(byIncreasing((String s) => s));
-        return nestedElementeList;
-    }
-    
-    shared actual AntDefinition nestedElementDefinition(String nestedElementName) {
-        Class<Object>? nestedElementType = antDefinitionSupport.nestedElementType(nestedElementName);
-        if(exists nestedElementType) {
-            IntrospectionHelper? nestedElementIntrospectionHelper = antDefinitionSupport.nestedElementIntrospectionHelper(nestedElementName, nestedElementType);
-            if(exists nestedElementIntrospectionHelper) {
-                return AntDefinitionImplementation(nestedElementName, antProject, nestedElementIntrospectionHelper, nestedElementType);
-            } else {
-                throw Exception("No nested IntrospectionHelper for element ``nestedElementName``.");
-            }
-        } else {
-            throw Exception("Type of nested element ``nestedElementName`` is not of type Class<Object>.");
+    shared actual List<AntDefinition> nestedAntDefinitions() {
+        LinkedList<AntDefinitionSupport> nestedAntDefinitionSupportList = LinkedList<AntDefinitionSupport>();
+        antDefinitionSupport.fillNestedAntDefinitionList(nestedAntDefinitionSupportList);
+        LinkedList<AntDefinition> nestedAntDefinitionList = LinkedList<AntDefinition>();
+        for (nestedAntDefinitionSupport in nestedAntDefinitionSupportList) {
+            AntDefinition nestedAntDefinition = AntDefinitionImplementation(nestedAntDefinitionSupport);
+            nestedAntDefinitionList.add(nestedAntDefinition);
         }
+        nestedAntDefinitionList.sort(byIncreasing((AntDefinition a) => a));
+        return nestedAntDefinitionList;
     }
     
     "Returns true if this element is executable as a top element."
     shared actual Boolean isTask() {
-        return antDefinitionSupport.isTask(elementType);
+        return antDefinitionSupport.task;
     }
     
     shared actual Boolean isDataType() {
-        return antDefinitionSupport.isDataType(elementType);
+        return antDefinitionSupport.dataType;
     }
     
     shared actual Boolean isTextSupported() {
@@ -54,7 +43,36 @@ shared class AntDefinitionImplementation(String antName, AntProject antProject, 
     }
     
     shared actual Boolean isContainer() {
-        return introspectionHelper.container;
+        return antDefinitionSupport.container;
+    }
+    
+    shared actual Boolean equals(Object otherObject) {
+        if(is AntDefinition otherObject) {
+            return (antName == otherObject.antName) && (elementTypeClassName == otherObject.elementTypeClassName);
+        }
+        return false;
+    }
+    
+    shared actual Integer hash {
+        return antName.hash + elementTypeClassName.hash;
+    }
+
+    shared actual Comparison compare(AntDefinition other) {
+        if(isTask() && !other.isTask()) {
+            return smaller;
+        }
+        if(!isTask() && other.isTask()) {
+            return larger;
+        }
+        Comparison nameComparision = antName <=> other.antName;
+        if(nameComparision != equal) {
+            return nameComparision;
+        }
+        return elementTypeClassName <=> other.elementTypeClassName;
+    }
+    
+    shared actual String string {
+        return "``antName``#``elementTypeClassName``";
     }
     
 }

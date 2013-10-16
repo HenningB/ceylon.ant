@@ -12,11 +12,11 @@
  assert(exists includeAntDefinition);
  \`\`\`
 "
-shared interface AntDefinition {
-    shared formal String name;
+shared interface AntDefinition satisfies Comparable<AntDefinition> {
+	shared formal String antName;
+	shared formal String elementTypeClassName;
     shared formal List<String> attributeNames();
-    shared formal List<String> nestedElementNames();
-    shared formal AntDefinition nestedElementDefinition(String nestedElementName);
+    shared formal List<AntDefinition> nestedAntDefinitions();
     shared formal Boolean isTask();
     shared formal Boolean isDataType();
     shared formal Boolean isTextSupported();

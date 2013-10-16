@@ -20,6 +20,20 @@ void verifyResource(String relativeResourceName, Interface<File|Directory|Nil> e
     }
 }
 
+AntDefinition? filterAntDefinition({AntDefinition*} antDefinitions, String antName) {
+	{AntDefinition*} filteredAntDefinitions = antDefinitions.filter { function selecting(AntDefinition antDefintion) => (antDefintion.antName == antName); };
+	switch (filteredAntDefinitions.size)
+	case (0) {
+		return null;
+	}
+	case (1) {
+		return filteredAntDefinitions.first;
+	}
+	else {
+		throw Exception("More than one Ant type/task found for ``antName``");
+	}
+}
+
 void testEcho() {
     Ant("echo", { "message" -> "G'day mate!" } ).execute();
 }
@@ -49,31 +63,25 @@ void testFileTasks() {
 
 void testAntDefinitions() {
     AntProject antProject = currentAntProject();
-    Map<String,AntDefinition> allTopLevelAntDefinitions = antProject.allTopLevelAntDefinitions();
+    List<AntDefinition> allTopLevelAntDefinitions = antProject.allTopLevelAntDefinitions();
     assertTrue(allTopLevelAntDefinitions.size > 0);
     // now print out ant definitions
-    Set<String> antNames = allTopLevelAntDefinitions.keys;
-    String[] antNamesSorted = antNames.sort(byIncreasing((String s) => s));
-    for(antName in antNamesSorted) {
-        print("``antName``");
+    for(antDefinition in allTopLevelAntDefinitions) {
+        print("``antDefinition.antName``");
     }
 }
 
 void testAntDefinition() {
     AntProject antProject = currentAntProject();
-    AntDefinition? copyAntDefinition = antProject.topLevelAntDefinition("copy");
+    AntDefinition? copyAntDefinition = filterAntDefinition(antProject.allTopLevelAntDefinitions(), "copy");
     assert(exists copyAntDefinition);
     List<String> copyAttributeNames = copyAntDefinition.attributeNames();
     assertTrue(copyAttributeNames.contains("todir"));
-    List<String> copyNestedElementNames = copyAntDefinition.nestedElementNames();
-    assertTrue(copyNestedElementNames.contains("fileset"));
-    AntDefinition? filesetAntDefinition = copyAntDefinition.nestedElementDefinition("fileset");
+    AntDefinition? filesetAntDefinition = filterAntDefinition(copyAntDefinition.nestedAntDefinitions(), "fileset");
     assert(exists filesetAntDefinition);
     List<String> filesetAttributeNames = filesetAntDefinition.attributeNames();
     assertTrue(filesetAttributeNames.contains("dir"));
-    List<String> filesetNestedElementNames = filesetAntDefinition.nestedElementNames();
-    assertTrue(filesetNestedElementNames.contains("include"));
-    AntDefinition? includeAntDefinition = filesetAntDefinition.nestedElementDefinition("include");
+    AntDefinition? includeAntDefinition = filterAntDefinition(filesetAntDefinition.nestedAntDefinitions(), "include");
     assert(exists includeAntDefinition);
     List<String> includeAttributeNames = includeAntDefinition.attributeNames();
     assertTrue(includeAttributeNames.contains("name"));
@@ -111,8 +119,8 @@ void testProperty() {
  It might be required to test this outside the `ceylon.ant` project."
 void testExternalDependency() {
     AntProject antProject = currentAntProject();
-    AntDefinition? ftpAntDefinition = antProject.topLevelAntDefinition("ftp");
-    AntDefinition? undefinedAntDefinition = antProject.topLevelAntDefinition("--undefined--");
+    AntDefinition? ftpAntDefinition = filterAntDefinition(antProject.allTopLevelAntDefinitions(), "ftp");
+    AntDefinition? undefinedAntDefinition = filterAntDefinition(antProject.allTopLevelAntDefinitions(), "--undefined--");
     if(exists ftpAntDefinition) {
         // ok
     } else {
@@ -128,16 +136,16 @@ void testExternalDependency() {
 "Checks the difference between top level <include> task and <include> datatype within <fileset>"
 void testIncludeAsTaskAndType() {
     AntProject antProject = currentAntProject();
-    AntDefinition? includeAntDefinition = antProject.topLevelAntDefinition("include");
+    AntDefinition? includeAntDefinition = filterAntDefinition(antProject.allTopLevelAntDefinitions(), "include");
     assert(exists includeAntDefinition);
     print("<include: ``includeAntDefinition.attributeNames()``>");
-    AntDefinition? copyAntDefinition = antProject.topLevelAntDefinition("copy");
+    AntDefinition? copyAntDefinition = filterAntDefinition(antProject.allTopLevelAntDefinitions(), "copy");
     assert(exists copyAntDefinition);
     print("<copy: ``copyAntDefinition.attributeNames()``>");
-    AntDefinition? copyFilesetAntDefinition = copyAntDefinition.nestedElementDefinition("fileset");
+    AntDefinition? copyFilesetAntDefinition = filterAntDefinition(copyAntDefinition.nestedAntDefinitions(), "fileset");
     assert(exists copyFilesetAntDefinition);
     print("<copy-fileset: ``copyFilesetAntDefinition.attributeNames()``>");
-    AntDefinition? copyFilesetIncludeAntDefinition = copyFilesetAntDefinition.nestedElementDefinition("include");
+    AntDefinition? copyFilesetIncludeAntDefinition = filterAntDefinition(copyFilesetAntDefinition.nestedAntDefinitions(), "include");
     assert(exists copyFilesetIncludeAntDefinition);
     print("<copy-fileset-include: ``copyFilesetIncludeAntDefinition.attributeNames()``>");
     assertTrue(includeAntDefinition.isTask());

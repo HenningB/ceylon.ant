@@ -1,7 +1,5 @@
-import ceylon.collection { HashMap }
-import org.apache.tools.ant { IntrospectionHelper }
-import ceylon.ant.internal { ProjectSupport, setAntProject, provideAntProject, AntDefinitionImplementation }
-import java.lang { Class }
+import ceylon.collection { HashMap, LinkedList }
+import ceylon.ant.internal { ProjectSupport, setAntProject, provideAntProject, AntDefinitionImplementation, AntDefinitionSupport }
 
 "Represents Ant's Project class, with the ability to access properties and Ant type definitions."
 shared class AntProject(String? baseDirectory) {
@@ -29,29 +27,16 @@ shared class AntProject(String? baseDirectory) {
         return projectSupport.baseDirectory;
     }
     
-    shared AntDefinition? topLevelAntDefinition(String antName) {
-        Class<Object>? instantiatedClass = projectSupport.instantiatedClass(antName);
-        if(exists instantiatedClass) {
-            IntrospectionHelper? introspectionHelper = projectSupport.introspectionHelper(antName, instantiatedClass);
-            if(exists introspectionHelper) {
-                return AntDefinitionImplementation(antName, this, introspectionHelper, instantiatedClass);
-            }
+    shared LinkedList<AntDefinition> allTopLevelAntDefinitions() {
+        LinkedList<AntDefinitionSupport> topLevelAntDefinitionSupportList = LinkedList<AntDefinitionSupport>();
+        projectSupport.fillTopLevelAntDefinitionSupportList(topLevelAntDefinitionSupportList);
+        LinkedList<AntDefinition> allTopLevelAntDefinitions = LinkedList<AntDefinition>();
+        for (topLevelAntDefinitionSupport in topLevelAntDefinitionSupportList) {
+            AntDefinition topLevelAntDefinition = AntDefinitionImplementation(topLevelAntDefinitionSupport);
+            allTopLevelAntDefinitions.add(topLevelAntDefinition);
         }
-        return null;
-    }
-     
-    shared Map<String,AntDefinition> allTopLevelAntDefinitions() {
-        HashMap<String,IntrospectionHelper> introspectionHelperMap = HashMap<String,IntrospectionHelper>();
-        projectSupport.fillIntrospectionHelperMap(introspectionHelperMap);
-        Set<String> antNames = introspectionHelperMap.keys;
-        HashMap<String,AntDefinition> result = HashMap<String,AntDefinition>();
-        for(antName in antNames) {
-            AntDefinition? antDefinition = topLevelAntDefinition(antName);
-            if(exists antDefinition) {
-                result.put(antName, antDefinition);
-            }
-        }
-        return result;
+        allTopLevelAntDefinitions.sort(byIncreasing((AntDefinition a) => a));
+        return allTopLevelAntDefinitions;
     }
  
 }

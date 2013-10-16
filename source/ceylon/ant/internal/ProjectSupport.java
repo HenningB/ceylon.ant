@@ -2,6 +2,7 @@ package ceylon.ant.internal;
 
 import java.io.File;
 import java.util.Hashtable;
+import java.util.Map.Entry;
 
 import org.apache.tools.ant.AntTypeDefinition;
 import org.apache.tools.ant.ComponentHelper;
@@ -9,6 +10,7 @@ import org.apache.tools.ant.IntrospectionHelper;
 import org.apache.tools.ant.Project;
 
 import ceylon.collection.HashMap;
+import ceylon.collection.LinkedList;
 
 public class ProjectSupport {
 
@@ -54,36 +56,24 @@ public class ProjectSupport {
         project.setBaseDir(new File(newBaseDirectory));;
     }
     
-    public void fillIntrospectionHelperMap(HashMap<ceylon.language.String, IntrospectionHelper> result) {
+    public void fillTopLevelAntDefinitionSupportList(LinkedList<AntDefinitionSupport> result) {
         ComponentHelper componentHelper = ComponentHelper.getComponentHelper(project);
         Hashtable<String, AntTypeDefinition> antTypeTable = componentHelper.getAntTypeTable();
-        for(String antName : antTypeTable.keySet()) {
+        for(Entry<String, AntTypeDefinition> antTypeEntry : antTypeTable.entrySet()) {
             try {
-                ceylon.language.String antNameCeylonString = new ceylon.language.String(antName);
+                String antName = antTypeEntry.getKey();
                 AntTypeDefinition antTypeDefinition = componentHelper.getDefinition(antName);
-                Object instantiatedType = antTypeDefinition.create(project);
-                IntrospectionHelper introspectionHelper = IntrospectionHelper.getHelper(project, instantiatedType.getClass());
-                result.put(antNameCeylonString, introspectionHelper);
-            } catch (Throwable throwable) {
-                // continue with next Ant Type, most likely couldn't instantiate object
+                @SuppressWarnings("unchecked")
+                Class<Object> instantiatedType = (Class<Object>) antTypeDefinition.create(project).getClass();
+                IntrospectionHelper introspectionHelper = IntrospectionHelper.getHelper(project, instantiatedType);
+                AntDefinitionSupport antDefinitionSupport = new AntDefinitionSupport(project, antName, instantiatedType, introspectionHelper);
+                result.add(antDefinitionSupport);
+            } catch (Exception exception) {
+             // continue with next Ant type, most likely couldn't instantiate object
             }
         }
     }
     
-	public Class<Object> instantiatedClass(String antName) {
-        try {
-            Project project = getProject();
-            ComponentHelper componentHelper = ComponentHelper.getComponentHelper(project);
-            AntTypeDefinition antTypeDefinition = componentHelper.getDefinition(antName);
-            Object instantiatedType = antTypeDefinition.create(project);
-            @SuppressWarnings("unchecked")
-            Class<Object> result = (Class<Object>) instantiatedType.getClass();
-            return result;
-        } catch (Throwable throwable) {
-            return null;
-        }
-    }
-
     public IntrospectionHelper introspectionHelper(String antName, Class<Object> instantiatedClass) {
         try {
             Project project = getProject();
@@ -93,5 +83,5 @@ public class ProjectSupport {
             return null;
         }
     }
-
+    
 }

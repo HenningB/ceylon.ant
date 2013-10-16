@@ -1,6 +1,7 @@
 package ceylon.ant.internal;
 
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.apache.tools.ant.IntrospectionHelper;
 import org.apache.tools.ant.Project;
@@ -11,47 +12,58 @@ import ceylon.collection.LinkedList;
 
 public class AntDefinitionSupport {
 	private Project project;
-	private IntrospectionHelper introspectionHelper;
-
+    private String antName;
+    private Class<Object> elementType;
+    private IntrospectionHelper introspectionHelper;
 	
-	public AntDefinitionSupport(Project project, IntrospectionHelper introspectionHelper) {
+	public AntDefinitionSupport(Project project, String antName, Class<Object> elementType, IntrospectionHelper introspectionHelper) {
 		this.project = project;
+        this.antName = antName;
+        this.elementType = elementType;
 		this.introspectionHelper = introspectionHelper;
 	}
 	
     public void fillAttributeList(LinkedList<ceylon.language.String> result) {
-    	Map<String, Class<?>> attributeMap = introspectionHelper.getAttributeMap();
+        Map<String, Class<?>> attributeMap = introspectionHelper.getAttributeMap();
         for(String attributeName : attributeMap.keySet()) {
             ceylon.language.String attributeNameCeylonString = new ceylon.language.String(attributeName);
             result.add(attributeNameCeylonString);
         }
     }
     
-    public void fillNestedElementList(LinkedList<ceylon.language.String> result) {
-    	Map<String, Class<?>> nestedElementMap = introspectionHelper.getNestedElementMap();
-        for(String nestedElementName : nestedElementMap.keySet()) {
-            ceylon.language.String nestedElementNameCeylonString = new ceylon.language.String(nestedElementName);
-            result.add(nestedElementNameCeylonString);
+    public void fillNestedAntDefinitionList(LinkedList<AntDefinitionSupport> result) {
+        Map<String, Class<?>> nestedElementMap = introspectionHelper.getNestedElementMap();
+        for(Entry<String, Class<?>> nestedElementEntry : nestedElementMap.entrySet()) {
+            String nestedElementName = nestedElementEntry.getKey();
+            @SuppressWarnings("unchecked")
+            Class<Object> nestedElementType = (Class<Object>) nestedElementEntry.getValue();
+            IntrospectionHelper nestedIntrospectionHelper = IntrospectionHelper.getHelper(project, nestedElementType);
+            AntDefinitionSupport antDefinitionSupport = new AntDefinitionSupport(project, nestedElementName, nestedElementType, nestedIntrospectionHelper);
+            result.add(antDefinitionSupport);
         }
     }
     
-    public Class<Object> nestedElementType(String nestedElementName) {
-    	Class<?> elementType = introspectionHelper.getElementType(nestedElementName);
-    	@SuppressWarnings("unchecked")
-		Class<Object> result = (Class<Object>) elementType;
-    	return result;
-    }
-
-    public IntrospectionHelper nestedElementIntrospectionHelper(String nestedElementName, Class<Object> nestedElementType) {
-    	IntrospectionHelper result = IntrospectionHelper.getHelper(project, nestedElementType);
-    	return result;
+    public String getAntName() {
+        return antName;
     }
     
-    public boolean isTask(Class<Object> elementType) {
+    public Project getProject() {
+        return project;
+    }
+
+    public IntrospectionHelper getIntrospectionHelper() {
+        return introspectionHelper;
+    }
+
+    public Class<Object> getElementType() {
+        return elementType;
+    }
+
+    public boolean isTask() {
         return Task.class.isAssignableFrom(elementType);
     }
     
-    public boolean isDataType(Class<Object> elementType) {
+    public boolean isDataType() {
         return DataType.class.isAssignableFrom(elementType);
     }
     
