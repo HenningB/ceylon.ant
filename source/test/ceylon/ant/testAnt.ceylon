@@ -21,17 +21,17 @@ void verifyResource(String relativeResourceName, Interface<File|Directory|Nil> e
 }
 
 AntDefinition? filterAntDefinition({AntDefinition*} antDefinitions, String antName) {
-	{AntDefinition*} filteredAntDefinitions = antDefinitions.filter { function selecting(AntDefinition antDefintion) => (antDefintion.antName == antName); };
-	switch (filteredAntDefinitions.size)
-	case (0) {
-		return null;
-	}
-	case (1) {
-		return filteredAntDefinitions.first;
-	}
-	else {
-		throw Exception("More than one Ant type/task found for ``antName``");
-	}
+    {AntDefinition*} filteredAntDefinitions = antDefinitions.filter { function selecting(AntDefinition antDefintion) => (antDefintion.antName == antName); };
+    switch (filteredAntDefinitions.size)
+    case (0) {
+        return null;
+    }
+    case (1) {
+        return filteredAntDefinitions.first;
+    }
+    else {
+        throw Exception("More than one Ant type/task found for ``antName``");
+    }
 }
 
 void testEcho() {

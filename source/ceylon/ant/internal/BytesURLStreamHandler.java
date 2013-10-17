@@ -5,7 +5,7 @@ import java.net.URLConnection;
 import java.net.URLStreamHandler;
 
 public class BytesURLStreamHandler extends URLStreamHandler {
-	
+    
     private byte[] content;
 
     public BytesURLStreamHandler(byte[] content) {

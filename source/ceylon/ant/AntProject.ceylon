@@ -38,7 +38,7 @@ shared class AntProject(String? baseDirectory) {
         AntDefinition[] sortedTopLevelAntDefinitions = allTopLevelAntDefinitions.sort(byIncreasing((AntDefinition a) => a));
         return sortedTopLevelAntDefinitions;
     }
- 
+    
 }
 
 "Allows access to the current (ThreadLocal) Ant project."

@@ -2,6 +2,7 @@ package ceylon.ant.internal;
 
 import java.io.File;
 import java.util.Hashtable;
+import java.util.Locale;
 import java.util.Map.Entry;
 
 import org.apache.tools.ant.AntTypeDefinition;
@@ -34,8 +35,8 @@ public class ProjectSupport {
             if(propertyObject != null) {
                 String propertyValue = propertyObject.toString();
                 ceylon.language.String propertyNameCeylonString = new ceylon.language.String(propertyName);
-				ceylon.language.String propertyValueCeylonString = new ceylon.language.String(propertyValue);
-				result.put(propertyNameCeylonString, propertyValueCeylonString);
+                ceylon.language.String propertyValueCeylonString = new ceylon.language.String(propertyValue);
+                result.put(propertyNameCeylonString, propertyValueCeylonString);
             }
         }
     }
@@ -53,7 +54,7 @@ public class ProjectSupport {
     }
     
     public void setBaseDirectory(String newBaseDirectory) {
-        project.setBaseDir(new File(newBaseDirectory));;
+        project.setBaseDir(new File(newBaseDirectory));
     }
     
     public void fillTopLevelAntDefinitionSupportList(LinkedList<AntDefinitionSupport> result) {
@@ -61,7 +62,7 @@ public class ProjectSupport {
         Hashtable<String, AntTypeDefinition> antTypeTable = componentHelper.getAntTypeTable();
         for(Entry<String, AntTypeDefinition> antTypeEntry : antTypeTable.entrySet()) {
             try {
-                String antName = antTypeEntry.getKey();
+                String antName = antTypeEntry.getKey().toLowerCase(Locale.ENGLISH);
                 AntTypeDefinition antTypeDefinition = componentHelper.getDefinition(antName);
                 @SuppressWarnings("unchecked")
                 Class<Object> instantiatedType = (Class<Object>) antTypeDefinition.create(project).getClass();
@@ -69,7 +70,7 @@ public class ProjectSupport {
                 AntDefinitionSupport antDefinitionSupport = new AntDefinitionSupport(project, antName, instantiatedType, introspectionHelper);
                 result.add(antDefinitionSupport);
             } catch (Exception exception) {
-             // continue with next Ant type, most likely couldn't instantiate object
+                // continue with next Ant type, most likely couldn't instantiate object
             }
         }
     }

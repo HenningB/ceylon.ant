@@ -16,7 +16,7 @@ import org.apache.tools.ant.types.DataType;
 
 public class AntSupport {
 
-	protected String antName;
+    protected String antName;
     private ProjectSupport projectSupport;
     private Object instantiatedType;
     private IntrospectionHelper introspectionHelper;
@@ -38,10 +38,10 @@ public class AntSupport {
     }
     
     private Project getProject() {
-		return projectSupport.getProject();
-	}
+        return projectSupport.getProject();
+    }
 
-	private AntSupport(String nestedElementName, ProjectSupport projectSupport, Object instantiatedType) {
+    private AntSupport(String nestedElementName, ProjectSupport projectSupport, Object instantiatedType) {
         this.antName= nestedElementName;
         this.projectSupport = projectSupport;
         this.instantiatedType = instantiatedType;
@@ -93,7 +93,7 @@ public class AntSupport {
     }
     
     public boolean isTextSupported() {
-    	return introspectionHelper.supportsCharacters();
+        return introspectionHelper.supportsCharacters();
     }
     
     // needs to be implemented explicitly, because "dynamic" is a Ceylon keyword

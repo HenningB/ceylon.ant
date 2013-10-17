@@ -3,8 +3,8 @@ import ceylon.collection { LinkedList }
 
 shared class AntDefinitionImplementation(AntDefinitionSupport antDefinitionSupport) satisfies AntDefinition {
 
-	shared actual String antName = antDefinitionSupport.antName;
-	shared actual String elementTypeClassName = antDefinitionSupport.elementType.name;
+    shared actual String antName = antDefinitionSupport.antName;
+    shared actual String elementTypeClassName = antDefinitionSupport.elementType.name;
     
     shared actual List<String> attributeNames() {
         LinkedList<String> attributeList = LinkedList<String>();

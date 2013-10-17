@@ -13,8 +13,8 @@
  \`\`\`
 "
 shared interface AntDefinition satisfies Comparable<AntDefinition> {
-	shared formal String antName;
-	shared formal String elementTypeClassName;
+    shared formal String antName;
+    shared formal String elementTypeClassName;
     shared formal List<String> attributeNames();
     shared formal List<AntDefinition> nestedAntDefinitions();
     shared formal Boolean isTask();

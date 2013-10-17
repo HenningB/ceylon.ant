@@ -1,5 +1,6 @@
 package ceylon.ant.internal;
 
+import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -11,18 +12,18 @@ import org.apache.tools.ant.types.DataType;
 import ceylon.collection.LinkedList;
 
 public class AntDefinitionSupport {
-	private Project project;
+    private Project project;
     private String antName;
     private Class<Object> elementType;
     private IntrospectionHelper introspectionHelper;
-	
-	public AntDefinitionSupport(Project project, String antName, Class<Object> elementType, IntrospectionHelper introspectionHelper) {
-		this.project = project;
+    
+    public AntDefinitionSupport(Project project, String antName, Class<Object> elementType, IntrospectionHelper introspectionHelper) {
+        this.project = project;
         this.antName = antName;
         this.elementType = elementType;
-		this.introspectionHelper = introspectionHelper;
-	}
-	
+        this.introspectionHelper = introspectionHelper;
+    }
+    
     public void fillAttributeList(LinkedList<ceylon.language.String> result) {
         Map<String, Class<?>> attributeMap = introspectionHelper.getAttributeMap();
         for(String attributeName : attributeMap.keySet()) {
@@ -34,7 +35,7 @@ public class AntDefinitionSupport {
     public void fillNestedAntDefinitionList(LinkedList<AntDefinitionSupport> result) {
         Map<String, Class<?>> nestedElementMap = introspectionHelper.getNestedElementMap();
         for(Entry<String, Class<?>> nestedElementEntry : nestedElementMap.entrySet()) {
-            String nestedElementName = nestedElementEntry.getKey();
+            String nestedElementName = nestedElementEntry.getKey().toLowerCase(Locale.ENGLISH);
             @SuppressWarnings("unchecked")
             Class<Object> nestedElementType = (Class<Object>) nestedElementEntry.getValue();
             IntrospectionHelper nestedIntrospectionHelper = IntrospectionHelper.getHelper(project, nestedElementType);
@@ -68,7 +69,7 @@ public class AntDefinitionSupport {
     }
     
     public boolean isTextSupported() {
-    	return introspectionHelper.supportsCharacters();
+        return introspectionHelper.supportsCharacters();
     }
     
     // needs to be implemented explicitly, because "dynamic" is a Ceylon keyword

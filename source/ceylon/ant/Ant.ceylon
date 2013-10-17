@@ -9,7 +9,7 @@ import ceylon.ant.internal { AntSupport, provideAntProject }
  <property name=\"buildDirectory\" value=\"target/build-test-file-tasks-directory\"/>
  <copy todir=\"${buildDirectory}/sub-directory\">
      <fileset dir=\"${buildDirectory}\">
-        <include name=\"example.txt\"/>
+         <include name=\"example.txt\"/>
      </fileset>
  </copy>
  \`\`\`
@@ -20,7 +20,7 @@ import ceylon.ant.internal { AntSupport, provideAntProject }
  value buildDirectory = \"target/build-test-file-tasks-directory\";
  Ant(\"copy\", { \"todir\" -> \"\`\`buildDirectory\`\`/sub-directory\" }, [
      Ant(\"fileset\", { \"dir\" -> \"\`\`buildDirectory\`\`\" }, [
-        Ant(\"include\", { \"name\" -> \"example.txt\" } )
+         Ant(\"include\", { \"name\" -> \"example.txt\" } )
      ] )
  ] ).execute();
  \`\`\`
@@ -29,7 +29,7 @@ import ceylon.ant.internal { AntSupport, provideAntProject }
 shared class Ant(
         shared String antName,
         {<String->String>*}? attributes = null,
-        [<Ant>*]? elements = null,
+        {<Ant>*}? elements = null,
         String? text = null) {
 
     void build(AntSupport antSupport) {

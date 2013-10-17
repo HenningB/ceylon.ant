@@ -25,15 +25,15 @@ shared class Include(
 
 shared class FileSet(
         String|File|Directory? dir=null,
-        [<Include>*]? _containingElements=null
-        ) extends Ant("fileset", constructAttributesForFileSet { dir=dir; }, _containingElements ) {
+        {<Include>*}? _containingElements=null
+        ) extends Ant("fileset", constructAttributesForFileSet { dir=dir; }, _containingElements) {
 }
 
 shared void copy(
         String? encoding=null,
         String|File|Directory? todir=null,
         String|Boolean? verbose=null,
-        [<FileSet>*]? _containingElements=null) {
+        {<FileSet>*}? _containingElements=null) {
     HashMap<String,String> attributes = HashMap<String,String>();
     if (exists encoding) { attributes.put("encoding", encoding.string); }
     if (exists todir) { attributes.put("todir", todir.string); }

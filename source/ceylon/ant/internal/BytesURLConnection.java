@@ -6,7 +6,7 @@ import java.net.URL;
 import java.net.URLConnection;
 
 public class BytesURLConnection extends URLConnection {
-	
+    
     protected byte[] content;
 
     public BytesURLConnection(URL url, byte[] content) {
