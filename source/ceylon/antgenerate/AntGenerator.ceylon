@@ -51,6 +51,9 @@ class AntGenerator() {
         if ((antBuilder.ceylonName) exists) {
             return;
         }
+        if(disallowedIdentifiers.contains(name)) {
+            return;
+        }
         LinkedList<AntBuilder>? sameNamedAntDefinitions = map.get(name);
         assert(exists sameNamedAntDefinitions);
         if(sameNamedAntDefinitions.size == 1) {

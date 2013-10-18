@@ -1,32 +1,15 @@
-import ceylon.ant { AntDefinition, Ant }
+import ceylon.ant { AntDefinition }
 import ceylon.collection { HashMap, LinkedList }
-import ceylon.file { File, Directory }
-
-{<String->String>*} constructAttributesForInclude(String? name) {
-    HashMap<String,String> attributes = HashMap<String,String>();
-    if (exists name) { attributes.put("name", name.string); }
-    return attributes;
-}
-
-shared class Include(
-    String? name=null
-) extends Ant("include", constructAttributesForInclude { name=name; } ) {
-}
-
-{<String->String>*} constructAttributesForFileSet(String|File|Directory? dir) {
-    HashMap<String,String> attributes = HashMap<String,String>();
-    if (exists dir) { attributes.put("dir", dir.string); }
-    return attributes;
-}
-
-shared class FileSet(
-    String|File|Directory? dir=null,
-    {<Include>*}? _containingElements=null
-) extends Ant("fileset", constructAttributesForFileSet { dir=dir; }, _containingElements) {
-}
-
 
 class TypeBuilder(AntDefinition antDefinition) extends AntBuilder(antDefinition, true) {
+    
+    function createCeylonAttributeName(String attributeName) {
+        String cleanedAttributeName = super.cleanString(attributeName, false);
+        if(reservedCeylonWords.contains(cleanedAttributeName)) {
+            return "``cleanedAttributeName``_attribute";
+        }
+        return cleanedAttributeName;
+    }
     
     shared actual void outputCeylonSource(HashMap<AntDefinition, AntBuilder> antBuilderMap) {
         String? ceylonNameString = ceylonName;
@@ -37,7 +20,7 @@ class TypeBuilder(AntDefinition antDefinition) extends AntBuilder(antDefinition,
         variable String attributeClassParameters = "";
         variable String attributeTransferParameters = "";
         for (attributeName in attributeNames) {
-            String cleanedAttributeName = super.cleanString(attributeName, false) + "_attribute";
+            String cleanedAttributeName = createCeylonAttributeName(attributeName);
             if(attributeFunctionParameters.size != 0 || attributeClassParameters.size != 0) {
                 attributeFunctionParameters += ", ";
                 attributeClassParameters += ", ";
@@ -60,6 +43,9 @@ class TypeBuilder(AntDefinition antDefinition) extends AntBuilder(antDefinition,
             }
             containingElements += nestedCeylonName;
         }
+        if(attributeClassParameters.size > 0 && containingElements.size > 0) {
+            attributeClassParameters += ",";
+        }
         output("// ``ceylonNameString`` : ``antDefinition``");
         output("{<String->String>*} ``constructAttributesForName``(``attributeFunctionParameters``) {");
         output("    HashMap<String,String> attributes = HashMap<String,String>();");
@@ -73,7 +59,7 @@ class TypeBuilder(AntDefinition antDefinition) extends AntBuilder(antDefinition,
         output("    ``attributeClassParameters``");
         String containingElementsParameter;
         if(containingElements.size > 0) {
-            output("    {<``containingElements``>*}? _containingElements");
+            output("    {<``containingElements``>*}? _containingElements=null");
             containingElementsParameter = ", _containingElements";
         } else {
             containingElementsParameter = "";
