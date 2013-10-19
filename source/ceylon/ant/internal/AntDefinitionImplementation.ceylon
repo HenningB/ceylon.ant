@@ -9,8 +9,8 @@ shared class AntDefinitionImplementation(AntDefinitionSupport antDefinitionSuppo
     shared actual List<String> attributeNames() {
         LinkedList<String> attributeList = LinkedList<String>();
         antDefinitionSupport.fillAttributeList(attributeList);
-        attributeList.sort(byIncreasing((String s) => s));
-        return attributeList;
+        String[] result = attributeList.sort(byIncreasing((String s) => s));
+        return result;
     }
     
     shared actual List<AntDefinition> nestedAntDefinitions() {
@@ -21,8 +21,8 @@ shared class AntDefinitionImplementation(AntDefinitionSupport antDefinitionSuppo
             AntDefinition nestedAntDefinition = AntDefinitionImplementation(nestedAntDefinitionSupport);
             nestedAntDefinitionList.add(nestedAntDefinition);
         }
-        nestedAntDefinitionList.sort(byIncreasing((AntDefinition a) => a));
-        return nestedAntDefinitionList;
+        AntDefinition[] result = nestedAntDefinitionList.sort(byIncreasing((AntDefinition a) => a));
+        return result;
     }
     
     "Returns true if this element is executable as a top element."
@@ -72,7 +72,7 @@ shared class AntDefinitionImplementation(AntDefinitionSupport antDefinitionSuppo
     }
     
     shared actual String string {
-        return "``antName``#``elementTypeClassName``";
+        return "``isTask() then "AntTask" else "AntType"``: ``antName``#``elementTypeClassName``";
     }
     
 }
