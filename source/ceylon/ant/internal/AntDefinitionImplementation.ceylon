@@ -59,10 +59,10 @@ shared class AntDefinitionImplementation(AntDefinitionSupport antDefinitionSuppo
 
     shared actual Comparison compare(AntDefinition other) {
         if(isTask() && !other.isTask()) {
-            return smaller;
+            return larger;
         }
         if(!isTask() && other.isTask()) {
-            return larger;
+            return smaller;
         }
         Comparison nameComparision = antName <=> other.antName;
         if(nameComparision != equal) {

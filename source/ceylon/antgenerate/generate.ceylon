@@ -73,9 +73,9 @@ shared void generateAntWrappers() {
         output("// -- no ceylon name -- : ``antBuilder.antDefinition``");
         output("");
     }
-    // only output <fileset> for now
-    //outputForSingleType("fileset");
-    for (antBuilder in antBuilderList) {
-        antBuilder.outputCeylonSource(antBuilderMap);
-    }
+    // only output <copy> for now
+    outputForSingleType("copy");
+    //for (antBuilder in antBuilderList) {
+    //    antBuilder.outputCeylonSource(antBuilderMap);
+    //}
 }

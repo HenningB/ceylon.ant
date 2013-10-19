@@ -1,5 +1,5 @@
 import ceylon.ant { AntDefinition }
-import ceylon.collection { HashMap }
+import ceylon.collection { HashMap, LinkedList }
 
 abstract class AntBuilder(antDefinition, ceylonNameIntialUppercase) satisfies Comparable<AntBuilder> {
     shared AntDefinition antDefinition;
@@ -82,6 +82,81 @@ abstract class AntBuilder(antDefinition, ceylonNameIntialUppercase) satisfies Co
     shared actual String string {
         String ceylonNameString = ceylonName else longCeylonName;
         return "AntBuilder: ``ceylonNameString`` - ``antDefinition``";
+    }
+    
+    String createCeylonAttributeName(String attributeName) {
+        String cleanedAttributeName = cleanString(attributeName, false);
+        if(reservedCeylonWords.contains(cleanedAttributeName)) {
+            return "``cleanedAttributeName``_attribute";
+        }
+        return cleanedAttributeName;
+    }
+    
+    shared {<[String,String]>*} createCleanedAttributeNameTuples() {
+        List<String> attributeNames = antDefinition.attributeNames();
+        LinkedList<[String,String]> cleanedAttributeNameTuples = LinkedList<[String,String]>();
+        for (attributeName in attributeNames) {
+            String cleanedAttributeName = createCeylonAttributeName(attributeName);
+            cleanedAttributeNameTuples.add([attributeName,cleanedAttributeName]);
+        }
+        return cleanedAttributeNameTuples;
+    }
+    
+    shared String createAttributeTransferParameters({[String,String]*} cleanedAttributeNameTuples) {
+        variable String attributeTransferParameters = "";
+        for (cleanedAttributeNameTuple in cleanedAttributeNameTuples) {
+            attributeTransferParameters += "``cleanedAttributeNameTuple[1]``=``cleanedAttributeNameTuple[1]``; ";
+        }
+        return attributeTransferParameters;
+    }
+    
+    shared String createAttributeFunctionParameters({[String,String]*} cleanedAttributeNameTuples) {
+        variable String attributeFunctionParameters = "";
+        for (cleanedAttributeNameTuple in cleanedAttributeNameTuples) {
+            if(attributeFunctionParameters.size != 0) {
+                attributeFunctionParameters += ", ";
+            }
+            attributeFunctionParameters += "String? ``cleanedAttributeNameTuple[1]``";
+        }
+        return attributeFunctionParameters;
+    }
+    
+    shared String createAttributeClassParameters({[String,String]*} cleanedAttributeNameTuples) {
+        variable String attributeClassParameters = "";
+        for (cleanedAttributeNameTuple in cleanedAttributeNameTuples) {
+            if(attributeClassParameters.size != 0) {
+                attributeClassParameters += ", ";
+            }
+            attributeClassParameters += "String? ``cleanedAttributeNameTuple[1]``=null";
+        }
+        if(antDefinition.attributeNames().size > 0 && antDefinition.nestedAntDefinitions().size > 0) {
+            attributeClassParameters += ",";
+        }
+        return attributeClassParameters;
+    }
+    
+    shared LinkedList<String> createAttributeSetters({[String,String]*} cleanedAttributeNameTuples) {
+        LinkedList<String> attributeSetters = LinkedList<String>();
+        for (cleanedAttributeNameTuple in cleanedAttributeNameTuples) {
+            String attributeSetter = "if (exists ``cleanedAttributeNameTuple[1]``) { attributes.put(\"``cleanedAttributeNameTuple[0]``\", ``cleanedAttributeNameTuple[1]``.string); }";
+            attributeSetters.add(attributeSetter);
+        }
+        return attributeSetters;
+    }
+    
+    shared String createContainingElements(HashMap<AntDefinition,AntBuilder> antBuilderMap) {
+        variable String containingElements = "";
+        for(nestedAntDefinition in antDefinition.nestedAntDefinitions()) {
+            AntBuilder? nestedAntBuilder = antBuilderMap.get(nestedAntDefinition);
+            assert(exists nestedAntBuilder);
+            String? nestedCeylonName = nestedAntBuilder.ceylonName;
+            assert(exists nestedCeylonName);
+            if(containingElements.size > 0) {
+                containingElements += "|";
+            }
+            containingElements += nestedCeylonName;
+        }
+        return containingElements;
     }
     
 }
