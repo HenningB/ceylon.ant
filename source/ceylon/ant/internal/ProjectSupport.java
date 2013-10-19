@@ -67,7 +67,7 @@ public class ProjectSupport {
                 @SuppressWarnings("unchecked")
                 Class<Object> instantiatedType = (Class<Object>) antTypeDefinition.create(project).getClass();
                 IntrospectionHelper introspectionHelper = IntrospectionHelper.getHelper(project, instantiatedType);
-                AntDefinitionSupport antDefinitionSupport = new AntDefinitionSupport(project, antName, instantiatedType, introspectionHelper);
+                AntDefinitionSupport antDefinitionSupport = new AntDefinitionSupport(project, antName, instantiatedType, introspectionHelper, false);
                 result.add(antDefinitionSupport);
             } catch (Exception exception) {
                 // continue with next Ant type, most likely couldn't instantiate object

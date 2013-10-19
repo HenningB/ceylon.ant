@@ -38,8 +38,8 @@ shared class AntDefinitionImplementation(AntDefinitionSupport antDefinitionSuppo
         return antDefinitionSupport.textSupported;
     }
     
-    shared actual Boolean isDynamicType() {
-        return antDefinitionSupport.dynamicType;
+    shared actual Boolean acceptsDynamicNestedElements() {
+        return antDefinitionSupport.acceptsDynamicNestedElements();
     }
     
     shared actual Boolean isContainer() {
@@ -48,7 +48,7 @@ shared class AntDefinitionImplementation(AntDefinitionSupport antDefinitionSuppo
     
     shared actual Boolean equals(Object otherObject) {
         if(is AntDefinition otherObject) {
-            return (antName == otherObject.antName) && (elementTypeClassName == otherObject.elementTypeClassName);
+            return ((isTask() == otherObject.isTask()) && antName == otherObject.antName) && (elementTypeClassName == otherObject.elementTypeClassName);
         }
         return false;
     }

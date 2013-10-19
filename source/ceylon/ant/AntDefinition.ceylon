@@ -20,6 +20,6 @@ shared interface AntDefinition satisfies Comparable<AntDefinition> {
     shared formal Boolean isTask();
     shared formal Boolean isDataType();
     shared formal Boolean isTextSupported();
-    shared formal Boolean isDynamicType();
+    shared formal Boolean acceptsDynamicNestedElements();
     shared formal Boolean isContainer();
 }

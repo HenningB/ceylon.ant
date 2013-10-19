@@ -16,12 +16,14 @@ public class AntDefinitionSupport {
     private String antName;
     private Class<Object> elementType;
     private IntrospectionHelper introspectionHelper;
+	private boolean definitelyType;
     
-    public AntDefinitionSupport(Project project, String antName, Class<Object> elementType, IntrospectionHelper introspectionHelper) {
+    public AntDefinitionSupport(Project project, String antName, Class<Object> elementType, IntrospectionHelper introspectionHelper, boolean definitelyType) {
         this.project = project;
         this.antName = antName;
         this.elementType = elementType;
         this.introspectionHelper = introspectionHelper;
+		this.definitelyType = definitelyType;
     }
     
     public void fillAttributeList(LinkedList<ceylon.language.String> result) {
@@ -39,7 +41,7 @@ public class AntDefinitionSupport {
             @SuppressWarnings("unchecked")
             Class<Object> nestedElementType = (Class<Object>) nestedElementEntry.getValue();
             IntrospectionHelper nestedIntrospectionHelper = IntrospectionHelper.getHelper(project, nestedElementType);
-            AntDefinitionSupport antDefinitionSupport = new AntDefinitionSupport(project, nestedElementName, nestedElementType, nestedIntrospectionHelper);
+            AntDefinitionSupport antDefinitionSupport = new AntDefinitionSupport(project, nestedElementName, nestedElementType, nestedIntrospectionHelper, true);
             result.add(antDefinitionSupport);
         }
     }
@@ -61,7 +63,7 @@ public class AntDefinitionSupport {
     }
 
     public boolean isTask() {
-        return Task.class.isAssignableFrom(elementType);
+        return !definitelyType && Task.class.isAssignableFrom(elementType);
     }
     
     public boolean isDataType() {
@@ -73,7 +75,7 @@ public class AntDefinitionSupport {
     }
     
     // needs to be implemented explicitly, because "dynamic" is a Ceylon keyword
-    public boolean isDynamicType() {
+    public boolean acceptsDynamicNestedElements() {
         return introspectionHelper.isDynamic();
     }
     

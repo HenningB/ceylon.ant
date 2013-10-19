@@ -28,7 +28,7 @@ shared class Addfiles(
 
 shared class And(
     String? taskname=null, String? description=null,
-    {<Isfalse|Isreference|Equals|available|Not|Contains|Os|Or|And|Filesmatch|checksum|Istrue|Isset|Socket|Http|uptodate|Isfileselected>*}? _containingElements=null
+    {<Isfalse|Isreference|Equals|Available|Not|Contains|Os|Or|And|Filesmatch|Checksum|Istrue|Isset|Socket|Http|Uptodate|Isfileselected>*}? _containingElements=null
 ) extends Ant("and", _constructAttributesFor_And { taskname=taskname; description=description; }, _containingElements) {
 }
 
@@ -90,7 +90,7 @@ shared class Ant_AntResolver(
 
 shared class Archives_ZipFileSet(
     String? excludes=null, String? encoding=null, String? filemode=null, String? defaultexcludes=null, String? src=null, String? srcresource=null, String? fullpath=null, String? followsymlinks=null, String? maxlevelsofsymlinks=null, String? erroronmissingarchive=null, String? refid=null, String? casesensitive=null, String? dir=null, String? erroronmissingdir=null, String? includes=null, String? description=null, String? prefix=null, String? dirmode=null, String? includesfile=null, String? file=null, String? excludesfile=null,
-    {<Patternset|Include|Exclude|Custom|None|Present|Not_NotSelector|Type|Readable|Writable|Modified|Or_OrSelector|Contains_ContainsSelector|Depend|Different|Size|Majority|Containsregexp|Filename|Selector|Includesfile|Date|Excludesfile|And_AndSelector|Depth>*}? _containingElements=null
+    {<Include|Exclude|Patternset|Custom|None|Present|Not_NotSelector|Type|Readable|Writable|Modified|Or_OrSelector|Contains_ContainsSelector|Depend|Different|Size|Majority|Containsregexp|Filename|Selector|Includesfile|Date|Excludesfile|And_AndSelector|Depth>*}? _containingElements=null
 ) extends Ant("archives", _constructAttributesFor_Archives_ZipFileSet { excludes=excludes; encoding=encoding; filemode=filemode; defaultexcludes=defaultexcludes; src=src; srcresource=srcresource; fullpath=fullpath; followsymlinks=followsymlinks; maxlevelsofsymlinks=maxlevelsofsymlinks; erroronmissingarchive=erroronmissingarchive; refid=refid; casesensitive=casesensitive; dir=dir; erroronmissingdir=erroronmissingdir; includes=includes; description=description; prefix=prefix; dirmode=dirmode; includesfile=includesfile; file=file; excludesfile=excludesfile; }, _containingElements) {
 }
 
@@ -177,7 +177,7 @@ shared class Argument(
 
 shared class Assertions(
     String? refid=null, String? description=null, String? enablesystemassertions=null,
-    {<Enable|Disable>*}? _containingElements=null
+    {<Disable|Enable>*}? _containingElements=null
 ) extends Ant("assertions", _constructAttributesFor_Assertions { refid=refid; description=description; enablesystemassertions=enablesystemassertions; }, _containingElements) {
 }
 
@@ -273,6 +273,31 @@ shared class Attribute_ExtraAttribute(
 shared class Attribute_ScriptDefAttribute(
     String? name=null
 ) extends Ant("attribute", _constructAttributesFor_Attribute_ScriptDefAttribute { name=name; }) {
+}
+
+// Available : available#org.apache.tools.ant.taskdefs.Available
+{<String->String>*} _constructAttributesFor_Available(String? classpath, String? file, String? classname, String? resource, String? ignoresystemclasses, String? type, String? searchparents, String? classpathref, String? taskname, String? value_attribute, String? description, String? property, String? filepath) {
+    HashMap<String,String> attributes = HashMap<String,String>();
+    if (exists classpath) { attributes.put("classpath", classpath.string); }
+    if (exists file) { attributes.put("file", file.string); }
+    if (exists classname) { attributes.put("classname", classname.string); }
+    if (exists resource) { attributes.put("resource", resource.string); }
+    if (exists ignoresystemclasses) { attributes.put("ignoresystemclasses", ignoresystemclasses.string); }
+    if (exists type) { attributes.put("type", type.string); }
+    if (exists searchparents) { attributes.put("searchparents", searchparents.string); }
+    if (exists classpathref) { attributes.put("classpathref", classpathref.string); }
+    if (exists taskname) { attributes.put("taskname", taskname.string); }
+    if (exists value_attribute) { attributes.put("value", value_attribute.string); }
+    if (exists description) { attributes.put("description", description.string); }
+    if (exists property) { attributes.put("property", property.string); }
+    if (exists filepath) { attributes.put("filepath", filepath.string); }
+    return attributes;
+}
+
+shared class Available(
+    String? classpath=null, String? file=null, String? classname=null, String? resource=null, String? ignoresystemclasses=null, String? type=null, String? searchparents=null, String? classpathref=null, String? taskname=null, String? value_attribute=null, String? description=null, String? property=null, String? filepath=null,
+    {<Classpath|Filepath>*}? _containingElements=null
+) extends Ant("available", _constructAttributesFor_Available { classpath=classpath; file=file; classname=classname; resource=resource; ignoresystemclasses=ignoresystemclasses; type=type; searchparents=searchparents; classpathref=classpathref; taskname=taskname; value_attribute=value_attribute; description=description; property=property; filepath=filepath; }, _containingElements) {
 }
 
 // Bcc : bcc#org.apache.tools.ant.taskdefs.email.EmailAddress
@@ -431,6 +456,39 @@ shared class Chainedmapper(
 ) extends Ant("chainedmapper", _constructAttributesFor_Chainedmapper { from=from; to=to; }, _containingElements) {
 }
 
+// Checksum : checksum#org.apache.tools.ant.taskdefs.Checksum
+{<String->String>*} _constructAttributesFor_Checksum(String? excludes, String? fileext, String? totalproperty, String? defaultexcludes, String? property, String? followsymlinks, String? casesensitive, String? readbuffersize, String? verifyproperty, String? includes, String? description, String? todir, String? algorithm, String? includesfile, String? format, String? pattern, String? taskname, String? file, String? excludesfile, String? provider, String? forceoverwrite) {
+    HashMap<String,String> attributes = HashMap<String,String>();
+    if (exists excludes) { attributes.put("excludes", excludes.string); }
+    if (exists fileext) { attributes.put("fileext", fileext.string); }
+    if (exists totalproperty) { attributes.put("totalproperty", totalproperty.string); }
+    if (exists defaultexcludes) { attributes.put("defaultexcludes", defaultexcludes.string); }
+    if (exists property) { attributes.put("property", property.string); }
+    if (exists followsymlinks) { attributes.put("followsymlinks", followsymlinks.string); }
+    if (exists casesensitive) { attributes.put("casesensitive", casesensitive.string); }
+    if (exists readbuffersize) { attributes.put("readbuffersize", readbuffersize.string); }
+    if (exists verifyproperty) { attributes.put("verifyproperty", verifyproperty.string); }
+    if (exists includes) { attributes.put("includes", includes.string); }
+    if (exists description) { attributes.put("description", description.string); }
+    if (exists todir) { attributes.put("todir", todir.string); }
+    if (exists algorithm) { attributes.put("algorithm", algorithm.string); }
+    if (exists includesfile) { attributes.put("includesfile", includesfile.string); }
+    if (exists format) { attributes.put("format", format.string); }
+    if (exists pattern) { attributes.put("pattern", pattern.string); }
+    if (exists taskname) { attributes.put("taskname", taskname.string); }
+    if (exists file) { attributes.put("file", file.string); }
+    if (exists excludesfile) { attributes.put("excludesfile", excludesfile.string); }
+    if (exists provider) { attributes.put("provider", provider.string); }
+    if (exists forceoverwrite) { attributes.put("forceoverwrite", forceoverwrite.string); }
+    return attributes;
+}
+
+shared class Checksum(
+    String? excludes=null, String? fileext=null, String? totalproperty=null, String? defaultexcludes=null, String? property=null, String? followsymlinks=null, String? casesensitive=null, String? readbuffersize=null, String? verifyproperty=null, String? includes=null, String? description=null, String? todir=null, String? algorithm=null, String? includesfile=null, String? format=null, String? pattern=null, String? taskname=null, String? file=null, String? excludesfile=null, String? provider=null, String? forceoverwrite=null,
+    {<Include|Exclude|Patternset|Custom|None|Present|Not_NotSelector|Type|Modified|Or_OrSelector|Contains_ContainsSelector|Depend|Fileset|Different|Size|Majority|Containsregexp|Filename|Selector|Includesfile|Date|Excludesfile|And_AndSelector|Depth>*}? _containingElements=null
+) extends Ant("checksum", _constructAttributesFor_Checksum { excludes=excludes; fileext=fileext; totalproperty=totalproperty; defaultexcludes=defaultexcludes; property=property; followsymlinks=followsymlinks; casesensitive=casesensitive; readbuffersize=readbuffersize; verifyproperty=verifyproperty; includes=includes; description=description; todir=todir; algorithm=algorithm; includesfile=includesfile; format=format; pattern=pattern; taskname=taskname; file=file; excludesfile=excludesfile; provider=provider; forceoverwrite=forceoverwrite; }, _containingElements) {
+}
+
 // Class : class#org.apache.tools.ant.taskdefs.optional.Javah$ClassArgument
 {<String->String>*} _constructAttributesFor_Class(String? name) {
     HashMap<String,String> attributes = HashMap<String,String>();
@@ -483,7 +541,7 @@ shared class Classconstants(
 
 shared class Classes(
     String? excludes=null, String? encoding=null, String? filemode=null, String? defaultexcludes=null, String? src=null, String? srcresource=null, String? fullpath=null, String? followsymlinks=null, String? maxlevelsofsymlinks=null, String? erroronmissingarchive=null, String? refid=null, String? casesensitive=null, String? dir=null, String? erroronmissingdir=null, String? includes=null, String? description=null, String? prefix=null, String? dirmode=null, String? includesfile=null, String? file=null, String? excludesfile=null,
-    {<Patternset|Include|Exclude|Custom|None|Present|Not_NotSelector|Type|Readable|Writable|Modified|Or_OrSelector|Contains_ContainsSelector|Depend|Different|Size|Majority|Containsregexp|Filename|Selector|Includesfile|Date|Excludesfile|And_AndSelector|Depth>*}? _containingElements=null
+    {<Include|Exclude|Patternset|Custom|None|Present|Not_NotSelector|Type|Readable|Writable|Modified|Or_OrSelector|Contains_ContainsSelector|Depend|Different|Size|Majority|Containsregexp|Filename|Selector|Includesfile|Date|Excludesfile|And_AndSelector|Depth>*}? _containingElements=null
 ) extends Ant("classes", _constructAttributesFor_Classes { excludes=excludes; encoding=encoding; filemode=filemode; defaultexcludes=defaultexcludes; src=src; srcresource=srcresource; fullpath=fullpath; followsymlinks=followsymlinks; maxlevelsofsymlinks=maxlevelsofsymlinks; erroronmissingarchive=erroronmissingarchive; refid=refid; casesensitive=casesensitive; dir=dir; erroronmissingdir=erroronmissingdir; includes=includes; description=description; prefix=prefix; dirmode=dirmode; includesfile=includesfile; file=file; excludesfile=excludesfile; }, _containingElements) {
 }
 
@@ -509,7 +567,7 @@ shared class Classes(
 
 shared class Classfileset(
     String? refid=null, String? file=null, String? dir=null, String? defaultexcludes=null, String? followsymlinks=null, String? rootclass=null, String? erroronmissingdir=null, String? casesensitive=null, String? description=null, String? excludesfile=null, String? excludes=null, String? includesfile=null, String? maxlevelsofsymlinks=null, String? includes=null,
-    {<Patternset|Include|Exclude|Custom|Rootfileset|None|Present|Not_NotSelector|Type|Readable|Writable|Modified|Or_OrSelector|Contains_ContainsSelector|Depend|Different|Size|Majority|Containsregexp|Root|Filename|Selector|Includesfile|Date|Excludesfile|And_AndSelector|Depth>*}? _containingElements=null
+    {<Include|Exclude|Patternset|Custom|Rootfileset|None|Present|Not_NotSelector|Type|Readable|Writable|Modified|Or_OrSelector|Contains_ContainsSelector|Depend|Different|Size|Majority|Containsregexp|Root|Filename|Selector|Includesfile|Date|Excludesfile|And_AndSelector|Depth>*}? _containingElements=null
 ) extends Ant("classfileset", _constructAttributesFor_Classfileset { refid=refid; file=file; dir=dir; defaultexcludes=defaultexcludes; followsymlinks=followsymlinks; rootclass=rootclass; erroronmissingdir=erroronmissingdir; casesensitive=casesensitive; description=description; excludesfile=excludesfile; excludes=excludes; includesfile=includesfile; maxlevelsofsymlinks=maxlevelsofsymlinks; includes=includes; }, _containingElements) {
 }
 
@@ -651,8 +709,37 @@ shared class Concatfilter(
 
 shared class Condition(
     String? taskname=null, String? description=null,
-    {<Isfalse|Isreference|Equals|available|Not|Contains|Os|Or|And|Filesmatch|checksum|Istrue|Isset|Socket|Http|uptodate|Isfileselected>*}? _containingElements=null
+    {<Isfalse|Isreference|Equals|Available|Not|Contains|Os|Or|And|Filesmatch|Checksum|Istrue|Isset|Socket|Http|Uptodate|Isfileselected>*}? _containingElements=null
 ) extends Ant("condition", _constructAttributesFor_Condition { taskname=taskname; description=description; }, _containingElements) {
+}
+
+// Connectionproperty : connectionproperty#org.apache.tools.ant.taskdefs.Property
+{<String->String>*} _constructAttributesFor_Connectionproperty(String? prefixvalues, String? refid, String? name, String? relative, String? url, String? classpath, String? file, String? userproperty, String? resource, String? environment, String? prefix, String? basedir, String? classpathref, String? taskname, String? location, String? value_attribute, String? description) {
+    HashMap<String,String> attributes = HashMap<String,String>();
+    if (exists prefixvalues) { attributes.put("prefixvalues", prefixvalues.string); }
+    if (exists refid) { attributes.put("refid", refid.string); }
+    if (exists name) { attributes.put("name", name.string); }
+    if (exists relative) { attributes.put("relative", relative.string); }
+    if (exists url) { attributes.put("url", url.string); }
+    if (exists classpath) { attributes.put("classpath", classpath.string); }
+    if (exists file) { attributes.put("file", file.string); }
+    if (exists userproperty) { attributes.put("userproperty", userproperty.string); }
+    if (exists resource) { attributes.put("resource", resource.string); }
+    if (exists environment) { attributes.put("environment", environment.string); }
+    if (exists prefix) { attributes.put("prefix", prefix.string); }
+    if (exists basedir) { attributes.put("basedir", basedir.string); }
+    if (exists classpathref) { attributes.put("classpathref", classpathref.string); }
+    if (exists taskname) { attributes.put("taskname", taskname.string); }
+    if (exists location) { attributes.put("location", location.string); }
+    if (exists value_attribute) { attributes.put("value", value_attribute.string); }
+    if (exists description) { attributes.put("description", description.string); }
+    return attributes;
+}
+
+shared class Connectionproperty(
+    String? prefixvalues=null, String? refid=null, String? name=null, String? relative=null, String? url=null, String? classpath=null, String? file=null, String? userproperty=null, String? resource=null, String? environment=null, String? prefix=null, String? basedir=null, String? classpathref=null, String? taskname=null, String? location=null, String? value_attribute=null, String? description=null,
+    {<Classpath>*}? _containingElements=null
+) extends Ant("connectionproperty", _constructAttributesFor_Connectionproperty { prefixvalues=prefixvalues; refid=refid; name=name; relative=relative; url=url; classpath=classpath; file=file; userproperty=userproperty; resource=resource; environment=environment; prefix=prefix; basedir=basedir; classpathref=classpathref; taskname=taskname; location=location; value_attribute=value_attribute; description=description; }, _containingElements) {
 }
 
 // Contains_LineContainsContains : contains#org.apache.tools.ant.filters.LineContains$Contains
@@ -948,7 +1035,7 @@ shared class Different(
 
 shared class Dirset(
     String? refid=null, String? file=null, String? dir=null, String? defaultexcludes=null, String? followsymlinks=null, String? erroronmissingdir=null, String? casesensitive=null, String? description=null, String? excludes=null, String? includesfile=null, String? excludesfile=null, String? maxlevelsofsymlinks=null, String? includes=null,
-    {<Patternset|Include|Exclude|Custom|None|Present|Not_NotSelector|Type|Readable|Writable|Modified|Or_OrSelector|Contains_ContainsSelector|Depend|Different|Size|Majority|Containsregexp|Filename|Selector|Includesfile|Date|Excludesfile|And_AndSelector|Depth>*}? _containingElements=null
+    {<Include|Exclude|Patternset|Custom|None|Present|Not_NotSelector|Type|Readable|Writable|Modified|Or_OrSelector|Contains_ContainsSelector|Depend|Different|Size|Majority|Containsregexp|Filename|Selector|Includesfile|Date|Excludesfile|And_AndSelector|Depth>*}? _containingElements=null
 ) extends Ant("dirset", _constructAttributesFor_Dirset { refid=refid; file=file; dir=dir; defaultexcludes=defaultexcludes; followsymlinks=followsymlinks; erroronmissingdir=erroronmissingdir; casesensitive=casesensitive; description=description; excludes=excludes; includesfile=includesfile; excludesfile=excludesfile; maxlevelsofsymlinks=maxlevelsofsymlinks; includes=includes; }, _containingElements) {
 }
 
@@ -1197,17 +1284,17 @@ shared class Escapeunicode(
 }
 
 // Exclude : exclude#org.apache.tools.ant.types.PatternSet$NameEntry
-{<String->String>*} _constructAttributesFor_Exclude(String? name, String? unless, String? if_attribute) {
+{<String->String>*} _constructAttributesFor_Exclude(String? name, String? if_attribute, String? unless) {
     HashMap<String,String> attributes = HashMap<String,String>();
     if (exists name) { attributes.put("name", name.string); }
-    if (exists unless) { attributes.put("unless", unless.string); }
     if (exists if_attribute) { attributes.put("if", if_attribute.string); }
+    if (exists unless) { attributes.put("unless", unless.string); }
     return attributes;
 }
 
 shared class Exclude(
-    String? name=null, String? unless=null, String? if_attribute=null
-) extends Ant("exclude", _constructAttributesFor_Exclude { name=name; unless=unless; if_attribute=if_attribute; }) {
+    String? name=null, String? if_attribute=null, String? unless=null
+) extends Ant("exclude", _constructAttributesFor_Exclude { name=name; if_attribute=if_attribute; unless=unless; }) {
 }
 
 // Excludepackage : excludepackage#org.apache.tools.ant.taskdefs.Javadoc$PackageName
@@ -1223,17 +1310,17 @@ shared class Excludepackage(
 }
 
 // Excludesfile : excludesfile#org.apache.tools.ant.types.PatternSet$NameEntry
-{<String->String>*} _constructAttributesFor_Excludesfile(String? name, String? unless, String? if_attribute) {
+{<String->String>*} _constructAttributesFor_Excludesfile(String? name, String? if_attribute, String? unless) {
     HashMap<String,String> attributes = HashMap<String,String>();
     if (exists name) { attributes.put("name", name.string); }
-    if (exists unless) { attributes.put("unless", unless.string); }
     if (exists if_attribute) { attributes.put("if", if_attribute.string); }
+    if (exists unless) { attributes.put("unless", unless.string); }
     return attributes;
 }
 
 shared class Excludesfile(
-    String? name=null, String? unless=null, String? if_attribute=null
-) extends Ant("excludesfile", _constructAttributesFor_Excludesfile { name=name; unless=unless; if_attribute=if_attribute; }) {
+    String? name=null, String? if_attribute=null, String? unless=null
+) extends Ant("excludesfile", _constructAttributesFor_Excludesfile { name=name; if_attribute=if_attribute; unless=unless; }) {
 }
 
 // Existing : existing#org.apache.tools.ant.types.Path
@@ -1470,7 +1557,7 @@ shared class Files(
 
 shared class Fileset(
     String? refid=null, String? file=null, String? dir=null, String? defaultexcludes=null, String? followsymlinks=null, String? erroronmissingdir=null, String? casesensitive=null, String? description=null, String? excludes=null, String? includesfile=null, String? excludesfile=null, String? maxlevelsofsymlinks=null, String? includes=null,
-    {<Patternset|Include|Exclude|Custom|None|Present|Not_NotSelector|Type|Readable|Writable|Modified|Or_OrSelector|Contains_ContainsSelector|Depend|Different|Size|Majority|Containsregexp|Filename|Selector|Includesfile|Date|Excludesfile|And_AndSelector|Depth>*}? _containingElements=null
+    {<Include|Exclude|Patternset|Custom|None|Present|Not_NotSelector|Type|Readable|Writable|Modified|Or_OrSelector|Contains_ContainsSelector|Depend|Different|Size|Majority|Containsregexp|Filename|Selector|Includesfile|Date|Excludesfile|And_AndSelector|Depth>*}? _containingElements=null
 ) extends Ant("fileset", _constructAttributesFor_Fileset { refid=refid; file=file; dir=dir; defaultexcludes=defaultexcludes; followsymlinks=followsymlinks; erroronmissingdir=erroronmissingdir; casesensitive=casesensitive; description=description; excludes=excludes; includesfile=includesfile; excludesfile=excludesfile; maxlevelsofsymlinks=maxlevelsofsymlinks; includes=includes; }, _containingElements) {
 }
 
@@ -1781,6 +1868,28 @@ shared class Gzipresource(
 ) extends Ant("gzipresource", _constructAttributesFor_Gzipresource { directory=directory; name=name; lastmodified=lastmodified; size=size; refid=refid; description=description; exists_attribute=exists_attribute; }) {
 }
 
+// Handler : handler#org.apache.tools.ant.taskdefs.Input$Handler
+{<String->String>*} _constructAttributesFor_Handler(String? refid, String? uri, String? classpath, String? classname, String? type, String? classpathref, String? loaderref, String? taskname, String? description, String? reverseloader) {
+    HashMap<String,String> attributes = HashMap<String,String>();
+    if (exists refid) { attributes.put("refid", refid.string); }
+    if (exists uri) { attributes.put("uri", uri.string); }
+    if (exists classpath) { attributes.put("classpath", classpath.string); }
+    if (exists classname) { attributes.put("classname", classname.string); }
+    if (exists type) { attributes.put("type", type.string); }
+    if (exists classpathref) { attributes.put("classpathref", classpathref.string); }
+    if (exists loaderref) { attributes.put("loaderref", loaderref.string); }
+    if (exists taskname) { attributes.put("taskname", taskname.string); }
+    if (exists description) { attributes.put("description", description.string); }
+    if (exists reverseloader) { attributes.put("reverseloader", reverseloader.string); }
+    return attributes;
+}
+
+shared class Handler(
+    String? refid=null, String? uri=null, String? classpath=null, String? classname=null, String? type=null, String? classpathref=null, String? loaderref=null, String? taskname=null, String? description=null, String? reverseloader=null,
+    {<Classpath>*}? _containingElements=null
+) extends Ant("handler", _constructAttributesFor_Handler { refid=refid; uri=uri; classpath=classpath; classname=classname; type=type; classpathref=classpathref; loaderref=loaderref; taskname=taskname; description=description; reverseloader=reverseloader; }, _containingElements) {
+}
+
 // Header_ConcatTextElement : header#org.apache.tools.ant.taskdefs.Concat$TextElement
 {<String->String>*} _constructAttributesFor_Header_ConcatTextElement(String? trimleading, String? trim, String? file, String? description, String? encoding, String? filtering) {
     HashMap<String,String> attributes = HashMap<String,String>();
@@ -1894,31 +2003,31 @@ shared class Implementationclasspath(
 }
 
 // Include : include#org.apache.tools.ant.types.PatternSet$NameEntry
-{<String->String>*} _constructAttributesFor_Include(String? name, String? unless, String? if_attribute) {
+{<String->String>*} _constructAttributesFor_Include(String? name, String? if_attribute, String? unless) {
     HashMap<String,String> attributes = HashMap<String,String>();
     if (exists name) { attributes.put("name", name.string); }
-    if (exists unless) { attributes.put("unless", unless.string); }
     if (exists if_attribute) { attributes.put("if", if_attribute.string); }
+    if (exists unless) { attributes.put("unless", unless.string); }
     return attributes;
 }
 
 shared class Include(
-    String? name=null, String? unless=null, String? if_attribute=null
-) extends Ant("include", _constructAttributesFor_Include { name=name; unless=unless; if_attribute=if_attribute; }) {
+    String? name=null, String? if_attribute=null, String? unless=null
+) extends Ant("include", _constructAttributesFor_Include { name=name; if_attribute=if_attribute; unless=unless; }) {
 }
 
 // Includesfile : includesfile#org.apache.tools.ant.types.PatternSet$NameEntry
-{<String->String>*} _constructAttributesFor_Includesfile(String? name, String? unless, String? if_attribute) {
+{<String->String>*} _constructAttributesFor_Includesfile(String? name, String? if_attribute, String? unless) {
     HashMap<String,String> attributes = HashMap<String,String>();
     if (exists name) { attributes.put("name", name.string); }
-    if (exists unless) { attributes.put("unless", unless.string); }
     if (exists if_attribute) { attributes.put("if", if_attribute.string); }
+    if (exists unless) { attributes.put("unless", unless.string); }
     return attributes;
 }
 
 shared class Includesfile(
-    String? name=null, String? unless=null, String? if_attribute=null
-) extends Ant("includesfile", _constructAttributesFor_Includesfile { name=name; unless=unless; if_attribute=if_attribute; }) {
+    String? name=null, String? if_attribute=null, String? unless=null
+) extends Ant("includesfile", _constructAttributesFor_Includesfile { name=name; if_attribute=if_attribute; unless=unless; }) {
 }
 
 // Indexjars : indexjars#org.apache.tools.ant.types.Path
@@ -2000,7 +2109,7 @@ shared class Intersect(
 
 shared class Invert(
     String? includes=null, String? refid=null, String? description=null, String? excludesfile=null, String? includesfile=null, String? excludes=null,
-    {<Include|Patternset|Exclude|Excludesfile|Invert|Includesfile>*}? _containingElements=null
+    {<Include|Exclude|Patternset|Excludesfile|Invert|Includesfile>*}? _containingElements=null
 ) extends Ant("invert", _constructAttributesFor_Invert { includes=includes; refid=refid; description=description; excludesfile=excludesfile; includesfile=includesfile; excludes=excludes; }, _containingElements) {
 }
 
@@ -2132,11 +2241,11 @@ shared class Jboss(
 }
 
 // Jonas_JonasDeploymentTool : jonas#org.apache.tools.ant.taskdefs.optional.ejb.JonasDeploymentTool
-{<String->String>*} _constructAttributesFor_Jonas_JonasDeploymentTool(String? jonasroot, String? javac, String? keepgeneric, String? additionalargs, String? destdir, String? classpath, String? orb, String? jarsuffix, String? verbose, String? genericjarsuffix, String? nogenic, String? rmicopts, String? javacopts, String? novalidation, String? keepgenerated, String? nocompil, String? secpropag) {
+{<String->String>*} _constructAttributesFor_Jonas_JonasDeploymentTool(String? jonasroot, String? keepgeneric, String? javac, String? additionalargs, String? destdir, String? classpath, String? orb, String? jarsuffix, String? verbose, String? genericjarsuffix, String? nogenic, String? rmicopts, String? javacopts, String? novalidation, String? keepgenerated, String? nocompil, String? secpropag) {
     HashMap<String,String> attributes = HashMap<String,String>();
     if (exists jonasroot) { attributes.put("jonasroot", jonasroot.string); }
-    if (exists javac) { attributes.put("javac", javac.string); }
     if (exists keepgeneric) { attributes.put("keepgeneric", keepgeneric.string); }
+    if (exists javac) { attributes.put("javac", javac.string); }
     if (exists additionalargs) { attributes.put("additionalargs", additionalargs.string); }
     if (exists destdir) { attributes.put("destdir", destdir.string); }
     if (exists classpath) { attributes.put("classpath", classpath.string); }
@@ -2155,20 +2264,20 @@ shared class Jboss(
 }
 
 shared class Jonas_JonasDeploymentTool(
-    String? jonasroot=null, String? javac=null, String? keepgeneric=null, String? additionalargs=null, String? destdir=null, String? classpath=null, String? orb=null, String? jarsuffix=null, String? verbose=null, String? genericjarsuffix=null, String? nogenic=null, String? rmicopts=null, String? javacopts=null, String? novalidation=null, String? keepgenerated=null, String? nocompil=null, String? secpropag=null,
+    String? jonasroot=null, String? keepgeneric=null, String? javac=null, String? additionalargs=null, String? destdir=null, String? classpath=null, String? orb=null, String? jarsuffix=null, String? verbose=null, String? genericjarsuffix=null, String? nogenic=null, String? rmicopts=null, String? javacopts=null, String? novalidation=null, String? keepgenerated=null, String? nocompil=null, String? secpropag=null,
     {<Classpath>*}? _containingElements=null
-) extends Ant("jonas", _constructAttributesFor_Jonas_JonasDeploymentTool { jonasroot=jonasroot; javac=javac; keepgeneric=keepgeneric; additionalargs=additionalargs; destdir=destdir; classpath=classpath; orb=orb; jarsuffix=jarsuffix; verbose=verbose; genericjarsuffix=genericjarsuffix; nogenic=nogenic; rmicopts=rmicopts; javacopts=javacopts; novalidation=novalidation; keepgenerated=keepgenerated; nocompil=nocompil; secpropag=secpropag; }, _containingElements) {
+) extends Ant("jonas", _constructAttributesFor_Jonas_JonasDeploymentTool { jonasroot=jonasroot; keepgeneric=keepgeneric; javac=javac; additionalargs=additionalargs; destdir=destdir; classpath=classpath; orb=orb; jarsuffix=jarsuffix; verbose=verbose; genericjarsuffix=genericjarsuffix; nogenic=nogenic; rmicopts=rmicopts; javacopts=javacopts; novalidation=novalidation; keepgenerated=keepgenerated; nocompil=nocompil; secpropag=secpropag; }, _containingElements) {
 }
 
 // Jonas_JonasHotDeploymentTool : jonas#org.apache.tools.ant.taskdefs.optional.j2ee.JonasHotDeploymentTool
-{<String->String>*} _constructAttributesFor_Jonas_JonasHotDeploymentTool(String? jonasroot, String? classpath, String? orb, String? davidhost, String? classname, String? server, String? username, String? davidport, String? password) {
+{<String->String>*} _constructAttributesFor_Jonas_JonasHotDeploymentTool(String? jonasroot, String? orb, String? classpath, String? davidhost, String? server, String? classname, String? username, String? davidport, String? password) {
     HashMap<String,String> attributes = HashMap<String,String>();
     if (exists jonasroot) { attributes.put("jonasroot", jonasroot.string); }
-    if (exists classpath) { attributes.put("classpath", classpath.string); }
     if (exists orb) { attributes.put("orb", orb.string); }
+    if (exists classpath) { attributes.put("classpath", classpath.string); }
     if (exists davidhost) { attributes.put("davidhost", davidhost.string); }
-    if (exists classname) { attributes.put("classname", classname.string); }
     if (exists server) { attributes.put("server", server.string); }
+    if (exists classname) { attributes.put("classname", classname.string); }
     if (exists username) { attributes.put("username", username.string); }
     if (exists davidport) { attributes.put("davidport", davidport.string); }
     if (exists password) { attributes.put("password", password.string); }
@@ -2176,9 +2285,9 @@ shared class Jonas_JonasDeploymentTool(
 }
 
 shared class Jonas_JonasHotDeploymentTool(
-    String? jonasroot=null, String? classpath=null, String? orb=null, String? davidhost=null, String? classname=null, String? server=null, String? username=null, String? davidport=null, String? password=null,
+    String? jonasroot=null, String? orb=null, String? classpath=null, String? davidhost=null, String? server=null, String? classname=null, String? username=null, String? davidport=null, String? password=null,
     {<Arg_CommandlineArgument|Classpath|Jvmarg>*}? _containingElements=null
-) extends Ant("jonas", _constructAttributesFor_Jonas_JonasHotDeploymentTool { jonasroot=jonasroot; classpath=classpath; orb=orb; davidhost=davidhost; classname=classname; server=server; username=username; davidport=davidport; password=password; }, _containingElements) {
+) extends Ant("jonas", _constructAttributesFor_Jonas_JonasHotDeploymentTool { jonasroot=jonasroot; orb=orb; classpath=classpath; davidhost=davidhost; server=server; classname=classname; username=username; davidport=davidport; password=password; }, _containingElements) {
 }
 
 // Jvmarg : jvmarg#org.apache.tools.ant.types.Commandline$Argument
@@ -2244,7 +2353,7 @@ shared class Last(
 
 shared class Lib(
     String? excludes=null, String? encoding=null, String? filemode=null, String? defaultexcludes=null, String? src=null, String? srcresource=null, String? fullpath=null, String? followsymlinks=null, String? maxlevelsofsymlinks=null, String? erroronmissingarchive=null, String? refid=null, String? casesensitive=null, String? dir=null, String? erroronmissingdir=null, String? includes=null, String? description=null, String? prefix=null, String? dirmode=null, String? includesfile=null, String? file=null, String? excludesfile=null,
-    {<Patternset|Include|Exclude|Custom|None|Present|Not_NotSelector|Type|Readable|Writable|Modified|Or_OrSelector|Contains_ContainsSelector|Depend|Different|Size|Majority|Containsregexp|Filename|Selector|Includesfile|Date|Excludesfile|And_AndSelector|Depth>*}? _containingElements=null
+    {<Include|Exclude|Patternset|Custom|None|Present|Not_NotSelector|Type|Readable|Writable|Modified|Or_OrSelector|Contains_ContainsSelector|Depend|Different|Size|Majority|Containsregexp|Filename|Selector|Includesfile|Date|Excludesfile|And_AndSelector|Depth>*}? _containingElements=null
 ) extends Ant("lib", _constructAttributesFor_Lib { excludes=excludes; encoding=encoding; filemode=filemode; defaultexcludes=defaultexcludes; src=src; srcresource=srcresource; fullpath=fullpath; followsymlinks=followsymlinks; maxlevelsofsymlinks=maxlevelsofsymlinks; erroronmissingarchive=erroronmissingarchive; refid=refid; casesensitive=casesensitive; dir=dir; erroronmissingdir=erroronmissingdir; includes=includes; description=description; prefix=prefix; dirmode=dirmode; includesfile=includesfile; file=file; excludesfile=excludesfile; }, _containingElements) {
 }
 
@@ -2272,7 +2381,7 @@ shared class Lib(
 
 shared class Libfileset(
     String? refid=null, String? urlbase=null, String? file=null, String? includeimpl=null, String? dir=null, String? defaultexcludes=null, String? followsymlinks=null, String? includeurl=null, String? erroronmissingdir=null, String? casesensitive=null, String? description=null, String? excludesfile=null, String? includesfile=null, String? excludes=null, String? maxlevelsofsymlinks=null, String? includes=null,
-    {<Patternset|Include|Exclude|Custom|None|Present|Not_NotSelector|Type|Readable|Writable|Modified|Or_OrSelector|Contains_ContainsSelector|Depend|Different|Size|Majority|Containsregexp|Filename|Selector|Includesfile|Date|Excludesfile|And_AndSelector|Depth>*}? _containingElements=null
+    {<Include|Exclude|Patternset|Custom|None|Present|Not_NotSelector|Type|Readable|Writable|Modified|Or_OrSelector|Contains_ContainsSelector|Depend|Different|Size|Majority|Containsregexp|Filename|Selector|Includesfile|Date|Excludesfile|And_AndSelector|Depth>*}? _containingElements=null
 ) extends Ant("libfileset", _constructAttributesFor_Libfileset { refid=refid; urlbase=urlbase; file=file; includeimpl=includeimpl; dir=dir; defaultexcludes=defaultexcludes; followsymlinks=followsymlinks; includeurl=includeurl; erroronmissingdir=erroronmissingdir; casesensitive=casesensitive; description=description; excludesfile=excludesfile; includesfile=includesfile; excludes=excludes; maxlevelsofsymlinks=maxlevelsofsymlinks; includes=includes; }, _containingElements) {
 }
 
@@ -2508,7 +2617,7 @@ shared class Message(
 
 shared class Metainf(
     String? excludes=null, String? encoding=null, String? filemode=null, String? defaultexcludes=null, String? src=null, String? srcresource=null, String? fullpath=null, String? followsymlinks=null, String? maxlevelsofsymlinks=null, String? erroronmissingarchive=null, String? refid=null, String? casesensitive=null, String? dir=null, String? erroronmissingdir=null, String? includes=null, String? description=null, String? prefix=null, String? dirmode=null, String? includesfile=null, String? file=null, String? excludesfile=null,
-    {<Patternset|Include|Exclude|Custom|None|Present|Not_NotSelector|Type|Readable|Writable|Modified|Or_OrSelector|Contains_ContainsSelector|Depend|Different|Size|Majority|Containsregexp|Filename|Selector|Includesfile|Date|Excludesfile|And_AndSelector|Depth>*}? _containingElements=null
+    {<Include|Exclude|Patternset|Custom|None|Present|Not_NotSelector|Type|Readable|Writable|Modified|Or_OrSelector|Contains_ContainsSelector|Depend|Different|Size|Majority|Containsregexp|Filename|Selector|Includesfile|Date|Excludesfile|And_AndSelector|Depth>*}? _containingElements=null
 ) extends Ant("metainf", _constructAttributesFor_Metainf { excludes=excludes; encoding=encoding; filemode=filemode; defaultexcludes=defaultexcludes; src=src; srcresource=srcresource; fullpath=fullpath; followsymlinks=followsymlinks; maxlevelsofsymlinks=maxlevelsofsymlinks; erroronmissingarchive=erroronmissingarchive; refid=refid; casesensitive=casesensitive; dir=dir; erroronmissingdir=erroronmissingdir; includes=includes; description=description; prefix=prefix; dirmode=dirmode; includesfile=includesfile; file=file; excludesfile=excludesfile; }, _containingElements) {
 }
 
@@ -2575,7 +2684,7 @@ shared class None(
 
 shared class Not(
     String? taskname=null, String? description=null,
-    {<Isfalse|Isreference|Equals|available|Not|Contains|Os|Or|And|Filesmatch|checksum|Istrue|Isset|Socket|Http|uptodate|Isfileselected>*}? _containingElements=null
+    {<Isfalse|Isreference|Equals|Available|Not|Contains|Os|Or|And|Filesmatch|Checksum|Istrue|Isset|Socket|Http|Uptodate|Isfileselected>*}? _containingElements=null
 ) extends Ant("not", _constructAttributesFor_Not { taskname=taskname; description=description; }, _containingElements) {
 }
 
@@ -2631,7 +2740,7 @@ shared class Options(
 
 shared class Or(
     String? taskname=null, String? description=null,
-    {<Isfalse|Isreference|Equals|available|Not|Contains|Os|Or|And|Filesmatch|checksum|Istrue|Isset|Socket|Http|uptodate|Isfileselected>*}? _containingElements=null
+    {<Isfalse|Isreference|Equals|Available|Not|Contains|Os|Or|And|Filesmatch|Checksum|Istrue|Isset|Socket|Http|Uptodate|Isfileselected>*}? _containingElements=null
 ) extends Ant("or", _constructAttributesFor_Or { taskname=taskname; description=description; }, _containingElements) {
 }
 
@@ -2760,7 +2869,7 @@ shared class Packagemapper(
 
 shared class Packageset(
     String? refid=null, String? file=null, String? dir=null, String? defaultexcludes=null, String? followsymlinks=null, String? erroronmissingdir=null, String? casesensitive=null, String? description=null, String? excludes=null, String? includesfile=null, String? excludesfile=null, String? maxlevelsofsymlinks=null, String? includes=null,
-    {<Patternset|Include|Exclude|Custom|None|Present|Not_NotSelector|Type|Readable|Writable|Modified|Or_OrSelector|Contains_ContainsSelector|Depend|Different|Size|Majority|Containsregexp|Filename|Selector|Includesfile|Date|Excludesfile|And_AndSelector|Depth>*}? _containingElements=null
+    {<Include|Exclude|Patternset|Custom|None|Present|Not_NotSelector|Type|Readable|Writable|Modified|Or_OrSelector|Contains_ContainsSelector|Depend|Different|Size|Majority|Containsregexp|Filename|Selector|Includesfile|Date|Excludesfile|And_AndSelector|Depth>*}? _containingElements=null
 ) extends Ant("packageset", _constructAttributesFor_Packageset { refid=refid; file=file; dir=dir; defaultexcludes=defaultexcludes; followsymlinks=followsymlinks; erroronmissingdir=erroronmissingdir; casesensitive=casesensitive; description=description; excludes=excludes; includesfile=includesfile; excludesfile=excludesfile; maxlevelsofsymlinks=maxlevelsofsymlinks; includes=includes; }, _containingElements) {
 }
 
@@ -2788,19 +2897,48 @@ shared class Param_JavadocDocletParam(
 ) extends Ant("param", _constructAttributesFor_Param_JavadocDocletParam { name=name; value_attribute=value_attribute; }) {
 }
 
+// Param_Property : param#org.apache.tools.ant.taskdefs.Property
+{<String->String>*} _constructAttributesFor_Param_Property(String? prefixvalues, String? refid, String? name, String? relative, String? url, String? classpath, String? file, String? userproperty, String? resource, String? environment, String? prefix, String? basedir, String? classpathref, String? taskname, String? location, String? value_attribute, String? description) {
+    HashMap<String,String> attributes = HashMap<String,String>();
+    if (exists prefixvalues) { attributes.put("prefixvalues", prefixvalues.string); }
+    if (exists refid) { attributes.put("refid", refid.string); }
+    if (exists name) { attributes.put("name", name.string); }
+    if (exists relative) { attributes.put("relative", relative.string); }
+    if (exists url) { attributes.put("url", url.string); }
+    if (exists classpath) { attributes.put("classpath", classpath.string); }
+    if (exists file) { attributes.put("file", file.string); }
+    if (exists userproperty) { attributes.put("userproperty", userproperty.string); }
+    if (exists resource) { attributes.put("resource", resource.string); }
+    if (exists environment) { attributes.put("environment", environment.string); }
+    if (exists prefix) { attributes.put("prefix", prefix.string); }
+    if (exists basedir) { attributes.put("basedir", basedir.string); }
+    if (exists classpathref) { attributes.put("classpathref", classpathref.string); }
+    if (exists taskname) { attributes.put("taskname", taskname.string); }
+    if (exists location) { attributes.put("location", location.string); }
+    if (exists value_attribute) { attributes.put("value", value_attribute.string); }
+    if (exists description) { attributes.put("description", description.string); }
+    return attributes;
+}
+
+shared class Param_Property(
+    String? prefixvalues=null, String? refid=null, String? name=null, String? relative=null, String? url=null, String? classpath=null, String? file=null, String? userproperty=null, String? resource=null, String? environment=null, String? prefix=null, String? basedir=null, String? classpathref=null, String? taskname=null, String? location=null, String? value_attribute=null, String? description=null,
+    {<Classpath>*}? _containingElements=null
+) extends Ant("param", _constructAttributesFor_Param_Property { prefixvalues=prefixvalues; refid=refid; name=name; relative=relative; url=url; classpath=classpath; file=file; userproperty=userproperty; resource=resource; environment=environment; prefix=prefix; basedir=basedir; classpathref=classpathref; taskname=taskname; location=location; value_attribute=value_attribute; description=description; }, _containingElements) {
+}
+
 // Param_XSLTProcessParam : param#org.apache.tools.ant.taskdefs.XSLTProcess$Param
-{<String->String>*} _constructAttributesFor_Param_XSLTProcessParam(String? name, String? unless, String? if_attribute, String? expression) {
+{<String->String>*} _constructAttributesFor_Param_XSLTProcessParam(String? name, String? if_attribute, String? unless, String? expression) {
     HashMap<String,String> attributes = HashMap<String,String>();
     if (exists name) { attributes.put("name", name.string); }
-    if (exists unless) { attributes.put("unless", unless.string); }
     if (exists if_attribute) { attributes.put("if", if_attribute.string); }
+    if (exists unless) { attributes.put("unless", unless.string); }
     if (exists expression) { attributes.put("expression", expression.string); }
     return attributes;
 }
 
 shared class Param_XSLTProcessParam(
-    String? name=null, String? unless=null, String? if_attribute=null, String? expression=null
-) extends Ant("param", _constructAttributesFor_Param_XSLTProcessParam { name=name; unless=unless; if_attribute=if_attribute; expression=expression; }) {
+    String? name=null, String? if_attribute=null, String? unless=null, String? expression=null
+) extends Ant("param", _constructAttributesFor_Param_XSLTProcessParam { name=name; if_attribute=if_attribute; unless=unless; expression=expression; }) {
 }
 
 // Param_Parameter : param#org.apache.tools.ant.types.Parameter
@@ -2861,7 +2999,7 @@ shared class Pathelement(
 
 shared class Patternset(
     String? includes=null, String? refid=null, String? description=null, String? excludesfile=null, String? includesfile=null, String? excludes=null,
-    {<Include|Patternset|Exclude|Excludesfile|Invert|Includesfile>*}? _containingElements=null
+    {<Include|Exclude|Patternset|Excludesfile|Invert|Includesfile>*}? _containingElements=null
 ) extends Ant("patternset", _constructAttributesFor_Patternset { includes=includes; refid=refid; description=description; excludesfile=excludesfile; includesfile=includesfile; excludes=excludes; }, _containingElements) {
 }
 
@@ -2928,21 +3066,50 @@ shared class Present(
 
 shared class Preserveintarget(
     String? refid=null, String? file=null, String? dir=null, String? defaultexcludes=null, String? followsymlinks=null, String? preserveemptydirs=null, String? erroronmissingdir=null, String? casesensitive=null, String? description=null, String? excludesfile=null, String? excludes=null, String? includesfile=null, String? maxlevelsofsymlinks=null, String? includes=null,
-    {<Patternset|Include|Exclude|Custom|None|Present|Not_NotSelector|Type|Readable|Writable|Modified|Or_OrSelector|Contains_ContainsSelector|Depend|Different|Size|Majority|Containsregexp|Filename|Selector|Includesfile|Date|Excludesfile|And_AndSelector|Depth>*}? _containingElements=null
+    {<Include|Exclude|Patternset|Custom|None|Present|Not_NotSelector|Type|Readable|Writable|Modified|Or_OrSelector|Contains_ContainsSelector|Depend|Different|Size|Majority|Containsregexp|Filename|Selector|Includesfile|Date|Excludesfile|And_AndSelector|Depth>*}? _containingElements=null
 ) extends Ant("preserveintarget", _constructAttributesFor_Preserveintarget { refid=refid; file=file; dir=dir; defaultexcludes=defaultexcludes; followsymlinks=followsymlinks; preserveemptydirs=preserveemptydirs; erroronmissingdir=erroronmissingdir; casesensitive=casesensitive; description=description; excludesfile=excludesfile; excludes=excludes; includesfile=includesfile; maxlevelsofsymlinks=maxlevelsofsymlinks; includes=includes; }, _containingElements) {
 }
 
-// Property : property#org.apache.tools.ant.taskdefs.optional.XMLValidateTask$Property
-{<String->String>*} _constructAttributesFor_Property(String? name, String? value_attribute) {
+// Property : property#org.apache.tools.ant.taskdefs.Property
+{<String->String>*} _constructAttributesFor_Property(String? prefixvalues, String? refid, String? name, String? relative, String? url, String? classpath, String? file, String? userproperty, String? resource, String? environment, String? prefix, String? basedir, String? classpathref, String? taskname, String? location, String? value_attribute, String? description) {
+    HashMap<String,String> attributes = HashMap<String,String>();
+    if (exists prefixvalues) { attributes.put("prefixvalues", prefixvalues.string); }
+    if (exists refid) { attributes.put("refid", refid.string); }
+    if (exists name) { attributes.put("name", name.string); }
+    if (exists relative) { attributes.put("relative", relative.string); }
+    if (exists url) { attributes.put("url", url.string); }
+    if (exists classpath) { attributes.put("classpath", classpath.string); }
+    if (exists file) { attributes.put("file", file.string); }
+    if (exists userproperty) { attributes.put("userproperty", userproperty.string); }
+    if (exists resource) { attributes.put("resource", resource.string); }
+    if (exists environment) { attributes.put("environment", environment.string); }
+    if (exists prefix) { attributes.put("prefix", prefix.string); }
+    if (exists basedir) { attributes.put("basedir", basedir.string); }
+    if (exists classpathref) { attributes.put("classpathref", classpathref.string); }
+    if (exists taskname) { attributes.put("taskname", taskname.string); }
+    if (exists location) { attributes.put("location", location.string); }
+    if (exists value_attribute) { attributes.put("value", value_attribute.string); }
+    if (exists description) { attributes.put("description", description.string); }
+    return attributes;
+}
+
+shared class Property(
+    String? prefixvalues=null, String? refid=null, String? name=null, String? relative=null, String? url=null, String? classpath=null, String? file=null, String? userproperty=null, String? resource=null, String? environment=null, String? prefix=null, String? basedir=null, String? classpathref=null, String? taskname=null, String? location=null, String? value_attribute=null, String? description=null,
+    {<Classpath>*}? _containingElements=null
+) extends Ant("property", _constructAttributesFor_Property { prefixvalues=prefixvalues; refid=refid; name=name; relative=relative; url=url; classpath=classpath; file=file; userproperty=userproperty; resource=resource; environment=environment; prefix=prefix; basedir=basedir; classpathref=classpathref; taskname=taskname; location=location; value_attribute=value_attribute; description=description; }, _containingElements) {
+}
+
+// Property_XMLValidateTaskProperty : property#org.apache.tools.ant.taskdefs.optional.XMLValidateTask$Property
+{<String->String>*} _constructAttributesFor_Property_XMLValidateTaskProperty(String? name, String? value_attribute) {
     HashMap<String,String> attributes = HashMap<String,String>();
     if (exists name) { attributes.put("name", name.string); }
     if (exists value_attribute) { attributes.put("value", value_attribute.string); }
     return attributes;
 }
 
-shared class Property(
+shared class Property_XMLValidateTaskProperty(
     String? name=null, String? value_attribute=null
-) extends Ant("property", _constructAttributesFor_Property { name=name; value_attribute=value_attribute; }) {
+) extends Ant("property", _constructAttributesFor_Property_XMLValidateTaskProperty { name=name; value_attribute=value_attribute; }) {
 }
 
 // Propertyref : propertyref#org.apache.tools.ant.types.PropertySet$PropertyRef
@@ -3031,7 +3198,7 @@ shared class Readable(
 }
 
 // Redirector : redirector#org.apache.tools.ant.types.RedirectorElement
-{<String->String>*} _constructAttributesFor_Redirector(String? refid, String? inputencoding, String? append, String? output, String? createemptyfiles, String? outputproperty, String? error, String? errorproperty, String? outputencoding, String? inputstring, String? alwayslog, String? loginputstring, String? input, String? description, String? errorencoding, String? logerror) {
+{<String->String>*} _constructAttributesFor_Redirector(String? refid, String? inputencoding, String? append, String? output, String? createemptyfiles, String? outputproperty, String? error, String? errorproperty, String? outputencoding, String? inputstring, String? loginputstring, String? alwayslog, String? input, String? description, String? logerror, String? errorencoding) {
     HashMap<String,String> attributes = HashMap<String,String>();
     if (exists refid) { attributes.put("refid", refid.string); }
     if (exists inputencoding) { attributes.put("inputencoding", inputencoding.string); }
@@ -3043,19 +3210,19 @@ shared class Readable(
     if (exists errorproperty) { attributes.put("errorproperty", errorproperty.string); }
     if (exists outputencoding) { attributes.put("outputencoding", outputencoding.string); }
     if (exists inputstring) { attributes.put("inputstring", inputstring.string); }
-    if (exists alwayslog) { attributes.put("alwayslog", alwayslog.string); }
     if (exists loginputstring) { attributes.put("loginputstring", loginputstring.string); }
+    if (exists alwayslog) { attributes.put("alwayslog", alwayslog.string); }
     if (exists input) { attributes.put("input", input.string); }
     if (exists description) { attributes.put("description", description.string); }
-    if (exists errorencoding) { attributes.put("errorencoding", errorencoding.string); }
     if (exists logerror) { attributes.put("logerror", logerror.string); }
+    if (exists errorencoding) { attributes.put("errorencoding", errorencoding.string); }
     return attributes;
 }
 
 shared class Redirector(
-    String? refid=null, String? inputencoding=null, String? append=null, String? output=null, String? createemptyfiles=null, String? outputproperty=null, String? error=null, String? errorproperty=null, String? outputencoding=null, String? inputstring=null, String? alwayslog=null, String? loginputstring=null, String? input=null, String? description=null, String? errorencoding=null, String? logerror=null,
+    String? refid=null, String? inputencoding=null, String? append=null, String? output=null, String? createemptyfiles=null, String? outputproperty=null, String? error=null, String? errorproperty=null, String? outputencoding=null, String? inputstring=null, String? loginputstring=null, String? alwayslog=null, String? input=null, String? description=null, String? logerror=null, String? errorencoding=null,
     {<Errorfilterchain|Outputfilterchain|Errormapper|Inputfilterchain|Outputmapper|Inputmapper>*}? _containingElements=null
-) extends Ant("redirector", _constructAttributesFor_Redirector { refid=refid; inputencoding=inputencoding; append=append; output=output; createemptyfiles=createemptyfiles; outputproperty=outputproperty; error=error; errorproperty=errorproperty; outputencoding=outputencoding; inputstring=inputstring; alwayslog=alwayslog; loginputstring=loginputstring; input=input; description=description; errorencoding=errorencoding; logerror=logerror; }, _containingElements) {
+) extends Ant("redirector", _constructAttributesFor_Redirector { refid=refid; inputencoding=inputencoding; append=append; output=output; createemptyfiles=createemptyfiles; outputproperty=outputproperty; error=error; errorproperty=errorproperty; outputencoding=outputencoding; inputstring=inputstring; loginputstring=loginputstring; alwayslog=alwayslog; input=input; description=description; logerror=logerror; errorencoding=errorencoding; }, _containingElements) {
 }
 
 // Reference : reference#org.apache.tools.ant.taskdefs.Ant$Reference
@@ -3306,7 +3473,7 @@ shared class Root(
 
 shared class Rootfileset(
     String? refid=null, String? file=null, String? dir=null, String? defaultexcludes=null, String? followsymlinks=null, String? erroronmissingdir=null, String? casesensitive=null, String? description=null, String? excludes=null, String? includesfile=null, String? excludesfile=null, String? maxlevelsofsymlinks=null, String? includes=null,
-    {<Patternset|Include|Exclude|Custom|None|Present|Not_NotSelector|Type|Readable|Writable|Modified|Or_OrSelector|Contains_ContainsSelector|Depend|Different|Size|Majority|Containsregexp|Filename|Selector|Includesfile|Date|Excludesfile|And_AndSelector|Depth>*}? _containingElements=null
+    {<Include|Exclude|Patternset|Custom|None|Present|Not_NotSelector|Type|Readable|Writable|Modified|Or_OrSelector|Contains_ContainsSelector|Depend|Different|Size|Majority|Containsregexp|Filename|Selector|Includesfile|Date|Excludesfile|And_AndSelector|Depth>*}? _containingElements=null
 ) extends Ant("rootfileset", _constructAttributesFor_Rootfileset { refid=refid; file=file; dir=dir; defaultexcludes=defaultexcludes; followsymlinks=followsymlinks; erroronmissingdir=erroronmissingdir; casesensitive=casesensitive; description=description; excludes=excludes; includesfile=includesfile; excludesfile=excludesfile; maxlevelsofsymlinks=maxlevelsofsymlinks; includes=includes; }, _containingElements) {
 }
 
@@ -3422,20 +3589,20 @@ shared class Section(
 }
 
 // Selector : selector#org.apache.tools.ant.types.selectors.SelectSelector
-{<String->String>*} _constructAttributesFor_Selector(String? error, String? refid, String? description, String? unless, String? if_attribute) {
+{<String->String>*} _constructAttributesFor_Selector(String? error, String? refid, String? description, String? if_attribute, String? unless) {
     HashMap<String,String> attributes = HashMap<String,String>();
     if (exists error) { attributes.put("error", error.string); }
     if (exists refid) { attributes.put("refid", refid.string); }
     if (exists description) { attributes.put("description", description.string); }
-    if (exists unless) { attributes.put("unless", unless.string); }
     if (exists if_attribute) { attributes.put("if", if_attribute.string); }
+    if (exists unless) { attributes.put("unless", unless.string); }
     return attributes;
 }
 
 shared class Selector(
-    String? error=null, String? refid=null, String? description=null, String? unless=null, String? if_attribute=null,
+    String? error=null, String? refid=null, String? description=null, String? if_attribute=null, String? unless=null,
     {<Custom|None|Present|Not_NotSelector|Type|Readable|Writable|Modified|Or_OrSelector|Contains_ContainsSelector|Depend|Different|Size|Majority|Containsregexp|Filename|Selector|Date|And_AndSelector|Depth>*}? _containingElements=null
-) extends Ant("selector", _constructAttributesFor_Selector { error=error; refid=refid; description=description; unless=unless; if_attribute=if_attribute; }, _containingElements) {
+) extends Ant("selector", _constructAttributesFor_Selector { error=error; refid=refid; description=description; if_attribute=if_attribute; unless=unless; }, _containingElements) {
 }
 
 // Sequential : sequential#org.apache.tools.ant.taskdefs.MacroDef$NestedSequential
@@ -3644,7 +3811,7 @@ shared class Srcfilelist(
 
 shared class Srcfiles(
     String? refid=null, String? file=null, String? dir=null, String? defaultexcludes=null, String? followsymlinks=null, String? erroronmissingdir=null, String? casesensitive=null, String? description=null, String? excludes=null, String? includesfile=null, String? excludesfile=null, String? maxlevelsofsymlinks=null, String? includes=null,
-    {<Patternset|Include|Exclude|Custom|None|Present|Not_NotSelector|Type|Readable|Writable|Modified|Or_OrSelector|Contains_ContainsSelector|Depend|Different|Size|Majority|Containsregexp|Filename|Selector|Includesfile|Date|Excludesfile|And_AndSelector|Depth>*}? _containingElements=null
+    {<Include|Exclude|Patternset|Custom|None|Present|Not_NotSelector|Type|Readable|Writable|Modified|Or_OrSelector|Contains_ContainsSelector|Depend|Different|Size|Majority|Containsregexp|Filename|Selector|Includesfile|Date|Excludesfile|And_AndSelector|Depth>*}? _containingElements=null
 ) extends Ant("srcfiles", _constructAttributesFor_Srcfiles { refid=refid; file=file; dir=dir; defaultexcludes=defaultexcludes; followsymlinks=followsymlinks; erroronmissingdir=erroronmissingdir; casesensitive=casesensitive; description=description; excludes=excludes; includesfile=includesfile; excludesfile=excludesfile; maxlevelsofsymlinks=maxlevelsofsymlinks; includes=includes; }, _containingElements) {
 }
 
@@ -3669,7 +3836,7 @@ shared class Srcfiles(
 
 shared class Srcfileset(
     String? refid=null, String? file=null, String? dir=null, String? defaultexcludes=null, String? followsymlinks=null, String? erroronmissingdir=null, String? casesensitive=null, String? description=null, String? excludes=null, String? includesfile=null, String? excludesfile=null, String? maxlevelsofsymlinks=null, String? includes=null,
-    {<Patternset|Include|Exclude|Custom|None|Present|Not_NotSelector|Type|Readable|Writable|Modified|Or_OrSelector|Contains_ContainsSelector|Depend|Different|Size|Majority|Containsregexp|Filename|Selector|Includesfile|Date|Excludesfile|And_AndSelector|Depth>*}? _containingElements=null
+    {<Include|Exclude|Patternset|Custom|None|Present|Not_NotSelector|Type|Readable|Writable|Modified|Or_OrSelector|Contains_ContainsSelector|Depend|Different|Size|Majority|Containsregexp|Filename|Selector|Includesfile|Date|Excludesfile|And_AndSelector|Depth>*}? _containingElements=null
 ) extends Ant("srcfileset", _constructAttributesFor_Srcfileset { refid=refid; file=file; dir=dir; defaultexcludes=defaultexcludes; followsymlinks=followsymlinks; erroronmissingdir=erroronmissingdir; casesensitive=casesensitive; description=description; excludes=excludes; includesfile=includesfile; excludesfile=excludesfile; maxlevelsofsymlinks=maxlevelsofsymlinks; includes=includes; }, _containingElements) {
 }
 
@@ -3835,7 +4002,7 @@ shared class Suffixlines(
 
 shared class Support(
     String? refid=null, String? file=null, String? dir=null, String? defaultexcludes=null, String? followsymlinks=null, String? erroronmissingdir=null, String? casesensitive=null, String? description=null, String? excludes=null, String? includesfile=null, String? excludesfile=null, String? maxlevelsofsymlinks=null, String? includes=null,
-    {<Patternset|Include|Exclude|Custom|None|Present|Not_NotSelector|Type|Readable|Writable|Modified|Or_OrSelector|Contains_ContainsSelector|Depend|Different|Size|Majority|Containsregexp|Filename|Selector|Includesfile|Date|Excludesfile|And_AndSelector|Depth>*}? _containingElements=null
+    {<Include|Exclude|Patternset|Custom|None|Present|Not_NotSelector|Type|Readable|Writable|Modified|Or_OrSelector|Contains_ContainsSelector|Depend|Different|Size|Majority|Containsregexp|Filename|Selector|Includesfile|Date|Excludesfile|And_AndSelector|Depth>*}? _containingElements=null
 ) extends Ant("support", _constructAttributesFor_Support { refid=refid; file=file; dir=dir; defaultexcludes=defaultexcludes; followsymlinks=followsymlinks; erroronmissingdir=erroronmissingdir; casesensitive=casesensitive; description=description; excludes=excludes; includesfile=includesfile; excludesfile=excludesfile; maxlevelsofsymlinks=maxlevelsofsymlinks; includes=includes; }, _containingElements) {
 }
 
@@ -3906,7 +4073,7 @@ shared class Tabstospaces(
 
 shared class Tag(
     String? refid=null, String? name=null, String? file=null, String? dir=null, String? defaultexcludes=null, String? followsymlinks=null, String? enabled=null, String? erroronmissingdir=null, String? casesensitive=null, String? description=null, String? excludesfile=null, String? includesfile=null, String? excludes=null, String? maxlevelsofsymlinks=null, String? scope=null, String? includes=null,
-    {<Patternset|Include|Exclude|Custom|None|Present|Not_NotSelector|Type|Readable|Writable|Modified|Or_OrSelector|Contains_ContainsSelector|Depend|Different|Size|Majority|Containsregexp|Filename|Selector|Includesfile|Date|Excludesfile|And_AndSelector|Depth>*}? _containingElements=null
+    {<Include|Exclude|Patternset|Custom|None|Present|Not_NotSelector|Type|Readable|Writable|Modified|Or_OrSelector|Contains_ContainsSelector|Depend|Different|Size|Majority|Containsregexp|Filename|Selector|Includesfile|Date|Excludesfile|And_AndSelector|Depth>*}? _containingElements=null
 ) extends Ant("tag", _constructAttributesFor_Tag { refid=refid; name=name; file=file; dir=dir; defaultexcludes=defaultexcludes; followsymlinks=followsymlinks; enabled=enabled; erroronmissingdir=erroronmissingdir; casesensitive=casesensitive; description=description; excludesfile=excludesfile; includesfile=includesfile; excludes=excludes; maxlevelsofsymlinks=maxlevelsofsymlinks; scope=scope; includes=includes; }, _containingElements) {
 }
 
@@ -3993,7 +4160,7 @@ shared class Tarentry(
 
 shared class Tarfileset_TarTarFileSet(
     String? excludes=null, String? preserveleadingslashes=null, String? username=null, String? filemode=null, String? defaultexcludes=null, String? src=null, String? uid=null, String? srcresource=null, String? group=null, String? fullpath=null, String? followsymlinks=null, String? maxlevelsofsymlinks=null, String? erroronmissingarchive=null, String? refid=null, String? casesensitive=null, String? mode=null, String? gid=null, String? dir=null, String? erroronmissingdir=null, String? includes=null, String? description=null, String? prefix=null, String? includesfile=null, String? dirmode=null, String? file=null, String? excludesfile=null,
-    {<Patternset|Include|Exclude|Custom|None|Present|Not_NotSelector|Type|Readable|Writable|Modified|Or_OrSelector|Contains_ContainsSelector|Depend|Different|Size|Majority|Containsregexp|Filename|Selector|Includesfile|Date|Excludesfile|And_AndSelector|Depth>*}? _containingElements=null
+    {<Include|Exclude|Patternset|Custom|None|Present|Not_NotSelector|Type|Readable|Writable|Modified|Or_OrSelector|Contains_ContainsSelector|Depend|Different|Size|Majority|Containsregexp|Filename|Selector|Includesfile|Date|Excludesfile|And_AndSelector|Depth>*}? _containingElements=null
 ) extends Ant("tarfileset", _constructAttributesFor_Tarfileset_TarTarFileSet { excludes=excludes; preserveleadingslashes=preserveleadingslashes; username=username; filemode=filemode; defaultexcludes=defaultexcludes; src=src; uid=uid; srcresource=srcresource; group=group; fullpath=fullpath; followsymlinks=followsymlinks; maxlevelsofsymlinks=maxlevelsofsymlinks; erroronmissingarchive=erroronmissingarchive; refid=refid; casesensitive=casesensitive; mode=mode; gid=gid; dir=dir; erroronmissingdir=erroronmissingdir; includes=includes; description=description; prefix=prefix; includesfile=includesfile; dirmode=dirmode; file=file; excludesfile=excludesfile; }, _containingElements) {
 }
 
@@ -4029,7 +4196,7 @@ shared class Tarfileset_TarTarFileSet(
 
 shared class Tarfileset(
     String? excludes=null, String? username=null, String? filemode=null, String? defaultexcludes=null, String? src=null, String? uid=null, String? srcresource=null, String? group=null, String? fullpath=null, String? followsymlinks=null, String? maxlevelsofsymlinks=null, String? erroronmissingarchive=null, String? refid=null, String? casesensitive=null, String? gid=null, String? dir=null, String? erroronmissingdir=null, String? includes=null, String? description=null, String? prefix=null, String? includesfile=null, String? dirmode=null, String? file=null, String? excludesfile=null,
-    {<Patternset|Include|Exclude|Custom|None|Present|Not_NotSelector|Type|Readable|Writable|Modified|Or_OrSelector|Contains_ContainsSelector|Depend|Different|Size|Majority|Containsregexp|Filename|Selector|Includesfile|Date|Excludesfile|And_AndSelector|Depth>*}? _containingElements=null
+    {<Include|Exclude|Patternset|Custom|None|Present|Not_NotSelector|Type|Readable|Writable|Modified|Or_OrSelector|Contains_ContainsSelector|Depend|Different|Size|Majority|Containsregexp|Filename|Selector|Includesfile|Date|Excludesfile|And_AndSelector|Depth>*}? _containingElements=null
 ) extends Ant("tarfileset", _constructAttributesFor_Tarfileset { excludes=excludes; username=username; filemode=filemode; defaultexcludes=defaultexcludes; src=src; uid=uid; srcresource=srcresource; group=group; fullpath=fullpath; followsymlinks=followsymlinks; maxlevelsofsymlinks=maxlevelsofsymlinks; erroronmissingarchive=erroronmissingarchive; refid=refid; casesensitive=casesensitive; gid=gid; dir=dir; erroronmissingdir=erroronmissingdir; includes=includes; description=description; prefix=prefix; includesfile=includesfile; dirmode=dirmode; file=file; excludesfile=excludesfile; }, _containingElements) {
 }
 
@@ -4095,7 +4262,7 @@ shared class Targetfilelist(
 
 shared class Targetfileset(
     String? refid=null, String? file=null, String? dir=null, String? defaultexcludes=null, String? followsymlinks=null, String? erroronmissingdir=null, String? casesensitive=null, String? description=null, String? excludes=null, String? includesfile=null, String? excludesfile=null, String? maxlevelsofsymlinks=null, String? includes=null,
-    {<Patternset|Include|Exclude|Custom|None|Present|Not_NotSelector|Type|Readable|Writable|Modified|Or_OrSelector|Contains_ContainsSelector|Depend|Different|Size|Majority|Containsregexp|Filename|Selector|Includesfile|Date|Excludesfile|And_AndSelector|Depth>*}? _containingElements=null
+    {<Include|Exclude|Patternset|Custom|None|Present|Not_NotSelector|Type|Readable|Writable|Modified|Or_OrSelector|Contains_ContainsSelector|Depend|Different|Size|Majority|Containsregexp|Filename|Selector|Includesfile|Date|Excludesfile|And_AndSelector|Depth>*}? _containingElements=null
 ) extends Ant("targetfileset", _constructAttributesFor_Targetfileset { refid=refid; file=file; dir=dir; defaultexcludes=defaultexcludes; followsymlinks=followsymlinks; erroronmissingdir=erroronmissingdir; casesensitive=casesensitive; description=description; excludes=excludes; includesfile=includesfile; excludesfile=excludesfile; maxlevelsofsymlinks=maxlevelsofsymlinks; includes=includes; }, _containingElements) {
 }
 
@@ -4192,7 +4359,7 @@ shared class Token(
 
 shared class Tokenfilter(
     String? delimoutput=null,
-    {<Containsstring|Linetokenizer|Trim|Replacestring|Stringtokenizer_TokenFilterStringTokenizer|Replaceregex|Ignoreblank|Deletecharacters|Containsregex|Filetokenizer_TokenFilterFileTokenizer>*}? _containingElements=null
+    {<Containsstring|Linetokenizer|Trim|Stringtokenizer_TokenFilterStringTokenizer|Replaceregex|Replacestring|Ignoreblank|Deletecharacters|Containsregex|Filetokenizer_TokenFilterFileTokenizer>*}? _containingElements=null
 ) extends Ant("tokenfilter", _constructAttributesFor_Tokenfilter { delimoutput=delimoutput; }, _containingElements) {
 }
 
@@ -4212,19 +4379,19 @@ shared class Tokens(
 }
 
 // Trace : trace#org.apache.tools.ant.taskdefs.XSLTProcess$TraceConfiguration
-{<String->String>*} _constructAttributesFor_Trace(String? templates, String? selection, String? elements, String? generation, String? extension) {
+{<String->String>*} _constructAttributesFor_Trace(String? templates, String? selection, String? generation, String? elements, String? extension) {
     HashMap<String,String> attributes = HashMap<String,String>();
     if (exists templates) { attributes.put("templates", templates.string); }
     if (exists selection) { attributes.put("selection", selection.string); }
-    if (exists elements) { attributes.put("elements", elements.string); }
     if (exists generation) { attributes.put("generation", generation.string); }
+    if (exists elements) { attributes.put("elements", elements.string); }
     if (exists extension) { attributes.put("extension", extension.string); }
     return attributes;
 }
 
 shared class Trace(
-    String? templates=null, String? selection=null, String? elements=null, String? generation=null, String? extension=null
-) extends Ant("trace", _constructAttributesFor_Trace { templates=templates; selection=selection; elements=elements; generation=generation; extension=extension; }) {
+    String? templates=null, String? selection=null, String? generation=null, String? elements=null, String? extension=null
+) extends Ant("trace", _constructAttributesFor_Trace { templates=templates; selection=selection; generation=generation; elements=elements; extension=extension; }) {
 }
 
 // Transaction : transaction#org.apache.tools.ant.taskdefs.SQLExec$Transaction
@@ -4295,6 +4462,24 @@ shared class Union(
 shared class Unpackagemapper(
     String? handledirsep=null, String? casesensitive=null, String? from=null, String? to=null
 ) extends Ant("unpackagemapper", _constructAttributesFor_Unpackagemapper { handledirsep=handledirsep; casesensitive=casesensitive; from=from; to=to; }) {
+}
+
+// Uptodate : uptodate#org.apache.tools.ant.taskdefs.UpToDate
+{<String->String>*} _constructAttributesFor_Uptodate(String? taskname, String? description, String? value_attribute, String? property, String? srcfile, String? targetfile) {
+    HashMap<String,String> attributes = HashMap<String,String>();
+    if (exists taskname) { attributes.put("taskname", taskname.string); }
+    if (exists description) { attributes.put("description", description.string); }
+    if (exists value_attribute) { attributes.put("value", value_attribute.string); }
+    if (exists property) { attributes.put("property", property.string); }
+    if (exists srcfile) { attributes.put("srcfile", srcfile.string); }
+    if (exists targetfile) { attributes.put("targetfile", targetfile.string); }
+    return attributes;
+}
+
+shared class Uptodate(
+    String? taskname=null, String? description=null, String? value_attribute=null, String? property=null, String? srcfile=null, String? targetfile=null,
+    {<Srcfiles|Srcresources|Mapper>*}? _containingElements=null
+) extends Ant("uptodate", _constructAttributesFor_Uptodate { taskname=taskname; description=description; value_attribute=value_attribute; property=property; srcfile=srcfile; targetfile=targetfile; }, _containingElements) {
 }
 
 // Url_URLResolver : url#org.apache.tools.ant.taskdefs.optional.extension.resolvers.URLResolver
@@ -4404,7 +4589,7 @@ shared class Webapp(
 
 shared class Webinf(
     String? excludes=null, String? encoding=null, String? filemode=null, String? defaultexcludes=null, String? src=null, String? srcresource=null, String? fullpath=null, String? followsymlinks=null, String? maxlevelsofsymlinks=null, String? erroronmissingarchive=null, String? refid=null, String? casesensitive=null, String? dir=null, String? erroronmissingdir=null, String? includes=null, String? description=null, String? prefix=null, String? dirmode=null, String? includesfile=null, String? file=null, String? excludesfile=null,
-    {<Patternset|Include|Exclude|Custom|None|Present|Not_NotSelector|Type|Readable|Writable|Modified|Or_OrSelector|Contains_ContainsSelector|Depend|Different|Size|Majority|Containsregexp|Filename|Selector|Includesfile|Date|Excludesfile|And_AndSelector|Depth>*}? _containingElements=null
+    {<Include|Exclude|Patternset|Custom|None|Present|Not_NotSelector|Type|Readable|Writable|Modified|Or_OrSelector|Contains_ContainsSelector|Depend|Different|Size|Majority|Containsregexp|Filename|Selector|Includesfile|Date|Excludesfile|And_AndSelector|Depth>*}? _containingElements=null
 ) extends Ant("webinf", _constructAttributesFor_Webinf { excludes=excludes; encoding=encoding; filemode=filemode; defaultexcludes=defaultexcludes; src=src; srcresource=srcresource; fullpath=fullpath; followsymlinks=followsymlinks; maxlevelsofsymlinks=maxlevelsofsymlinks; erroronmissingarchive=erroronmissingarchive; refid=refid; casesensitive=casesensitive; dir=dir; erroronmissingdir=erroronmissingdir; includes=includes; description=description; prefix=prefix; dirmode=dirmode; includesfile=includesfile; file=file; excludesfile=excludesfile; }, _containingElements) {
 }
 
@@ -4436,7 +4621,7 @@ shared class Webinf(
 
 shared class Weblogic_WeblogicDeploymentTool(
     String? newcmp=null, String? ejbdtd=null, String? jvmargs=null, String? rebuild=null, String? suffix=null, String? args=null, String? outputdir=null, String? wldtd=null, String? destdir=null, String? weblogicdtd=null, String? wlclasspath=null, String? jvmdebuglevel=null, String? classpath=null, String? keepgenerated=null, String? compiler=null, String? oldcmp=null, String? keepgeneric=null, String? ejbcclass=null, String? noejbc=null, String? genericjarsuffix=null,
-    {<Classpath|Sysproperty|Wlclasspath>*}? _containingElements=null
+    {<Classpath|Wlclasspath|Sysproperty>*}? _containingElements=null
 ) extends Ant("weblogic", _constructAttributesFor_Weblogic_WeblogicDeploymentTool { newcmp=newcmp; ejbdtd=ejbdtd; jvmargs=jvmargs; rebuild=rebuild; suffix=suffix; args=args; outputdir=outputdir; wldtd=wldtd; destdir=destdir; weblogicdtd=weblogicdtd; wlclasspath=wlclasspath; jvmdebuglevel=jvmdebuglevel; classpath=classpath; keepgenerated=keepgenerated; compiler=compiler; oldcmp=oldcmp; keepgeneric=keepgeneric; ejbcclass=ejbcclass; noejbc=noejbc; genericjarsuffix=genericjarsuffix; }, _containingElements) {
 }
 
@@ -4460,7 +4645,7 @@ shared class Weblogic_WebLogicHotDeploymentTool(
 }
 
 // Weblogictoplink : weblogictoplink#org.apache.tools.ant.taskdefs.optional.ejb.WeblogicTOPLinkDeploymentTool
-{<String->String>*} _constructAttributesFor_Weblogictoplink(String? newcmp, String? ejbdtd, String? jvmargs, String? rebuild, String? suffix, String? args, String? outputdir, String? toplinkdtd, String? wldtd, String? destdir, String? weblogicdtd, String? wlclasspath, String? jvmdebuglevel, String? classpath, String? keepgenerated, String? compiler, String? oldcmp, String? keepgeneric, String? ejbcclass, String? toplinkdescriptor, String? noejbc, String? genericjarsuffix) {
+{<String->String>*} _constructAttributesFor_Weblogictoplink(String? newcmp, String? ejbdtd, String? jvmargs, String? rebuild, String? suffix, String? args, String? outputdir, String? toplinkdtd, String? wldtd, String? destdir, String? weblogicdtd, String? wlclasspath, String? jvmdebuglevel, String? classpath, String? keepgenerated, String? compiler, String? oldcmp, String? keepgeneric, String? ejbcclass, String? noejbc, String? toplinkdescriptor, String? genericjarsuffix) {
     HashMap<String,String> attributes = HashMap<String,String>();
     if (exists newcmp) { attributes.put("newcmp", newcmp.string); }
     if (exists ejbdtd) { attributes.put("ejbdtd", ejbdtd.string); }
@@ -4481,20 +4666,20 @@ shared class Weblogic_WebLogicHotDeploymentTool(
     if (exists oldcmp) { attributes.put("oldcmp", oldcmp.string); }
     if (exists keepgeneric) { attributes.put("keepgeneric", keepgeneric.string); }
     if (exists ejbcclass) { attributes.put("ejbcclass", ejbcclass.string); }
-    if (exists toplinkdescriptor) { attributes.put("toplinkdescriptor", toplinkdescriptor.string); }
     if (exists noejbc) { attributes.put("noejbc", noejbc.string); }
+    if (exists toplinkdescriptor) { attributes.put("toplinkdescriptor", toplinkdescriptor.string); }
     if (exists genericjarsuffix) { attributes.put("genericjarsuffix", genericjarsuffix.string); }
     return attributes;
 }
 
 shared class Weblogictoplink(
-    String? newcmp=null, String? ejbdtd=null, String? jvmargs=null, String? rebuild=null, String? suffix=null, String? args=null, String? outputdir=null, String? toplinkdtd=null, String? wldtd=null, String? destdir=null, String? weblogicdtd=null, String? wlclasspath=null, String? jvmdebuglevel=null, String? classpath=null, String? keepgenerated=null, String? compiler=null, String? oldcmp=null, String? keepgeneric=null, String? ejbcclass=null, String? toplinkdescriptor=null, String? noejbc=null, String? genericjarsuffix=null,
-    {<Classpath|Sysproperty|Wlclasspath>*}? _containingElements=null
-) extends Ant("weblogictoplink", _constructAttributesFor_Weblogictoplink { newcmp=newcmp; ejbdtd=ejbdtd; jvmargs=jvmargs; rebuild=rebuild; suffix=suffix; args=args; outputdir=outputdir; toplinkdtd=toplinkdtd; wldtd=wldtd; destdir=destdir; weblogicdtd=weblogicdtd; wlclasspath=wlclasspath; jvmdebuglevel=jvmdebuglevel; classpath=classpath; keepgenerated=keepgenerated; compiler=compiler; oldcmp=oldcmp; keepgeneric=keepgeneric; ejbcclass=ejbcclass; toplinkdescriptor=toplinkdescriptor; noejbc=noejbc; genericjarsuffix=genericjarsuffix; }, _containingElements) {
+    String? newcmp=null, String? ejbdtd=null, String? jvmargs=null, String? rebuild=null, String? suffix=null, String? args=null, String? outputdir=null, String? toplinkdtd=null, String? wldtd=null, String? destdir=null, String? weblogicdtd=null, String? wlclasspath=null, String? jvmdebuglevel=null, String? classpath=null, String? keepgenerated=null, String? compiler=null, String? oldcmp=null, String? keepgeneric=null, String? ejbcclass=null, String? noejbc=null, String? toplinkdescriptor=null, String? genericjarsuffix=null,
+    {<Classpath|Wlclasspath|Sysproperty>*}? _containingElements=null
+) extends Ant("weblogictoplink", _constructAttributesFor_Weblogictoplink { newcmp=newcmp; ejbdtd=ejbdtd; jvmargs=jvmargs; rebuild=rebuild; suffix=suffix; args=args; outputdir=outputdir; toplinkdtd=toplinkdtd; wldtd=wldtd; destdir=destdir; weblogicdtd=weblogicdtd; wlclasspath=wlclasspath; jvmdebuglevel=jvmdebuglevel; classpath=classpath; keepgenerated=keepgenerated; compiler=compiler; oldcmp=oldcmp; keepgeneric=keepgeneric; ejbcclass=ejbcclass; noejbc=noejbc; toplinkdescriptor=toplinkdescriptor; genericjarsuffix=genericjarsuffix; }, _containingElements) {
 }
 
 // Websphere : websphere#org.apache.tools.ant.taskdefs.optional.ejb.WebsphereDeploymentTool
-{<String->String>*} _constructAttributesFor_Websphere(String? newcmp, String? ejbdtd, String? rmicoptions, String? noinform, String? rebuild, String? suffix, String? quiet, String? dbschema, String? destdir, String? ejbdeploy, String? tempdir, String? use35, String? novalidate, String? codegen, String? dbvendor, String? classpath, String? wasclasspath, String? oldcmp, String? dbname, String? keepgeneric, String? trace, String? nowarn, String? genericjarsuffix) {
+{<String->String>*} _constructAttributesFor_Websphere(String? newcmp, String? ejbdtd, String? rmicoptions, String? noinform, String? rebuild, String? suffix, String? quiet, String? dbschema, String? destdir, String? ejbdeploy, String? use35, String? tempdir, String? novalidate, String? codegen, String? dbvendor, String? classpath, String? wasclasspath, String? oldcmp, String? dbname, String? keepgeneric, String? trace, String? nowarn, String? genericjarsuffix) {
     HashMap<String,String> attributes = HashMap<String,String>();
     if (exists newcmp) { attributes.put("newcmp", newcmp.string); }
     if (exists ejbdtd) { attributes.put("ejbdtd", ejbdtd.string); }
@@ -4506,8 +4691,8 @@ shared class Weblogictoplink(
     if (exists dbschema) { attributes.put("dbschema", dbschema.string); }
     if (exists destdir) { attributes.put("destdir", destdir.string); }
     if (exists ejbdeploy) { attributes.put("ejbdeploy", ejbdeploy.string); }
-    if (exists tempdir) { attributes.put("tempdir", tempdir.string); }
     if (exists use35) { attributes.put("use35", use35.string); }
+    if (exists tempdir) { attributes.put("tempdir", tempdir.string); }
     if (exists novalidate) { attributes.put("novalidate", novalidate.string); }
     if (exists codegen) { attributes.put("codegen", codegen.string); }
     if (exists dbvendor) { attributes.put("dbvendor", dbvendor.string); }
@@ -4523,9 +4708,9 @@ shared class Weblogictoplink(
 }
 
 shared class Websphere(
-    String? newcmp=null, String? ejbdtd=null, String? rmicoptions=null, String? noinform=null, String? rebuild=null, String? suffix=null, String? quiet=null, String? dbschema=null, String? destdir=null, String? ejbdeploy=null, String? tempdir=null, String? use35=null, String? novalidate=null, String? codegen=null, String? dbvendor=null, String? classpath=null, String? wasclasspath=null, String? oldcmp=null, String? dbname=null, String? keepgeneric=null, String? trace=null, String? nowarn=null, String? genericjarsuffix=null,
+    String? newcmp=null, String? ejbdtd=null, String? rmicoptions=null, String? noinform=null, String? rebuild=null, String? suffix=null, String? quiet=null, String? dbschema=null, String? destdir=null, String? ejbdeploy=null, String? use35=null, String? tempdir=null, String? novalidate=null, String? codegen=null, String? dbvendor=null, String? classpath=null, String? wasclasspath=null, String? oldcmp=null, String? dbname=null, String? keepgeneric=null, String? trace=null, String? nowarn=null, String? genericjarsuffix=null,
     {<Classpath|Wasclasspath>*}? _containingElements=null
-) extends Ant("websphere", _constructAttributesFor_Websphere { newcmp=newcmp; ejbdtd=ejbdtd; rmicoptions=rmicoptions; noinform=noinform; rebuild=rebuild; suffix=suffix; quiet=quiet; dbschema=dbschema; destdir=destdir; ejbdeploy=ejbdeploy; tempdir=tempdir; use35=use35; novalidate=novalidate; codegen=codegen; dbvendor=dbvendor; classpath=classpath; wasclasspath=wasclasspath; oldcmp=oldcmp; dbname=dbname; keepgeneric=keepgeneric; trace=trace; nowarn=nowarn; genericjarsuffix=genericjarsuffix; }, _containingElements) {
+) extends Ant("websphere", _constructAttributesFor_Websphere { newcmp=newcmp; ejbdtd=ejbdtd; rmicoptions=rmicoptions; noinform=noinform; rebuild=rebuild; suffix=suffix; quiet=quiet; dbschema=dbschema; destdir=destdir; ejbdeploy=ejbdeploy; use35=use35; tempdir=tempdir; novalidate=novalidate; codegen=codegen; dbvendor=dbvendor; classpath=classpath; wasclasspath=wasclasspath; oldcmp=oldcmp; dbname=dbname; keepgeneric=keepgeneric; trace=trace; nowarn=nowarn; genericjarsuffix=genericjarsuffix; }, _containingElements) {
 }
 
 // Wlclasspath : wlclasspath#org.apache.tools.ant.types.Path
@@ -4624,7 +4809,7 @@ shared class Zipentry(
 
 shared class Zipfileset(
     String? excludes=null, String? encoding=null, String? filemode=null, String? defaultexcludes=null, String? src=null, String? srcresource=null, String? fullpath=null, String? followsymlinks=null, String? maxlevelsofsymlinks=null, String? erroronmissingarchive=null, String? refid=null, String? casesensitive=null, String? dir=null, String? erroronmissingdir=null, String? includes=null, String? description=null, String? prefix=null, String? dirmode=null, String? includesfile=null, String? file=null, String? excludesfile=null,
-    {<Patternset|Include|Exclude|Custom|None|Present|Not_NotSelector|Type|Readable|Writable|Modified|Or_OrSelector|Contains_ContainsSelector|Depend|Different|Size|Majority|Containsregexp|Filename|Selector|Includesfile|Date|Excludesfile|And_AndSelector|Depth>*}? _containingElements=null
+    {<Include|Exclude|Patternset|Custom|None|Present|Not_NotSelector|Type|Readable|Writable|Modified|Or_OrSelector|Contains_ContainsSelector|Depend|Different|Size|Majority|Containsregexp|Filename|Selector|Includesfile|Date|Excludesfile|And_AndSelector|Depth>*}? _containingElements=null
 ) extends Ant("zipfileset", _constructAttributesFor_Zipfileset { excludes=excludes; encoding=encoding; filemode=filemode; defaultexcludes=defaultexcludes; src=src; srcresource=srcresource; fullpath=fullpath; followsymlinks=followsymlinks; maxlevelsofsymlinks=maxlevelsofsymlinks; erroronmissingarchive=erroronmissingarchive; refid=refid; casesensitive=casesensitive; dir=dir; erroronmissingdir=erroronmissingdir; includes=includes; description=description; prefix=prefix; dirmode=dirmode; includesfile=includesfile; file=file; excludesfile=excludesfile; }, _containingElements) {
 }
 
@@ -4649,7 +4834,7 @@ shared class Zipfileset(
 
 shared class Zipgroupfileset(
     String? refid=null, String? file=null, String? dir=null, String? defaultexcludes=null, String? followsymlinks=null, String? erroronmissingdir=null, String? casesensitive=null, String? description=null, String? excludes=null, String? includesfile=null, String? excludesfile=null, String? maxlevelsofsymlinks=null, String? includes=null,
-    {<Patternset|Include|Exclude|Custom|None|Present|Not_NotSelector|Type|Readable|Writable|Modified|Or_OrSelector|Contains_ContainsSelector|Depend|Different|Size|Majority|Containsregexp|Filename|Selector|Includesfile|Date|Excludesfile|And_AndSelector|Depth>*}? _containingElements=null
+    {<Include|Exclude|Patternset|Custom|None|Present|Not_NotSelector|Type|Readable|Writable|Modified|Or_OrSelector|Contains_ContainsSelector|Depend|Different|Size|Majority|Containsregexp|Filename|Selector|Includesfile|Date|Excludesfile|And_AndSelector|Depth>*}? _containingElements=null
 ) extends Ant("zipgroupfileset", _constructAttributesFor_Zipgroupfileset { refid=refid; file=file; dir=dir; defaultexcludes=defaultexcludes; followsymlinks=followsymlinks; erroronmissingdir=erroronmissingdir; casesensitive=casesensitive; description=description; excludes=excludes; includesfile=includesfile; excludesfile=excludesfile; maxlevelsofsymlinks=maxlevelsofsymlinks; includes=includes; }, _containingElements) {
 }
 
