@@ -35,20 +35,21 @@ object antSubTree {
         }
     }
     
-    shared {AntBuilder*} subAntBuilders(AntBuilder antBuilder) {
+    shared {AntBuilder*} subAntBuilders({AntBuilder*} antBuilders) {
         processedAntDefinitions.clear();
         collectedAntBuilders.clear();
-        recurseAntDefintions(antBuilder.antDefinition);
+        for(antBuilder in antBuilders) {
+            recurseAntDefintions(antBuilder.antDefinition);
+        }
         {AntBuilder*} result = collectedAntBuilders.sort((AntBuilder antBuilder1, AntBuilder antBuilder2) => antBuilder1 <=> antBuilder2);
         return result;
     }
     
 }
 
-void outputForSingleType(String antName) {
-    AntBuilder? filesetAntBuilder = antBuilderList.find((AntBuilder antBuilder) => antBuilder.antDefinition.antName == antName);
-    assert(exists filesetAntBuilder);
-    {AntBuilder*} subAntBuilders = antSubTree.subAntBuilders(filesetAntBuilder);
+void outputForAntNames({String*} antNames) {
+    {AntBuilder*} rootAntBuilders = antBuilderList.filter((AntBuilder antBuilder) => antNames.contains(antBuilder.antDefinition.antName));
+    {AntBuilder*} subAntBuilders = antSubTree.subAntBuilders(rootAntBuilders);
     for (subAntBuilder in subAntBuilders) {
         subAntBuilder.outputCeylonSource(antBuilderMap);
     }
@@ -74,7 +75,7 @@ shared void generateAntWrappers() {
         output("");
     }
     // only output <copy> for now
-    outputForSingleType("copy");
+    outputForAntNames( { "echo", "copy", "delete" } );
     //for (antBuilder in antBuilderList) {
     //    antBuilder.outputCeylonSource(antBuilderMap);
     //}

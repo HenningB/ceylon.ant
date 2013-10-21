@@ -7,7 +7,7 @@
  Can be used as a batch processor."
 by ("Henning Burdack")
 license ("http://www.apache.org/licenses/LICENSE-2.0.html")
-module ceylon.ant "0.1.0"{
+module ceylon.ant "0.2.0"{
     shared import ceylon.collection "0.6.1";
     import java.base "7";
     import org.apache.ant.ant "1.9.2";

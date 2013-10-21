@@ -25,7 +25,7 @@ class TaskBuilder(AntDefinition antDefinition) extends AntBuilder(antDefinition,
         for(attributeSetter in attributeSetters) {
             output("    ``attributeSetter``");
         }
-        output("    Ant(\"``antDefinition.antName``\", attributes, _containingElements).execute();");
+        output("    Ant(\"``antDefinition.antName``\", attributes``containingElementsParameter``).execute();");
         output("}");
         output("");
     }

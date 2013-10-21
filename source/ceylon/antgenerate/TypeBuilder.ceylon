@@ -1,5 +1,5 @@
 import ceylon.ant { AntDefinition }
-import ceylon.collection { HashMap, LinkedList }
+import ceylon.collection { HashMap }
 
 class TypeBuilder(AntDefinition antDefinition) extends AntBuilder(antDefinition, true) {
     
