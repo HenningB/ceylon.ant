@@ -1,4 +1,4 @@
-import ceylon.ant { Ant, AntProject, currentAntProject, AntDefinition }
+import ceylon.ant { Ant, AntProject, currentAntProject, AntDefinition, AntAttributeDefinition }
 import ceylon.test { AssertException, assertEquals, assertTrue, assertFalse }
 import ceylon.file { parsePath, Path, File, Directory, Nil }
 import ceylon.language.meta.model { Interface }
@@ -35,7 +35,7 @@ AntDefinition? filterAntDefinition({AntDefinition*} antDefinitions, String antNa
 }
 
 void testEcho() {
-    Ant("echo", { "message" -> "G'day mate!" } ).execute();
+    Ant("echo", { "message" -> "G'day mate! " }, {}, "Cheerio!" ).execute();
 }
 
 void testFileTasks() {
@@ -75,15 +75,15 @@ void testAntDefinition() {
     AntProject antProject = currentAntProject();
     AntDefinition? copyAntDefinition = filterAntDefinition(antProject.allTopLevelAntDefinitions(), "copy");
     assert(exists copyAntDefinition);
-    List<String> copyAttributeNames = copyAntDefinition.attributeNames();
+    {String*} copyAttributeNames = copyAntDefinition.attributes().map<String>((AntAttributeDefinition a) => a.name);
     assertTrue(copyAttributeNames.contains("todir"));
     AntDefinition? filesetAntDefinition = filterAntDefinition(copyAntDefinition.nestedAntDefinitions(), "fileset");
     assert(exists filesetAntDefinition);
-    List<String> filesetAttributeNames = filesetAntDefinition.attributeNames();
+    {String*} filesetAttributeNames = filesetAntDefinition.attributes().map<String>((AntAttributeDefinition a) => a.name);
     assertTrue(filesetAttributeNames.contains("dir"));
     AntDefinition? includeAntDefinition = filterAntDefinition(filesetAntDefinition.nestedAntDefinitions(), "include");
     assert(exists includeAntDefinition);
-    List<String> includeAttributeNames = includeAntDefinition.attributeNames();
+    {String*} includeAttributeNames = includeAntDefinition.attributes().map<String>((AntAttributeDefinition a) => a.name);
     assertTrue(includeAttributeNames.contains("name"));
 }
 
@@ -115,8 +115,7 @@ void testProperty() {
 }
 
 "Test whether the `<ftp>` tasks exists, which is part of modul `org.apache.ant.ant-commons-net`.
- Depending of Ceylon's module implementation, this might not be available to the module `ceylon.ant`.
- It might be required to test this outside the `ceylon.ant` project."
+ Depending of Ceylon's module implementation, this might not be available to the module `ceylon.ant`."
 void testExternalDependency() {
     AntProject antProject = currentAntProject();
     AntDefinition? ftpAntDefinition = filterAntDefinition(antProject.allTopLevelAntDefinitions(), "ftp");
@@ -124,7 +123,7 @@ void testExternalDependency() {
     if(exists ftpAntDefinition) {
         // ok
     } else {
-        throw AssertException("ExternalDependency: ftp task does not exists.");
+        throw AssertException("ExternalDependency: ftp task does not exists. Module org.apache.ant.ant-commons-net not imported properly.");
     }
     if(exists undefinedAntDefinition) {
         throw AssertException("ExternalDependency: --undefined-- task exists.");
@@ -138,22 +137,22 @@ void testIncludeAsTaskAndType() {
     AntProject antProject = currentAntProject();
     AntDefinition? includeAntDefinition = filterAntDefinition(antProject.allTopLevelAntDefinitions(), "include");
     assert(exists includeAntDefinition);
-    print("<include: ``includeAntDefinition.attributeNames()``>");
+    print("<include: ``includeAntDefinition.attributes().map<String>((AntAttributeDefinition a) => a.name)``>");
     AntDefinition? copyAntDefinition = filterAntDefinition(antProject.allTopLevelAntDefinitions(), "copy");
     assert(exists copyAntDefinition);
-    print("<copy: ``copyAntDefinition.attributeNames()``>");
+    print("<copy: ``copyAntDefinition.attributes().map<String>((AntAttributeDefinition a) => a.name)``>");
     AntDefinition? copyFilesetAntDefinition = filterAntDefinition(copyAntDefinition.nestedAntDefinitions(), "fileset");
     assert(exists copyFilesetAntDefinition);
-    print("<copy-fileset: ``copyFilesetAntDefinition.attributeNames()``>");
+    print("<copy-fileset: ``copyFilesetAntDefinition.attributes().map<String>((AntAttributeDefinition a) => a.name)``>");
     AntDefinition? copyFilesetIncludeAntDefinition = filterAntDefinition(copyFilesetAntDefinition.nestedAntDefinitions(), "include");
     assert(exists copyFilesetIncludeAntDefinition);
-    print("<copy-fileset-include: ``copyFilesetIncludeAntDefinition.attributeNames()``>");
+    print("<copy-fileset-include: ``copyFilesetIncludeAntDefinition.attributes().map<String>((AntAttributeDefinition a) => a.name)``>");
     assertTrue(includeAntDefinition.isTask());
-    assertTrue(includeAntDefinition.attributeNames().contains("taskname"));
-    assertFalse(includeAntDefinition.attributeNames().contains("name"));
+    assertTrue(includeAntDefinition.attributes().map<String>((AntAttributeDefinition a) => a.name).contains("taskname"));
+    assertFalse(includeAntDefinition.attributes().map<String>((AntAttributeDefinition a) => a.name).contains("name"));
     assertFalse(copyFilesetIncludeAntDefinition.isTask());
-    assertTrue(copyFilesetIncludeAntDefinition.attributeNames().contains("name"));
-    assertFalse(copyFilesetIncludeAntDefinition.attributeNames().contains("taskname"));
+    assertTrue(copyFilesetIncludeAntDefinition.attributes().map<String>((AntAttributeDefinition a) => a.name).contains("name"));
+    assertFalse(copyFilesetIncludeAntDefinition.attributes().map<String>((AntAttributeDefinition a) => a.name).contains("taskname"));
 }
 
 "Test a typesave by hand generated Ceylon interface"

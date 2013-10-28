@@ -26,11 +26,13 @@ public class AntDefinitionSupport {
 		this.definitelyType = definitelyType;
     }
     
-    public void fillAttributeList(LinkedList<ceylon.language.String> result) {
+    public void fillAttributeList(LinkedList<AntAttributeDefinitionSupport> result) {
         Map<String, Class<?>> attributeMap = introspectionHelper.getAttributeMap();
-        for(String attributeName : attributeMap.keySet()) {
-            ceylon.language.String attributeNameCeylonString = new ceylon.language.String(attributeName);
-            result.add(attributeNameCeylonString);
+        for(Entry<String, Class<?>> attribute : attributeMap.entrySet()) {
+            String attributeName = attribute.getKey();
+            Class<?> attributeClass = attribute.getValue();
+            AntAttributeDefinitionSupport antAttributeDefinition = new AntAttributeDefinitionSupport(attributeName, attributeClass);
+            result.add(antAttributeDefinition);
         }
     }
     

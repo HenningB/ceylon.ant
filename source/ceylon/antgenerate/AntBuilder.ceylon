@@ -1,4 +1,4 @@
-import ceylon.ant { AntDefinition }
+import ceylon.ant { AntDefinition, AntAttributeDefinition }
 import ceylon.collection { HashMap, LinkedList }
 
 abstract class AntBuilder(antDefinition, ceylonNameIntialUppercase) satisfies Comparable<AntBuilder> {
@@ -93,11 +93,11 @@ abstract class AntBuilder(antDefinition, ceylonNameIntialUppercase) satisfies Co
     }
     
     shared {<[String,String]>*} createCleanedAttributeNameTuples() {
-        List<String> attributeNames = antDefinition.attributeNames();
+        List<AntAttributeDefinition> attributes = antDefinition.attributes();
         LinkedList<[String,String]> cleanedAttributeNameTuples = LinkedList<[String,String]>();
-        for (attributeName in attributeNames) {
-            String cleanedAttributeName = createCeylonAttributeName(attributeName);
-            cleanedAttributeNameTuples.add([attributeName,cleanedAttributeName]);
+        for (attribute in attributes) {
+            String cleanedAttributeName = createCeylonAttributeName(attribute.name);
+            cleanedAttributeNameTuples.add([attribute.name,cleanedAttributeName]);
         }
         return cleanedAttributeNameTuples;
     }
@@ -129,7 +129,7 @@ abstract class AntBuilder(antDefinition, ceylonNameIntialUppercase) satisfies Co
             }
             attributeClassParameters += "String? ``cleanedAttributeNameTuple[1]``=null";
         }
-        if(antDefinition.attributeNames().size > 0 && antDefinition.nestedAntDefinitions().size > 0) {
+        if(antDefinition.attributes().size > 0 && antDefinition.nestedAntDefinitions().size > 0) {
             attributeClassParameters += ",";
         }
         return attributeClassParameters;

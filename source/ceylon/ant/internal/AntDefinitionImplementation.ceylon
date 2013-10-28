@@ -1,4 +1,4 @@
-import ceylon.ant { AntDefinition }
+import ceylon.ant { AntDefinition, AntAttributeDefinition }
 import ceylon.collection { LinkedList }
 
 shared class AntDefinitionImplementation(AntDefinitionSupport antDefinitionSupport) satisfies AntDefinition {
@@ -6,10 +6,11 @@ shared class AntDefinitionImplementation(AntDefinitionSupport antDefinitionSuppo
     shared actual String antName = antDefinitionSupport.antName;
     shared actual String elementTypeClassName = antDefinitionSupport.elementType.name;
     
-    shared actual List<String> attributeNames() {
-        LinkedList<String> attributeList = LinkedList<String>();
-        antDefinitionSupport.fillAttributeList(attributeList);
-        String[] result = attributeList.sort(byIncreasing((String s) => s));
+    shared actual List<AntAttributeDefinition> attributes() {
+        LinkedList<AntAttributeDefinitionSupport> antAttributeDefinitionSupportList = LinkedList<AntAttributeDefinitionSupport>();
+        antDefinitionSupport.fillAttributeList(antAttributeDefinitionSupportList);
+        {AntAttributeDefinition*} antAttributeDefinitions = antAttributeDefinitionSupportList.map<AntAttributeDefinition>((AntAttributeDefinitionSupport a) => AntAttributeDefinition(a.name, a.className));
+        AntAttributeDefinition[] result = antAttributeDefinitions.sort(byIncreasing((AntAttributeDefinition a) => a.name));
         return result;
     }
     
