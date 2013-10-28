@@ -1,4 +1,4 @@
-import ceylon.ant { Ant, AntProject, currentAntProject, AntDefinition, AntAttributeDefinition }
+import ceylon.ant { Ant, AntProject, currentAntProject, AntDefinition, AntAttributeDefinition, ant }
 import ceylon.test { AssertException, assertEquals, assertTrue, assertFalse }
 import ceylon.file { parsePath, Path, File, Directory, Nil }
 import ceylon.language.meta.model { Interface }
@@ -35,7 +35,7 @@ AntDefinition? filterAntDefinition({AntDefinition*} antDefinitions, String antNa
 }
 
 void testEcho() {
-    Ant("echo", { "message" -> "G'day mate! " }, {}, "Cheerio!" ).execute();
+    ant("echo", { "message" -> "G'day mate! " }, {}, "Cheerio!" );
 }
 
 void testFileTasks() {
@@ -43,21 +43,21 @@ void testFileTasks() {
     Ant fileset = Ant("fileset", { "dir" -> "``buildDirectory``" }, [
         Ant("include", { "name" -> "example.txt" } )
     ] );
-    Ant("mkdir", { "dir" -> "``buildDirectory``" } ).execute();
+    ant("mkdir", { "dir" -> "``buildDirectory``" } );
     verifyResource("``buildDirectory``", `Directory`, "Cannot create directory");
-    Ant("echo", { "message" -> "File created.", "file" -> "``buildDirectory``/example.txt" } ).execute();
+    ant("echo", { "message" -> "File created.", "file" -> "``buildDirectory``/example.txt" } );
     verifyResource("``buildDirectory``/example.txt", `File`, "Cannot create file");
-    Ant("mkdir", { "dir" -> "``buildDirectory``/sub-directory" } ).execute();
+    ant("mkdir", { "dir" -> "``buildDirectory``/sub-directory" } );
     verifyResource("``buildDirectory``/sub-directory", `Directory`, "Cannot create directory");
-    Ant("copy", { "todir" -> "``buildDirectory``/sub-directory" }, [
+    ant("copy", { "todir" -> "``buildDirectory``/sub-directory" }, [
         fileset
-    ] ).execute();
+    ] );
     verifyResource("``buildDirectory``/sub-directory/example.txt", `File`, "Cannot copy to file");
-    Ant("delete", { }, [
+    ant("delete", { }, [
         fileset
-    ] ).execute();
+    ] );
     verifyResource("``buildDirectory``/example.txt", `Nil`, "Cannot delete file");
-    Ant("delete", { "dir" -> "``buildDirectory``", "verbose" -> "true" } ).execute();
+    ant("delete", { "dir" -> "``buildDirectory``", "verbose" -> "true" } );
     verifyResource("``buildDirectory``", `Nil`, "Cannot delete directory");
 }
 
@@ -161,11 +161,11 @@ void testPseudoGenerated() {
     Ant fileset = Ant("fileset", { "dir" -> "``buildDirectory``" }, [
         Ant("include", { "name" -> "example.txt" } )
     ] );
-    Ant("mkdir", { "dir" -> "``buildDirectory``" } ).execute();
+    ant("mkdir", { "dir" -> "``buildDirectory``" } );
     verifyResource("``buildDirectory``", `Directory`, "Cannot create directory");
-    Ant("echo", { "message" -> "File created.", "file" -> "``buildDirectory``/example.txt" } ).execute();
+    ant("echo", { "message" -> "File created.", "file" -> "``buildDirectory``/example.txt" } );
     verifyResource("``buildDirectory``/example.txt", `File`, "Cannot create file");
-    Ant("mkdir", { "dir" -> "``buildDirectory``/sub-directory" } ).execute();
+    ant("mkdir", { "dir" -> "``buildDirectory``/sub-directory" } );
     verifyResource("``buildDirectory``/sub-directory", `Directory`, "Cannot create directory");
     // invocation of pseudo generated typesave Ant interface (need to get rid of _containingElements someday)
     copy { todir="``buildDirectory``/sub-directory"; _containingElements = [
@@ -175,10 +175,10 @@ void testPseudoGenerated() {
     ]; };
     // end typesave invocation
     verifyResource("``buildDirectory``/sub-directory/example.txt", `File`, "Cannot copy to file");
-    Ant("delete", { }, [
+    ant("delete", { }, [
         fileset
-    ] ).execute();
+    ] );
     verifyResource("``buildDirectory``/example.txt", `Nil`, "Cannot delete file");
-    Ant("delete", { "dir" -> "``buildDirectory``", "verbose" -> "true" } ).execute();
+    ant("delete", { "dir" -> "``buildDirectory``", "verbose" -> "true" } );
     verifyResource("``buildDirectory``", `Nil`, "Cannot delete directory");
 }

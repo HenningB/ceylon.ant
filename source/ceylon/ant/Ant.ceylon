@@ -76,7 +76,7 @@ shared class Ant(
     ```
 """
 see(`class Ant`)
-void ant(
+shared void ant(
         String antName,
         {<String->String>*}? attributes = null,
         {<Ant>*}? elements = null,

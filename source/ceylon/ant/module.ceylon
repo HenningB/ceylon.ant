@@ -13,5 +13,5 @@ module ceylon.ant "0.2.0"{
     shared import ceylon.collection "0.6.1";
     import java.base "7";
     import org.apache.ant.ant "1.9.2";
-    optional import additional.ceylon.ant "unversioned";
+    shared optional import additional.ceylon.ant "unversioned";
 }
