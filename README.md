@@ -76,14 +76,13 @@ Modify the Maven Aether setting: right-click on project, select `Properties` -> 
 
 ## Caveats and Outlook
 
-
 Ant allows users to add their own types and tasks by adding them to Java's classpath.
 As the module system doesn't allow using classes from modules not imported directly, it is not possible to provide tasks that are not known to ceylon.ant in advance.
 This is only possible with a flat classpath.
 
 In M6 there is a run-configuration "Run As... -> Ceylon Application" which mixes all classpathes.
 Using "Run As... -> Ceylon Java Module" results in Ant not finding additionally provided tasks.
-See the test `test.ceylon.ant::testExternalDependency` for reference.
+See the test `test.ceylon.ant::testExternalDependency()` for reference.
 
 This project also includes a way to automatically generate source code for typed Ceylon wrappers for the several types and tasks.
 See the output of `ceylon.antgenerate::run()`, and look into the details of `ceylon.antgenerate::generateAntWrappers()`.
