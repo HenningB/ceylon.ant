@@ -19,6 +19,9 @@ Can be used as a batch processor.
 Basically it's a mapping from Ant's XML description language to Ceylon.
 Elements and attributes are `String`s as Ant itself has a dynamic nature.
 
+Also it is important to distinguish between Ant types and Ant tasks.
+Types are data holders like `<fileset>` and task are executables like `<copy>`.
+
 Consider the following Ant snippet:
 
 ```xml
@@ -34,14 +37,15 @@ The above Ant snippet becomes with the value `buildDirectory` the following Ceyl
 
 ```ceylon
 value buildDirectory = "target/build-test-file-tasks-directory";
-Ant("copy", { "todir" -> "``buildDirectory``/sub-directory" }, [
+ant("copy", { "todir" -> "``buildDirectory``/sub-directory" }, [
     Ant("fileset", { "dir" -> "``buildDirectory``" }, [
         Ant("include", { "name" -> "example.txt" } )
     ] )
-] ).execute();
+] );
 ```
 
-Take care to include the last `.execute()` directive, otherwise the operation will not get executed.
+So types like `<fileset>` are built using the `Ant` class.
+For executing a tasks, use the `ant()` functions, which actually builds an `Ant` object and then calls `execute()` on it.
 
 
 
@@ -53,11 +57,11 @@ Example:
 
 ```ceylon
 AntProject antProject = currentAntProject();
-AntDefinition? copyAntDefinition = antProject.topLevelAntDefinition("copy");
+AntDefinition? copyAntDefinition = antProject.allTopLevelAntDefinitions().filter { (AntDefinition a) => (a.antName == "copy"); }.first;
 assert(exists copyAntDefinition);
-AntDefinition? filesetAntDefinition = copyAntDefinition.nestedElementDefinition("fileset");
+AntDefinition? filesetAntDefinition = copyAntDefinition.nestedAntDefinitions().filter { (AntDefinition a) => (a.antName == "fileset"); }.first;
 assert(exists filesetAntDefinition);
-AntDefinition? includeAntDefinition = filesetAntDefinition.nestedElementDefinition("include");
+AntDefinition? includeAntDefinition = includeAntDefinition.nestedAntDefinitions().filter { (AntDefinition a) => (a.antName == "include"); }.first;
 assert(exists includeAntDefinition);
 ```
 
@@ -72,12 +76,20 @@ Modify the Maven Aether setting: right-click on project, select `Properties` -> 
 
 ## Caveats and Outlook
 
-Initially I considered to automatically generate Ceylon definitions from Ant tasks.
-But it's not possible to map Ant tasks and types to Ceylon classes or functions, as the same named element could be mapped differently in different locations.
-At least this is not possible without overlapping meanings, or unpractically long names.
 
-I'm not sure how Ceylon's class loader works, so there might be a problem when you use tasks with external dependencies in your module.
-To ensure external modules may still get accessed in future Ceylon versions, check with `test.ceylon.ant::testExternalDependency()`, which tries to get the definition of the `ftp` task, which is defined in an external module.
+Ant allows users to add their own types and tasks by adding them to Java's classpath.
+As the module system doesn't allow using classes from modules not imported directly, it is not possible to provide tasks that are not known to ceylon.ant in advance.
+This is only possible with a flat classpath.
+
+In M6 there is a run-configuration "Run As... -> Ceylon Application" which mixes all classpathes.
+Using "Run As... -> Ceylon Java Module" results in Ant not finding additionally provided tasks.
+See the test `test.ceylon.ant::testExternalDependency` for reference.
+
+This project also includes a way to automatically generate source code for typed Ceylon wrappers for the several types and tasks.
+See the output of `ceylon.antgenerate::run()`, and look into the details of `ceylon.antgenerate::generateAntWrappers()`.
+The typed structure of Ant elements are mapped.
+Not finished, as attributes aren't typed and text inclusion isn't done yet.
+Also missing dynamic Ant elements.
 
 
 
