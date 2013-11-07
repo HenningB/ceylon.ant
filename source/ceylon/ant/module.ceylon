@@ -10,7 +10,7 @@
 by ("Henning Burdack")
 license ("[ASL 2.0](http://www.apache.org/licenses/LICENSE-2.0)")
 module ceylon.ant "0.2.0"{
-    shared import ceylon.collection "0.6.1";
+    shared import ceylon.collection "1.0.0";
     import java.base "7";
     import org.apache.ant.ant "1.9.2";
     shared optional import additional.ceylon.ant "unversioned";

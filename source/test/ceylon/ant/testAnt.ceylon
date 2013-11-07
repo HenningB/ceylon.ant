@@ -1,5 +1,5 @@
 import ceylon.ant { Ant, AntProject, currentAntProject, AntDefinition, AntAttributeDefinition, ant }
-import ceylon.test { AssertException, assertEquals, assertTrue, assertFalse }
+import ceylon.test { assertEquals, assertTrue, assertFalse, test }
 import ceylon.file { parsePath, Path, File, Directory, Nil }
 import ceylon.language.meta.model { Interface }
 
@@ -13,10 +13,10 @@ File|Directory|Nil retrieveActualResource(String relativeResourceName) {
 
 void verifyResource(String relativeResourceName, Interface<File|Directory|Nil> expectedResourceType, String failMessage) {
     File|Directory|Nil actualResource = retrieveActualResource(relativeResourceName);
-    if(expectedResourceType.isTypeOf(actualResource)) {
+    if(expectedResourceType.typeOf(actualResource)) {
         print("``relativeResourceName`` is ``expectedResourceType``");
     } else {
-        throw AssertException("``failMessage``: ``relativeResourceName`` is not ``expectedResourceType``");
+        throw Exception("``failMessage``: ``relativeResourceName`` is not ``expectedResourceType``");
     }
 }
 
@@ -34,11 +34,11 @@ AntDefinition? filterAntDefinition({AntDefinition*} antDefinitions, String antNa
     }
 }
 
-void testEcho() {
+test void testEcho() {
     ant("echo", { "message" -> "G'day mate! " }, {}, "Cheerio!" );
 }
 
-void testFileTasks() {
+test void testFileTasks() {
     String buildDirectory = "target/build-test-file-tasks-directory";
     Ant fileset = Ant("fileset", { "dir" -> "``buildDirectory``" }, [
         Ant("include", { "name" -> "example.txt" } )
@@ -61,7 +61,7 @@ void testFileTasks() {
     verifyResource("``buildDirectory``", `Nil`, "Cannot delete directory");
 }
 
-void testAntDefinitions() {
+test void testAntDefinitions() {
     AntProject antProject = currentAntProject();
     List<AntDefinition> allTopLevelAntDefinitions = antProject.allTopLevelAntDefinitions();
     assertTrue(allTopLevelAntDefinitions.size > 0);
@@ -71,7 +71,7 @@ void testAntDefinitions() {
     }
 }
 
-void testAntDefinition() {
+test void testAntDefinition() {
     AntProject antProject = currentAntProject();
     AntDefinition? copyAntDefinition = filterAntDefinition(antProject.allTopLevelAntDefinitions(), "copy");
     assert(exists copyAntDefinition);
@@ -87,7 +87,7 @@ void testAntDefinition() {
     assertTrue(includeAttributeNames.contains("name"));
 }
 
-void testProperties() {
+test void testProperties() {
     AntProject antProject = currentAntProject();
     Map<String,String> allProperties = antProject.allProperties();
     assertTrue(allProperties.size > 0);
@@ -102,7 +102,7 @@ void testProperties() {
     }
 }
 
-void testProperty() {
+test void testProperty() {
     String propertyName = "ceylon.ant.test.test-property";
     String propertyConstant = "test-property-set";
     AntProject antProject = currentAntProject();
@@ -116,24 +116,24 @@ void testProperty() {
 
 "Test whether the `<ftp>` tasks exists, which is part of modul `org.apache.ant.ant-commons-net`.
  Depending of Ceylon's module implementation, this might not be available to the module `ceylon.ant`."
-void testExternalDependency() {
+test void testExternalDependency() {
     AntProject antProject = currentAntProject();
     AntDefinition? ftpAntDefinition = filterAntDefinition(antProject.allTopLevelAntDefinitions(), "ftp");
     AntDefinition? undefinedAntDefinition = filterAntDefinition(antProject.allTopLevelAntDefinitions(), "--undefined--");
     if(exists ftpAntDefinition) {
         // ok
     } else {
-        throw AssertException("ExternalDependency: ftp task does not exists. Module org.apache.ant.ant-commons-net not imported properly.");
+        throw Exception("ExternalDependency: ftp task does not exists. Module org.apache.ant.ant-commons-net not imported properly.");
     }
     if(exists undefinedAntDefinition) {
-        throw AssertException("ExternalDependency: --undefined-- task exists.");
+        throw Exception("ExternalDependency: --undefined-- task exists.");
     } else {
         // ok
     }
 }
 
 "Checks the difference between top level <include> task and <include> datatype within <fileset>"
-void testIncludeAsTaskAndType() {
+test void testIncludeAsTaskAndType() {
     AntProject antProject = currentAntProject();
     AntDefinition? includeAntDefinition = filterAntDefinition(antProject.allTopLevelAntDefinitions(), "include");
     assert(exists includeAntDefinition);
@@ -156,7 +156,7 @@ void testIncludeAsTaskAndType() {
 }
 
 "Test a typesave by hand generated Ceylon interface"
-void testPseudoGenerated() {
+test void testPseudoGenerated() {
     String buildDirectory = "target/build-test-file-tasks-directory";
     Ant fileset = Ant("fileset", { "dir" -> "``buildDirectory``" }, [
         Ant("include", { "name" -> "example.txt" } )

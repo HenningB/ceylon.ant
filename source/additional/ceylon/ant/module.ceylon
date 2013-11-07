@@ -4,5 +4,5 @@
 """
 module additional.ceylon.ant "unversioned" {
     """For testing external dependency (ftp task)."""
-    shared import 'org.apache.ant.ant-commons-net' "1.9.2"; 
+    shared import "org.apache.ant.ant-commons-net" "1.9.2"; 
 }
